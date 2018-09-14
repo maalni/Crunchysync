@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTabsModule, MatProgressSpinnerModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FilterPipe }from './filter.pipe';
@@ -29,9 +28,7 @@ import { SettingsComponent } from './settings/settings.component';
   ],
   imports: [
     BrowserModule,
-		MatTabsModule,
 		BrowserAnimationsModule,
-		MatProgressSpinnerModule,
 		HttpModule,
 		FormsModule
   ],

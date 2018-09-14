@@ -19,6 +19,7 @@ export class AppComponent {
 	watching: Array<any> = new Array();
 	selectedAnime: Array<any> = new Array();
 	errorMessage: string = "";
+	searchTerm: string = "";
 
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
@@ -115,7 +116,7 @@ export class AppComponent {
 				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration){
 					this.done.push(anime);
 				}else{
-					if(anime.most_likely_media.playhead > 0){
+					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
 						this.watching.push(anime);
 					}else{
 						this.unseen.push(anime);
@@ -127,7 +128,7 @@ export class AppComponent {
 	}
 
 	clearSearch(){
-		(<HTMLInputElement>document.getElementById("search")).value = "";
+		this.searchTerm = "";
 	}
 
 	onSelect(anime: Array<any>){
