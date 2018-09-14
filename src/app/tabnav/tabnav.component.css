@@ -1,0 +1,55 @@
+nav{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 450px;
+	height: 50px;
+	background-color: #f3f3f3;
+	z-index: 900;
+}
+
+nav button{
+	position: absolute;
+	height: 50px;
+	color: orange;
+	background-color: white;
+	border: none;
+}
+
+nav button:hover{
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+nav button:focus{
+	outline: none;
+}
+
+.watchingbtn{
+	top: 0px;
+	left: 0px;
+	width: 100px;
+}
+
+.unseenbtn{
+	top: 0px;
+	left: 100px;
+	width: 100px;
+}
+
+.donebtn{
+	top: 0px;
+	left: 200px;
+	width: 100px;
+}
+
+.allbtn{
+	top: 0px;
+	left: 300px;
+	width: 100px;
+}
+
+.settingsbtn{
+	top: 0px;
+	left: calc(100% - 50px);
+	width: 50px;
+}

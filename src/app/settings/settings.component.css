@@ -1,0 +1,140 @@
+.settingstitle{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	color: orange;
+	font-size: 20pt;
+	font-weight: bold;
+}
+
+.version{
+	position: absolute;
+	top: 22px;
+	left: 110px;
+	font-size: 11pt;
+}
+
+.username{
+	position: absolute;
+	top: 50px;
+	left: 10px;
+	width: 420px;
+	height: 30px;
+	padding-left: 10px;
+	border-radius: 5px;
+	border: none;
+}
+
+.password{
+	position: absolute;
+	top: 90px;
+	left: 10px;
+	width: 420px;
+	height: 30px;
+	padding-left: 10px;
+	border-radius: 5px;
+	border: none;
+}
+
+.sessionid{
+	position: absolute;
+	top: 130px;
+	left: 10px;
+	width: 420px;
+	height: 30px;
+	padding-left: 10px;
+	border-radius: 5px;
+	border: none;
+}
+
+.deviceid{
+	position: absolute;
+	top: 170px;
+	left: 10px;
+	width: 420px;
+	height: 30px;
+	padding-left: 10px;
+	border-radius: 5px;
+	border: none;
+}
+
+.ignorecookie{
+	appearance: none;
+	position: absolute;
+	left: 0px;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+	border-radius: 5px;
+	color: orange;
+	background-color: white;
+	border: none;
+	content: "";
+}
+
+.ignorecookielabel{
+	position: absolute;
+	top: 210px;
+	left: 10px;
+	width: 390px;
+	height: 30px;
+	padding-left: 40px;
+	margin: 0;
+	color: black;
+	border: none;
+	line-height: 30px;
+}
+
+.ignorecookie:checked{
+	color: white;
+	background-color: orange;
+}
+
+.ignorecookie:checked:after{
+	content: "✔";
+ 	color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+	font-size: 15pt;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.reload{
+	position: absolute;
+	top: 250px;
+	left: 208px;
+	width: 136px;
+	height: 30px;
+	border-radius: 5px;
+	color: white;
+	background-color: orange;
+	border: none;
+}
+
+.save{
+	position: absolute;
+	top: 250px;
+	left: 354px;
+	width: 86px;
+	height: 30px;
+	border-radius: 5px;
+	color: white;
+	background-color: orange;
+	border: none;
+}
+
+.visit{
+	position: absolute;
+	top: 250px;
+	left: 62px;
+	width: 136px;
+	height: 30px;
+	border-radius: 5px;
+	color: white;
+	background-color: orange;
+	border: none;
+}

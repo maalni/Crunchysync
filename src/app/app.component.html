@@ -1,0 +1,24 @@
+<app-tabnav id="nav" [totalAnimes]="animes?.length"></app-tabnav>
+<app-error id="error" [errorMessage]="errorMessage"></app-error>
+<div id="content">
+	<div id="watching">
+		<app-anime *ngFor="let anime of watching" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
+	</div>
+	<div id="unseen">
+		<app-anime *ngFor="let anime of unseen" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
+	</div>
+	<div id="done">
+		<app-anime *ngFor="let anime of done" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
+	</div>
+	<div id="all">
+		<input id="search" class="search" placeholder="Suchen..." [(ngModel)]="searchTerm">
+		<button class="clearsearch" (click)="clearSearch()">🞩</button>
+		<app-anime *ngFor="let anime of animes | filter:searchTerm" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
+	</div>
+	<div id="settings">
+		<app-settings [sessionid]="sessionid" [deviceid]="deviceid"></app-settings>
+	</div>
+	<app-spinner id="spinner"></app-spinner>
+</div>
+<button id="refresh" (click)="refreshQueue()">↻</button>
+<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime"></app-selected-anime>

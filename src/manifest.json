@@ -1,0 +1,27 @@
+{
+  "name":"Crunchysync",
+  "version": "0.1.8",
+  "manifest_version": 2,
+  "description":"Sync the Crunchyroll queue properly",
+  "browser_action":{
+    "default_icon": "assets/premium.png",
+    "default_title": "Crunchysync",
+    "default_popup": "index.html"
+  },
+  "icons":{
+    "16":"assets/premium.png"
+  },
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"content_scripts": [{
+		 "matches": ["http://*.Crunchyroll.com/home/queue*"],
+		 "js": ["queuescript.js"]
+	}],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "http://*/",
+    "https://*/",
+		"cookies"
+  ]
+}
