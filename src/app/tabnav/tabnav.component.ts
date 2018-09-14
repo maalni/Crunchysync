@@ -41,11 +41,9 @@ export class TabnavComponent implements OnInit {
 	showSelected(selected: number){
 		if(selected >=0 && selected <= 4){
 			if((<HTMLElement>document.getElementById("spinner")).hidden && !(<HTMLElement>document.getElementById("refresh")).hidden && selected == 4){
-				console.log("settings + loading finished");
 				(<HTMLElement>document.getElementById("refresh")).hidden = true;
 			}
 			if((<HTMLElement>document.getElementById("spinner")).hidden && (<HTMLElement>document.getElementById("refresh")).hidden && selected != 4){
-				console.log("not settings + loading finished");
 				(<HTMLElement>document.getElementById("refresh")).hidden = false;
 			}
 			(<HTMLElement>document.getElementById("content").children[this.currentlyShown]).hidden = true;
