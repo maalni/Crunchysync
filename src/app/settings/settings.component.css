@@ -105,13 +105,11 @@
 
 .reload{
 	position: absolute;
-	top: 250px;
-	left: 208px;
+	bottom: 10px;
+	right: 5px;
 	width: 136px;
 	height: 30px;
 	border-radius: 5px;
-	color: white;
-	background-color: orange;
 	border: none;
 }
 
@@ -129,12 +127,13 @@
 
 .visit{
 	position: absolute;
-	top: 250px;
-	left: 62px;
-	width: 136px;
-	height: 30px;
+	top: 130px;
+	right: 5px;
+	width: 32px;
+	height: 32px;
 	border-radius: 5px;
-	color: white;
-	background-color: orange;
+	background-color: rgba(0, 0, 0, 0);
+	font-size: 20pt;
+	color: orange;
 	border: none;
 }
