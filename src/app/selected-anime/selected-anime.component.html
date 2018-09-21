@@ -1,8 +1,8 @@
 <div class="closeAnime" (click)="closeSelectedAnime()"></div>
 <div class="selectedAnime">
 	<button class="closeSelectedAnime" (click)="closeSelectedAnime()">🞩</button>
-	<button class="openSelectedEpisode" (click)="openSelectedEpisode()"><img src="../assets/openSelectedEpisode.svg"></button>
-	<button class="openSelectedAnime" (click)="openSelectedAnime()"><img src="../assets/openSelectedAnime.svg"></button>
+	<button class="openSelectedEpisode" (click)="openSelectedEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
+	<button class="openSelectedAnime" (click)="openSelectedAnime()"><img src="../assets/icons/openSelectedAnime.svg"></button>
 	<img class="selectedAnimePicture" [src]="selectedAnime?.most_likely_media?.screenshot_image?.fwide_url">
 	<progress class="selectedAnimePlaytime" [value]="selectedAnime?.most_likely_media?.playhead" [max]="selectedAnime?.most_likely_media?.duration"></progress>
 	<ul class="selectedAnimePropertys">
