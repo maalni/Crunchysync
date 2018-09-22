@@ -1,0 +1,36 @@
+variables:
+  DOCKER_DRIVER: overlay2
+
+image: maalni/maalni.gitlab.io:latest
+
+stages:
+  - test
+  - deploy
+
+cache:
+  paths:
+  - node_modules/
+
+test:
+  stage: test
+  before_script:
+  - yarn
+  script:
+  - ng build
+  except:
+  - master
+  artifacts:
+    paths:
+    - dist/
+
+pages:
+  stage: deploy
+  before_script:
+  - yarn
+  script:
+  - ng build --prod --build-optimizer
+  only:
+  - master
+  artifacts:
+    paths:
+    - dist/
