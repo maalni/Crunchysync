@@ -5,31 +5,13 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
   selector: 'app-anime',
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
-	animations: [
-		trigger('premiumState', [
-			state('false', style({
-				visibility: "hidden"
-			})),
-			state('true', style({
-				visibility: "visible"
-			})),
-			transition('close => open', animate('100ms ease-in')),
-			transition('open => close', animate('100ms ease-in')),
-		])
-	]
 })
 export class AnimeComponent implements OnInit {
 
 	@Input() anime;
 	@Output() onSelect = new EventEmitter<Array<any>>();
 
-	premium: string = "false";
-
   ngOnInit() {
-		if(this.anime.most_likely_media.premium_only){
-			this.premium = "true";
-		}
-
 		if(this.anime.most_likely_media.playhead === undefined){
 			this.anime.most_likely_media.playhead = 0;
 		}
@@ -40,6 +22,11 @@ export class AnimeComponent implements OnInit {
   }
 
 	animeSelect(){
+		console.log(this.anime);
 		this.onSelect.emit(this.anime);
+	}
+
+	openEpisode(){
+		window.open(this.anime.most_likely_media.url);
 	}
 }

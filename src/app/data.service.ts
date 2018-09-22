@@ -11,7 +11,7 @@ export class DataService {
 	constructor(private _http: Http) { }
 
 	getQueue(session: string): Observable<any> {
-		return this._http.get("https://api.crunchyroll.com/queue.0.json?fields=most_likely_media,series,series.name,series.description,series.media_count,media.description,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.wide_url,image.fwide_url,image.fwidestar_url,image.widestar_url&media_types=anime|drama&locale=enUS&session_id=" + session).pipe(map(result => this.result = result.json().data), catchError((err: any) => { return Observable.throw(err.statusText) }));
+		return this._http.get("https://api.crunchyroll.com/queue.0.json?fields=most_likely_media,series,series.name,series.description,series.media_count,media.description,media.unavailable_time,media.premium_unavailable_time,media.premium_available_time,media.premium_available,media.free_unavailable_time,media.free_available_time,media.free_available,media.available_time,media.available,media.availability_notes,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.wide_url,image.fwide_url,image.fwidestar_url,image.widestar_url&media_types=anime|drama&locale=enUS&session_id=" + session).pipe(map(result => this.result = result.json().data), catchError((err: any) => { return Observable.throw(err.statusText) }));
 	}
 
 	getInfo(session: string): Observable<any> {

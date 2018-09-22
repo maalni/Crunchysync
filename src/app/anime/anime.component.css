@@ -13,6 +13,23 @@
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
+.container:hover .openEpisode{
+	visibility:visible;
+}
+
+.openEpisode{
+	position: absolute;
+	top: 20px;
+	left: 55px;
+	width: 50px;
+	height: 50px;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 100;
+	border-radius: 25px;
+	border: none;
+	visibility: hidden;
+}
+
 .preview{
 	position: absolute;
 	top: 0px;

@@ -14,8 +14,34 @@
 	width: calc(100% - 40px);
 }
 
-.selectedAnimePropertys{
-	width: calc(100% - 40px);
+.selectedAnimePremium{
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	height: 25px;
+	background-color: rgba(0, 0, 0, 0.3);
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 0;
+}
+
+.selectedAnimePremiumDate{
+	margin-left: 30px;
+	margin-right: 5px;
+	font-size: 10pt;
+	line-height: 25px;
+	text-align: center;
+}
+
+.selectedAnimePremiumIcon{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 25px;
+	height: 25px;
+	border: none;
+	padding: 0;
 }
 
 .selectedAnimePicture{
@@ -47,7 +73,6 @@
 .selectedEpisodeNumber{
 	font-size: 11pt;
 }
-
 
 .closeSelectedAnime{
 	position: absolute;
