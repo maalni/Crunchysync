@@ -12,8 +12,8 @@
 }
 
 .search::placeholder{
-	opacity: 0.6;
-	color: orange;
+	opacity: 0.8;
+	color: var(--primary-color);
 	font-size: 15pt;
 }
 
@@ -22,8 +22,8 @@
 	right: 5px;
 	width: 47px;
 	height: 47px;
-	color: orange;
-	background-color: white;
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
 	border: none;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -38,8 +38,8 @@
 	height: 50px;
 	border: none;
 	border-radius: 25px;
-	color: white;
-	background-color: orange;
+	color: var(--secondary-color);
+	background-color: var(--primary-color);
 	font-size: 20pt;
 	font-weight: bold;
 }

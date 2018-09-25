@@ -6,6 +6,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
 })
+
 export class AnimeComponent implements OnInit {
 
 	@Input() anime;
@@ -22,7 +23,6 @@ export class AnimeComponent implements OnInit {
   }
 
 	animeSelect(){
-		console.log(this.anime);
 		this.onSelect.emit(this.anime);
 	}
 

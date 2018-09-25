@@ -3,7 +3,7 @@
 	left: 10px;
 	width: 430px;
 	height: 90px;
-	background-color: white;
+	background-color: var(--secondary-color);
 	border-radius: 5px 5px 5px 5px;
 	margin-bottom: 10px;
 	overflow: hidden;
@@ -67,6 +67,7 @@
 	height: 70px;
 	margin: 0;
 	list-style-type: none;
+	color: var(--tertiary-color);
 }
 
 .animename{
@@ -103,6 +104,6 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-  background-color: orange;
+  background-color: var(--primary-color);
 	border-bottom-left-radius: 5px;
 }

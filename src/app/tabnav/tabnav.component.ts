@@ -18,6 +18,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 		])
 	]
 })
+
 export class TabnavComponent implements OnInit {
 
 	@Input() totalAnimes;

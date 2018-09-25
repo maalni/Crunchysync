@@ -1,10 +1,9 @@
 <span class="settingstitle">Settings</span>
 <span class="version">v.{{version}}</span>
-<input id="username" class="username" placeholder="Username (currently not working)" value="{{username}}" disabled>
-<input id="password" class="password" placeholder="Password (currently not working)" value="{{password}}" type="password" disabled>
+<input id="username" class="username" placeholder="Username" value="{{username}}">
+<input id="password" class="password" placeholder="Password" value="{{password}}" type="password">
 <input id="sessionid" class="sessionid" placeholder="Session ID" value="{{sessionid}}" disabled>
 <input id="deviceid" class="deviceid" placeholder="Device ID" value="{{deviceid}}" disabled>
-<label id="ignorecookielabel" class="ignorecookielabel"><input id="ignorecookie" class="ignorecookie" type="checkbox">Force ignore cookie</label>
 <button class="reload" (click)="reloadExtension()">Reload Extension</button>
 <button class="save" (click)="saveSettings()">Save</button>
 <button class="visit" (click)="visitCrunchyroll()">↻</button>

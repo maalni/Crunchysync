@@ -2,7 +2,7 @@
 	position: absolute;
 	top: 10px;
 	left: 10px;
-	color: orange;
+	color: var(--primary-color);
 	font-size: 20pt;
 	font-weight: bold;
 }
@@ -58,51 +58,6 @@
 	border: none;
 }
 
-.ignorecookie{
-	appearance: none;
-	position: absolute;
-	left: 0px;
-	width: 30px;
-	height: 30px;
-	margin: 0;
-	border-radius: 5px;
-	color: orange;
-	background-color: white;
-	border: none;
-	content: "";
-}
-
-.ignorecookielabel{
-	position: absolute;
-	top: 210px;
-	left: 10px;
-	width: 390px;
-	height: 30px;
-	padding-left: 40px;
-	margin: 0;
-	color: black;
-	border: none;
-	line-height: 30px;
-}
-
-.ignorecookie:checked{
-	color: white;
-	background-color: orange;
-}
-
-.ignorecookie:checked:after{
-	content: "✔";
- 	color: white;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-	font-size: 15pt;
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-}
-
 .reload{
 	position: absolute;
 	bottom: 10px;
@@ -120,8 +75,8 @@
 	width: 86px;
 	height: 30px;
 	border-radius: 5px;
-	color: white;
-	background-color: orange;
+	color: var(--secondary-color);
+	background-color: var(--primary-color);
 	border: none;
 }
 
@@ -134,6 +89,6 @@
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, 0);
 	font-size: 20pt;
-	color: orange;
+	color: var(--primary-color);
 	border: none;
 }

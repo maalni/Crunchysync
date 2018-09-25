@@ -3,7 +3,7 @@
 	bottom: 0;
 	left: 0;
 	width: 450px;
-	background-color: white;
+	background-color: var(--secondary-color);
 	z-index: 999;
 }
 
@@ -12,6 +12,7 @@
 	margin-bottom: 20px;
 	padding-left: 20px;
 	width: calc(100% - 40px);
+	color: var(--tertiary-color);
 }
 
 .selectedAnimePremium{
@@ -20,7 +21,7 @@
 	left: 10px;
 	height: 25px;
 	background-color: rgba(0, 0, 0, 0.3);
-	color: white;
+	color: var(--secondary-color);
 	border: none;
 	border-radius: 5px;
 	padding: 0;
@@ -81,7 +82,7 @@
 	width: 25px;
 	height: 25px;
 	background-color: rgba(0, 0, 0, 0.3);
-	color: white;
+	color: var(--secondary-color);
 	border: none;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -98,7 +99,7 @@
 	width: 50px;
 	height: 50px;
 	background-color: rgba(0, 0, 0, 0.3);
-	color: white;
+	color: var(--secondary-color);
 	border: none;
 	border-radius: 25px;
 	padding: 4px;
@@ -115,14 +116,30 @@
 	width: 25px;
 	height: 25px;
 	background-color: rgba(0, 0, 0, 0.3);
-	color: white;
+	color: var(--secondary-color);
+	border: none;
+	padding: 4px;
+}
+
+.openSelectedAnime img{
+	width: 100%;
+}
+
+.completeSelectedEpisode{
+	position: absolute;
+	top: 10px;
+	right: 60px;
+	width: 25px;
+	height: 25px;
+	background-color: rgba(0, 0, 0, 0.3);
+	color: var(--secondary-color);
 	border: none;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	padding: 4px;
 }
 
-.openSelectedAnime img{
+.completeSelectedEpisode img{
 	width: 100%;
 }
 

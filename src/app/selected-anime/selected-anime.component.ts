@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-selected-anime',
@@ -9,10 +10,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SelectedAnimeComponent {
 
 	@Input() selectedAnime: any;
+	@Output() onComplete = new EventEmitter<Array<any>>();
 
-	ngOnInit() {
-		this.closeSelectedAnime();
-  }
+	constructor(private dataService: DataService) {}
 
 	getDate(){
 		var date = new Date(this.selectedAnime.most_likely_media.free_available_time);
@@ -31,5 +31,10 @@ export class SelectedAnimeComponent {
 
 	closeSelectedAnime(){
 		(<HTMLElement>document.getElementById("selectedAnime")).hidden = true;
+	}
+
+	completeSelectedEpisode(){
+		this.closeSelectedAnime();
+		this.onComplete.emit(this.selectedAnime);
 	}
 }

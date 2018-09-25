@@ -5,7 +5,11 @@
 
 *{
    font-family: 'Roboto', sans-serif;
-}
+	 --primary-color: #f78c25;
+	 --secondary-color: white;
+	 --tertiary-color: #333;
+	 --error-color: #F44336;
+ }
 
 *::-webkit-scrollbar {
 	top: 50px;
@@ -18,7 +22,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: orange;
+  background-color: var(--primary-color);
 }
 
 progress::-webkit-progress-bar {
@@ -26,7 +30,7 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-  background-color: orange;
+  background-color: var(--primary-color);
 }
 
 html, body{

@@ -3,6 +3,7 @@
 	<button class="closeSelectedAnime" (click)="closeSelectedAnime()">🞩</button>
 	<button class="openSelectedEpisode" (click)="openSelectedEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
 	<button class="openSelectedAnime" (click)="openSelectedAnime()"><img src="../assets/icons/openSelectedAnime.svg"></button>
+	<button class="completeSelectedEpisode" (click)="completeSelectedEpisode()"><img src="../assets/icons/completeSelectedEpisode.svg"></button>
 	<div class="selectedAnimePremium" *ngIf="selectedAnime?.most_likely_media?.premium_only">
 		<img class="selectedAnimePremiumIcon" src="../../assets/icons/premium.png">
 		<span class="selectedAnimePremiumDate">{{getDate()}}</span>
