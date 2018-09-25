@@ -4,27 +4,14 @@ variables:
 image: maalni/maalni.gitlab.io:latest
 
 stages:
-  - test
-  - deploy
+  - build
 
 cache:
   paths:
   - node_modules/
 
-test:
-  stage: test
-  before_script:
-  - yarn
-  script:
-  - ng build
-  except:
-  - master
-  artifacts:
-    paths:
-    - dist/
-
-pages:
-  stage: deploy
+build:
+  stage: build
   before_script:
   - yarn
   script:
