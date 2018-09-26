@@ -1,6 +1,6 @@
 {
   "name":"Crunchysync",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "manifest_version": 2,
   "description":"Sync the Crunchyroll queue properly",
   "browser_action":{
@@ -14,8 +14,13 @@
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"content_scripts": [{
 		 "matches": ["http://*.Crunchyroll.com/home/queue*"],
-		 "js": ["queuescript.js"]
+		 "js": ["queuescript.js"],
+		 "run_at": "document_end"
 	}],
+	"background": {
+    "scripts": ["backgroundscript.js"],
+		"persistent": false
+	},
   "permissions": [
     "tabs",
     "activeTab",
@@ -23,5 +28,8 @@
     "http://*.Crunchyroll.com/home/queue*",
     "https://*.Crunchyroll.com/home/queue*",
 		"cookies"
-  ]
+  ],
+	"web_accessible_resources": [
+		"assets/*"
+	]
 }
