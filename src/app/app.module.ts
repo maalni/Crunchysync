@@ -13,6 +13,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { TabnavComponent } from './tabnav/tabnav.component';
 import { ErrorComponent } from './error/error.component';
 import { SettingsComponent } from './settings/settings.component';
+import { CategoryComponent } from './category/category.component';
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { SettingsComponent } from './settings/settings.component';
 		SpinnerComponent,
 		TabnavComponent,
 		ErrorComponent,
-		SettingsComponent
+		SettingsComponent,
+		CategoryComponent,
+		SearchComponent
   ],
   imports: [
     BrowserModule,

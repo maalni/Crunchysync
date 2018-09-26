@@ -1,9 +1,11 @@
-<span class="settingstitle">Settings</span>
-<span class="version">v.{{version}}</span>
-<input id="username" class="username" placeholder="Username" value="{{username}}">
-<input id="password" class="password" placeholder="Password" value="{{password}}" type="password">
-<input id="sessionid" class="sessionid" placeholder="Session ID" value="{{sessionid}}" disabled>
-<input id="deviceid" class="deviceid" placeholder="Device ID" value="{{deviceid}}" disabled>
-<button class="reload" (click)="reloadExtension()">Reload Extension</button>
-<button class="save" (click)="saveSettings()">Save</button>
-<button class="visit" (click)="visitCrunchyroll()"><img src="../assets/icons/refresh_orange.svg"></button>
+<div class="settingsContainer">
+	<span class="settingstitle">Settings</span>
+	<span class="version">v.{{version}}</span>
+	<input id="username" class="username" placeholder="Username" value="{{username}}">
+	<input id="password" class="password" placeholder="Password" value="{{password}}" type="password">
+	<input id="sessionid" class="sessionid" placeholder="Session ID" value="{{sessionid}}" disabled>
+	<input id="deviceid" class="deviceid" placeholder="Device ID" value="{{deviceid}}" disabled>
+	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
+	<button class="savebtn" (click)="saveSettings()">Save</button>
+	<button class="visitbtn" (click)="visitCrunchyroll()"><img src="../assets/icons/refresh_orange.svg"></button>
+</div>

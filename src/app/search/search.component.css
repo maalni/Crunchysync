@@ -1,0 +1,32 @@
+.search{
+	position: relative;
+	left: 10px;
+	width: 383px;
+	height: 35px;
+	margin-bottom: 10px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding-left: 10px;
+	border: none;
+	font-size: 15pt;
+}
+
+.search::placeholder{
+	opacity: 0.8;
+	color: var(--primary-color);
+	font-size: 15pt;
+}
+
+.clearsearchbtn{
+	position: absolute;
+	right: 5px;
+	width: 37px;
+	height: 37px;
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
+	border: none;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	font-size: 15pt;
+	font-weight: bold;
+}

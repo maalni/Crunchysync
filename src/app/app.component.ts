@@ -8,62 +8,58 @@ import { DataService } from './data.service';
 })
 
 export class AppComponent {
-	sessionid: string = "";
-	deviceid: string = "";
-	username: string = "";
-	password: string = "";
-	expires: Date = new Date();
-	auth: string = "";
+	onAuthenticatedEvent: any = new Event('onAuthenticatedEvent');
+	settings: Array<any> = new Array();
 	animes: Array<any> = new Array();
 	unseen: Array<any> = new Array();
 	done: Array<any> = new Array();
 	watching: Array<any> = new Array();
 	selectedAnime: Array<any> = new Array();
 	errorMessage: string = "";
-	searchTerm: string = "";
 
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
 	ngOnInit() {
-		this.getSettings();
-		this.loading(true);
+		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
 		this.getLocalQueue();
-		this.authenticate();
 	}
 
-	getSettings(){
-		var ang = this;
-		chrome.storage.local.get(["username"], function(result) {
-			ang.username = result.username;
-		});
-		chrome.storage.local.get(["password"], function(result) {
-			ang.password = result.password;
-		});
-		chrome.storage.local.get(["deviceid"], function(result) {
-			ang.deviceid = result.deviceid;
-		});
-		chrome.storage.local.get(["auth"], function(result) {
-			ang.auth = result.auth;
-		});
-		chrome.storage.local.get(["expires"], function(result) {
-			ang.expires = result.expires;
-		});
+	onSettingsLoadedEventHandler(settings: Array<any>){
+		this.settings = settings;
+		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid']);
 	}
 
-	authenticate(){
+	authenticate(username: string, password: string, sessionid: string, deviceid: string){
 		var ang = this;
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
 				ang.ngZone.run(() => {
-					ang.sessionid = cookie.value;
-					ang.refreshQueue();
+					ang.settings['sessionid'] = cookie.value;
+					document.dispatchEvent(ang.onAuthenticatedEvent);
 				});
 			}else{
 				ang.ngZone.run(() => {
-					if(ang.username != "" && ang.password != ""){
-						ang.createSessionID();
+					if(sessionid === "" || sessionid === undefined){
+						if(username != "" && password != ""){
+							ang.dataService.getSessionID(deviceid).subscribe(res => {
+								if(!res.error){
+									chrome.storage.local.set({"sessionid": res.data.session_id, "deviceid": res.data.device_id}, function() {});
+									ang.settings['sessionid'] = res.data.session_id;
+									ang.settings['deviceid'] = res.data.device_id;
+									ang.dataService.login(res.data.session_id, username, password).subscribe(res => {
+										if(!res.error){
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": ang.settings['sessionid']}, function(){});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": ang.settings['sessionid']}, function(){});
+											document.dispatchEvent(ang.onAuthenticatedEvent);
+										}
+									}, err => this.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
+								}
+							}, err => this.error("Connection failed! Please try again later. Discription: " + err));
+						}else{
+							ang.error("No Cookie set! Please visit http://www.crunchyroll.com or save your credentials in the settingstab.");
+						}
 					}else{
-						ang.error("No Cookie set! Please visit http://www.crunchyroll.com or save your credentials in the settingstab.");
+						document.dispatchEvent(ang.onAuthenticatedEvent);
 					}
 					ang.loading(false);
 				});
@@ -71,97 +67,55 @@ export class AppComponent {
 		});
 	}
 
-	createSessionID(){
-		this.dataService.getSessionID(this.deviceid).subscribe(res => {
-			if(!res.error){
-				chrome.storage.local.set({"sessionid": res.data.session_id}, function() {});
-				this.sessionid = res.data.session_id;
-				chrome.storage.local.set({"deviceid": res.data.device_id}, function() {});
-				this.deviceid = res.data.device_id;
-				this.authenticateSessionID(res.data.session_id);
+	addToQueue(animes: Array<any>){
+		this.animes = animes;
+		this.done = [];
+		this.watching = [];
+		this.unseen = [];
+		for(var i in this.animes){
+			var anime = this.animes[i];
+			if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+				this.done.push(anime);
+			}else{
+				if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+					this.watching.push(anime);
+				}else{
+					this.unseen.push(anime);
+				}
 			}
-		}, err => this.error("Connection failed! Please try again later. Discription: " + err));
-	}
-
-	authenticateSessionID(sessionid: string){
-		this.dataService.login(this.sessionid, this.username, this.password).subscribe(res => {
-			if(!res.error){
-				chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid}, function(){});
-				chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid}, function(){});
-				chrome.storage.local.set({"expires": res.data.expires}, function() {});
-				this.expires = new Date(res.data.expires);
-				chrome.storage.local.set({"auth": res.data.auth}, function() {});
-				this.auth = res.data.auth;
-				this.refreshQueue();
-			}
-		}, err => this.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
+		}
 	}
 
 	getLocalQueue(){
 		var ang = this;
+		this.loading(true);
 		chrome.storage.local.get(["animes"], function(result) {
 			ang.ngZone.run(() => {
-				ang.animes = result.animes;
-				for(var i in ang.animes){
-					var anime = ang.animes[i];
-					if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-						ang.done.push(anime);
-					}else{
-						if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-							ang.watching.push(anime);
-						}else{
-							ang.unseen.push(anime);
-						}
-					}
-				}
+				ang.addToQueue(result.animes);
+				ang.loading(false);
 			});
 		});
 	}
 
 	refreshQueue(){
 		this.loading(true);
-		this.dataService.getQueue(this.sessionid).subscribe(res => {
-			this.animes = res;
-			this.done = [];
-			this.watching = [];
-			this.unseen = [];
+		this.dataService.getQueue(this.settings['sessionid']).subscribe(res => {
 			chrome.storage.local.set({"animes": this.animes}, function() {});
-			for(var i in this.animes){
-				var anime = this.animes[i];
-				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-					this.done.push(anime);
-				}else{
-					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-						this.watching.push(anime);
-					}else{
-						this.unseen.push(anime);
-					}
-				}
-			}
-			this.loading(false);
+			this.addToQueue(res);
 			(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
+			this.loading(false);
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}
 
-	clearSearch(){
-		this.searchTerm = "";
-	}
-
-	onSelect(anime: Array<any>){
+	onSelectEventHandler(anime: Array<any>){
 		this.selectedAnime = anime;
 		(<HTMLElement>document.getElementById("selectedAnime")).hidden = false;
-	}
-
-	completeSelectedAnimeEpisode(anime: Array<any>){
-		this.dataService.completeEpisode(anime['most_likely_media']['media_id'], anime['most_likely_media']['duration']).subscribe(res => {
-			this.refreshQueue();
-		});
 	}
 
 	loading(state: boolean){
 		(<HTMLElement>document.getElementById("spinner")).hidden = !state;
 		if((<HTMLElement>document.getElementById("content").children[4]).hidden){
-			(<HTMLElement>document.getElementById("refresh")).hidden = state;
+			(<HTMLElement>document.getElementById("refreshbtn")).hidden = state;
 		}
 	}
 

@@ -1,4 +1,4 @@
-#warning{
+.errorContainer{
 	position: absolute;
 	top: 50px;
 	left: 0px;
@@ -9,7 +9,7 @@
 	z-index: 1000;
 }
 
-.warningTriangle{
+.errorContainer .warningTriangle{
 	position: absolute;
 	top: 5px;
 	left: 0;
@@ -19,7 +19,7 @@
 	margin: auto;
 }
 
-.closeError{
+.errorContainer .close{
 	position: absolute;
 	top: 5px;
 	right: 10px;
@@ -35,7 +35,7 @@
 	z-index: 1100;
 }
 
-.message{
+.errorContainer .message{
 	position: relative;
 	width: 415px;
 }

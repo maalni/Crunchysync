@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -10,10 +10,9 @@ export class SettingsComponent implements OnInit {
 
 	@Input() sessionid: string = "";
 	@Input() deviceid: string = "";
-	username: string = "";
-	password: string = "";
-	expires: Date = new Date();
-	auth: string = "";
+	@Input() username: string = "";
+	@Input() password: string = "";
+	@Output() onSettingsLoaded = new EventEmitter<any>();
 	version: string = chrome.runtime.getManifest().version;
 
   constructor() { }
@@ -24,11 +23,12 @@ export class SettingsComponent implements OnInit {
 
 	getSettings(){
 		var ang = this;
-		chrome.storage.local.get(["username"], function(result) {
+		chrome.storage.local.get(["username", "password", "deviceid", "sessionid"], function(result) {
 			ang.username = result.username;
-		});
-		chrome.storage.local.get(["password"], function(result) {
 			ang.password = result.password;
+			ang.deviceid = result.deviceid;
+			ang.sessionid = result.sessionid;
+			ang.onSettingsLoaded.emit({"username": result.username, "password": result.password, "deviceid": result.deviceid, "sessionid": result.sessionid});
 		});
 	}
 

@@ -1,4 +1,4 @@
-.selectedAnime{
+.selectedAnimeContainer .selectedAnime{
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -7,7 +7,7 @@
 	z-index: 999;
 }
 
-.selectedAnimePropertys{
+.selectedAnimeContainer .selectedAnime .animePropertys{
 	list-style-type: none;
 	margin-bottom: 20px;
 	padding-left: 20px;
@@ -15,7 +15,7 @@
 	color: var(--tertiary-color);
 }
 
-.selectedAnimePremium{
+.selectedAnimeContainer .selectedAnime .premium{
 	position: absolute;
 	top: 10px;
 	left: 10px;
@@ -27,7 +27,7 @@
 	padding: 0;
 }
 
-.selectedAnimePremiumDate{
+.selectedAnimeContainer .selectedAnime .premiumDate{
 	margin-left: 30px;
 	margin-right: 5px;
 	font-size: 10pt;
@@ -35,7 +35,7 @@
 	text-align: center;
 }
 
-.selectedAnimePremiumIcon{
+.selectedAnimeContainer .selectedAnime .premiumIcon{
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -45,12 +45,12 @@
 	padding: 0;
 }
 
-.selectedAnimePicture{
+.selectedAnimeContainer .selectedAnime .preview{
 	top: 5px;
 	width: 100%;
 }
 
-.selectedAnimePlaytime{
+.selectedAnimeContainer .selectedAnime .playtime{
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -61,21 +61,21 @@
 	border-bottom-left-radius: 5px;
 }
 
-.selectedAnimeName{
+.selectedAnimeContainer .selectedAnime .animeName{
 	font-size: 12pt;
 	font-weight: bold;
 }
 
-.selectedEpisodeName{
+.selectedAnimeContainer .selectedAnime .episodeName{
 	font-size: 14pt;
 	font-weight: bold;
 }
 
-.selectedEpisodeNumber{
+.selectedAnimeContainer .selectedAnime .episodeNumber{
 	font-size: 11pt;
 }
 
-.closeSelectedAnime{
+.selectedAnimeContainer .selectedAnime .closebtn{
 	position: absolute;
 	top: 10px;
 	right: 10px;
@@ -92,7 +92,7 @@
 	padding: 0;
 }
 
-.openSelectedEpisode{
+.selectedAnimeContainer .selectedAnime .openEpisodebtn{
 	position: absolute;
 	top: 190px;
 	right: 10px;
@@ -105,11 +105,11 @@
 	padding: 4px;
 }
 
-.openSelectedEpisode img{
+.selectedAnimeContainer .selectedAnime .openEpisodebtn img{
 	width: 100%;
 }
 
-.openSelectedAnime{
+.selectedAnimeContainer .selectedAnime .openAnimebtn{
 	position: absolute;
 	top: 10px;
 	right: 35px;
@@ -121,11 +121,11 @@
 	padding: 4px;
 }
 
-.openSelectedAnime img{
+.selectedAnimeContainer .selectedAnime .openAnimebtn img{
 	width: 100%;
 }
 
-.completeSelectedEpisode{
+.selectedAnimeContainer .selectedAnime .completeEpisodebtn{
 	position: absolute;
 	top: 10px;
 	right: 60px;
@@ -139,11 +139,11 @@
 	padding: 4px;
 }
 
-.completeSelectedEpisode img{
+.selectedAnimeContainer .selectedAnime .completeEpisodebtn img{
 	width: 100%;
 }
 
-.closeAnime{
+.selectedAnimeContainer .close{
 	position: fixed;
 	top: 0;
 	left: 0;

@@ -185,6 +185,12 @@ function addAnimesToDom(animes){
 		var date = new Date(anime.most_likely_media.free_available_time);
 		var options = { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
 		var formattedDate = date.toLocaleDateString(undefined, options);
+		if(anime.most_likely_media.playhead === undefined){
+			anime.most_likely_media.playhead = 0;
+		}
+		if(anime.most_likely_media.episode_number === "" || anime.most_likely_media.episode_number === undefined){
+			anime.most_likely_media.episode_number = "N/A";
+		}
 		var element = "<li name="+anime.most_likely_media.name+"><a href="+anime.most_likely_media.url+"><img src="+anime.most_likely_media.screenshot_image.fwide_url+">";
 		if(anime.most_likely_media.premium_only){
 			element += "<span class='premiumDate'>"+formattedDate.replace(new RegExp(",", 'g'), "")+"</span><img class='premiumIcon' src="+premiumiconsrc+">";

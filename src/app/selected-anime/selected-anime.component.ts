@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
 export class SelectedAnimeComponent {
 
 	@Input() selectedAnime: any;
-	@Output() onComplete = new EventEmitter<Array<any>>();
+	@Output() onComplete = new EventEmitter<any>();
 
 	constructor(private dataService: DataService) {}
 
@@ -21,20 +21,22 @@ export class SelectedAnimeComponent {
 		return formattedDate.replace(new RegExp(",", 'g'), "");
 	}
 
-	openSelectedEpisode(){
+	openEpisode(){
 		window.open(this.selectedAnime.most_likely_media.url);
 	}
 
-	openSelectedAnime(){
+	openAnime(){
 		window.open(this.selectedAnime.series.url);
 	}
 
-	closeSelectedAnime(){
+	closeAnime(){
 		(<HTMLElement>document.getElementById("selectedAnime")).hidden = true;
 	}
 
-	completeSelectedEpisode(){
-		this.closeSelectedAnime();
-		this.onComplete.emit(this.selectedAnime);
+	completeEpisode(){
+		this.closeAnime();
+		this.dataService.completeEpisode(this.selectedAnime['most_likely_media']['media_id'], this.selectedAnime['most_likely_media']['duration']).subscribe(res => {
+			this.onComplete.emit();
+		});
 	}
 }

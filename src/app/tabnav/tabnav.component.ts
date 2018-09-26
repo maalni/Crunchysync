@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
 @Component({
@@ -29,31 +29,22 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 	]
 })
 
-export class TabnavComponent implements OnInit {
+export class TabnavComponent {
 
 	@Input() totalWatching;
 	@Input() totalUnseen;
 	@Input() totalDone;
 	@Input() totalAnimes;
 	currentlyShown: number = 0;
-	selected: Array<string> = new Array();
-	watchingSelected: string = "false";
-	unseenSelected: string = "false";
-	doneSelected: string = "false";
-	allSelected: string = "false";
-	settingsSelected: string = "false";
-
-  ngOnInit() {
-		this.showSelected(0);
-  }
+	selected: Array<string> = new Array("true", "false", "false", "false", "false");
 
 	showSelected(selected: number){
 		if(selected >=0 && selected <= 4){
-			if((<HTMLElement>document.getElementById("spinner")).hidden && !(<HTMLElement>document.getElementById("refresh")).hidden && selected == 4){
-				(<HTMLElement>document.getElementById("refresh")).hidden = true;
+			if((<HTMLElement>document.getElementById("spinner")).hidden && !(<HTMLElement>document.getElementById("refreshbtn")).hidden && selected == 4){
+				(<HTMLElement>document.getElementById("refreshbtn")).hidden = true;
 			}
-			if((<HTMLElement>document.getElementById("spinner")).hidden && (<HTMLElement>document.getElementById("refresh")).hidden && selected != 4){
-				(<HTMLElement>document.getElementById("refresh")).hidden = false;
+			if((<HTMLElement>document.getElementById("spinner")).hidden && (<HTMLElement>document.getElementById("refreshbtn")).hidden && selected != 4){
+				(<HTMLElement>document.getElementById("refreshbtn")).hidden = false;
 			}
 			(<HTMLElement>document.getElementById("content").children[this.currentlyShown]).hidden = true;
 			this.selected[this.currentlyShown] = "false";

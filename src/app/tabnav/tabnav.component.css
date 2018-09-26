@@ -1,4 +1,4 @@
-nav{
+.navContainer{
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -8,7 +8,7 @@ nav{
 	z-index: 900;
 }
 
-nav button{
+.navContainer button{
 	position: absolute;
 	height: 50px;
 	color: var(--primary-color);
@@ -16,11 +16,11 @@ nav button{
 	border: none;
 }
 
-nav button:hover{
+.navContainer button:hover{
 	background-color: rgba(0, 0, 0, 0.02);
 }
 
-nav button:focus{
+.navContainer button:focus{
 	outline: none;
 }
 

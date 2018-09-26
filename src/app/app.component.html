@@ -1,25 +1,13 @@
-<app-tabnav id="nav" [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length"></app-tabnav>
+<app-tabnav [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length"></app-tabnav>
 <app-error id="error" [errorMessage]="errorMessage" hidden></app-error>
-<div id="cachedwarning" class="cachedwarning">Cached</div>
+<div id="cachedwarning">Cached</div>
 <div id="content">
-	<div id="watching" hidden>
-		<app-anime *ngFor="let anime of watching" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
-	</div>
-	<div id="unseen" hidden>
-		<app-anime *ngFor="let anime of unseen" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
-	</div>
-	<div id="done" hidden>
-		<app-anime *ngFor="let anime of done" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
-	</div>
-	<div id="all" hidden>
-		<input id="search" class="search" placeholder="Suchen..." [(ngModel)]="searchTerm">
-		<button class="clearsearch" (click)="clearSearch()">🞩</button>
-		<app-anime *ngFor="let anime of animes | filter:searchTerm" [anime]="anime" (onSelect)="onSelect($event)"></app-anime>
-	</div>
-	<div id="settings" hidden>
-		<app-settings [sessionid]="sessionid" [deviceid]="deviceid"></app-settings>
-	</div>
+	<app-category [animes]="watching" (onSelect)="onSelectEventHandler($event)"></app-category>
+	<app-category [animes]="unseen" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
+	<app-category [animes]="done" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
+	<app-category [animes]="animes" (onSelect)="onSelectEventHandler($event)" search="true" hidden></app-category>
+	<app-settings id="settings" [sessionid]="settings['sessionid']" [deviceid]="settings['deviceid']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" hidden></app-settings>
 	<app-spinner id="spinner"></app-spinner>
 </div>
-<button id="refresh" (click)="refreshQueue()" hidden><img src="../assets/icons/refresh.svg"><span>Refresh</span></button>
-<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime" (onComplete)="completeSelectedAnimeEpisode($event)" hidden></app-selected-anime>
+<button id="refreshbtn" (click)="refreshQueue()" hidden><img src="../assets/icons/refresh.svg"><span>Refresh</span></button>
+<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime" (onComplete)="refreshQueue()" hidden></app-selected-anime>

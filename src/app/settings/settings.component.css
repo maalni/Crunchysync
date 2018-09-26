@@ -1,4 +1,4 @@
-.settingstitle{
+.settingsContainer .settingstitle{
 	position: absolute;
 	top: 10px;
 	left: 10px;
@@ -7,14 +7,14 @@
 	font-weight: bold;
 }
 
-.version{
+.settingsContainer .version{
 	position: absolute;
 	top: 22px;
 	left: 110px;
 	font-size: 11pt;
 }
 
-.username{
+.settingsContainer .username{
 	position: absolute;
 	top: 50px;
 	left: 10px;
@@ -25,7 +25,7 @@
 	border: none;
 }
 
-.password{
+.settingsContainer .password{
 	position: absolute;
 	top: 90px;
 	left: 10px;
@@ -36,7 +36,7 @@
 	border: none;
 }
 
-.sessionid{
+.settingsContainer .sessionid{
 	position: absolute;
 	top: 130px;
 	left: 10px;
@@ -47,7 +47,7 @@
 	border: none;
 }
 
-.deviceid{
+.settingsContainer .deviceid{
 	position: absolute;
 	top: 170px;
 	left: 10px;
@@ -58,29 +58,29 @@
 	border: none;
 }
 
-.reload{
+.settingsContainer .reloadbtn{
 	position: absolute;
-	bottom: 10px;
-	right: 5px;
-	width: 136px;
-	height: 30px;
+	top: 210px;
+	left: 220px;
+	width: 130px;
+	height: 32px;
 	border-radius: 5px;
 	border: none;
 }
 
-.save{
+.settingsContainer .savebtn{
 	position: absolute;
 	top: 210px;
-	left: 354px;
-	width: 86px;
-	height: 30px;
+	left: 360px;
+	width: 80px;
+	height: 32px;
 	border-radius: 5px;
 	color: var(--secondary-color);
 	background-color: var(--primary-color);
 	border: none;
 }
 
-.visit{
+.settingsContainer .visitbtn{
 	position: absolute;
 	top: 130px;
 	right: 5px;
@@ -93,7 +93,7 @@
 	border: none;
 }
 
-.visit img{
+.settingsContainer .visitbtn img{
 	width: 100%;
 	height: 100%;
 }

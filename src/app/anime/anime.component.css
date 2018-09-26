@@ -1,4 +1,4 @@
-.container{
+.animeContainer{
 	position: relative;
 	left: 10px;
 	width: 430px;
@@ -9,15 +9,15 @@
 	overflow: hidden;
 }
 
-.container:hover{
+.animeContainer:hover{
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
-.container:hover .openEpisode{
+.animeContainer:hover .openEpisodebtn{
 	visibility:visible;
 }
 
-.openEpisode{
+.animeContainer .openEpisodebtn{
 	position: absolute;
 	top: 20px;
 	left: 55px;
@@ -30,7 +30,11 @@
 	visibility: hidden;
 }
 
-.preview{
+.animeContainer .openEpisodebtn:hover{
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.animeContainer .preview{
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -40,7 +44,7 @@
 	border-bottom-left-radius: 5px;
 }
 
-.premium{
+.animeContainer .premium{
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -49,7 +53,7 @@
 	z-index: 100;
 }
 
-.playtime{
+.animeContainer .playtime{
 	position: absolute;
 	top: 85px;
 	left: 0px;
@@ -60,7 +64,7 @@
 	border-bottom-left-radius: 5px;
 }
 
-.animepropertys{
+.animeContainer .animePropertys{
 	position: absolute;
 	top: 10px;
 	left: 130px;
@@ -70,7 +74,7 @@
 	color: var(--tertiary-color);
 }
 
-.animename{
+.animeContainer .animeName{
 	top: 10px;
 	width: calc(100% - 175px);
 	height: 18px;
@@ -78,7 +82,7 @@
 	overflow: hidden;
 }
 
-.episodename{
+.animeContainer .episodeName{
 	top: 30px;
 	width: calc(100% - 175px);
 	height: 40px;
@@ -86,24 +90,24 @@
 	overflow: hidden;
 }
 
-.episodenumber{
+.animeContainer .episodeNumber{
 	width: calc(100% - 175px);
 	height: 16px;
 	font-size: 10pt;
 	overflow: hidden;
 }
 
-.animepropertys li{
+.animeContainer .animePropertys li{
 	height: 20px;
 	overflow: hidden;
 }
 
-progress::-webkit-progress-bar {
+.animeContainer progress::-webkit-progress-bar {
 	background-color: rgba(0, 0, 0, 0);
 	border-bottom-left-radius: 5px;
 }
 
-progress::-webkit-progress-value {
+.animeContainer progress::-webkit-progress-value {
   background-color: var(--primary-color);
 	border-bottom-left-radius: 5px;
 }

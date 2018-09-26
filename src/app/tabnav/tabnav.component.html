@@ -1,4 +1,4 @@
-<nav>
+<nav class="navContainer">
 	<button class="watchingbtn" (click)="showSelected(0)" [@isSelected]="selected[0]">Watching<span class="animeCount" [@showTotal]="selected[0]">{{totalWatching}}</span></button>
 	<button class="unseenbtn" (click)="showSelected(1)" [@isSelected]="selected[1]">Unseen<span class="animeCount" [@showTotal]="selected[1]">{{totalUnseen}}</span></button>
 	<button class="donebtn" (click)="showSelected(2)" [@isSelected]="selected[2]">Done<span class="animeCount" [@showTotal]="selected[2]">{{totalDone}}</span></button>

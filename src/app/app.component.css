@@ -17,7 +17,7 @@
 	font-size: 15pt;
 }
 
-.clearsearch{
+.clearsearchbtn{
 	position: absolute;
 	right: 5px;
 	width: 37px;
@@ -31,7 +31,7 @@
 	font-weight: bold;
 }
 
-.cachedwarning{
+#cachedwarning{
 	margin-top: 50px;
 	margin-bottom: -50px;
 	width: 100%;
@@ -42,7 +42,7 @@
 	font-size: 10pt;
 }
 
-#refresh{
+#refreshbtn{
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
@@ -54,7 +54,7 @@
 	background-color: var(--primary-color);
 }
 
-#refresh img{
+#refreshbtn img{
 	position: absolute;
 	left: 10px;
 	top: 0px;
@@ -64,7 +64,7 @@
 	height: 30px;
 }
 
-#refresh span{
+#refreshbtn span{
 	position: absolute;
 	left: 40px;
 	top: 0px;
