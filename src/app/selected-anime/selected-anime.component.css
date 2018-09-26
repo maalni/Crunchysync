@@ -92,6 +92,10 @@
 	padding: 0;
 }
 
+.selectedAnimeContainer .selectedAnime .closebtn:hover{
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
 .selectedAnimeContainer .selectedAnime .openEpisodebtn{
 	position: absolute;
 	top: 190px;
@@ -103,6 +107,10 @@
 	border: none;
 	border-radius: 25px;
 	padding: 4px;
+}
+
+.selectedAnimeContainer .selectedAnime .openEpisodebtn:hover{
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .selectedAnimeContainer .selectedAnime .openEpisodebtn img{
@@ -119,6 +127,10 @@
 	color: var(--secondary-color);
 	border: none;
 	padding: 4px;
+}
+
+.selectedAnimeContainer .selectedAnime .openAnimebtn:hover{
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .selectedAnimeContainer .selectedAnime .openAnimebtn img{
@@ -138,6 +150,11 @@
 	border-bottom-left-radius: 5px;
 	padding: 4px;
 }
+
+.selectedAnimeContainer .selectedAnime .completeEpisodebtn:hover{
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
 
 .selectedAnimeContainer .selectedAnime .completeEpisodebtn img{
 	width: 100%;

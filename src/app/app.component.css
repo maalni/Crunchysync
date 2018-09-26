@@ -54,6 +54,10 @@
 	background-color: var(--primary-color);
 }
 
+#refreshbtn:hover{
+	background-color: rgba(247, 140, 37, 0.8);
+}
+
 #refreshbtn img{
 	position: absolute;
 	left: 10px;

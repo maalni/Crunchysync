@@ -68,6 +68,10 @@
 	border: none;
 }
 
+.settingsContainer .reloadbtn:hover{
+	background-color: rgba(0, 0, 0, 0.13);
+}
+
 .settingsContainer .savebtn{
 	position: absolute;
 	top: 210px;
@@ -78,6 +82,10 @@
 	color: var(--secondary-color);
 	background-color: var(--primary-color);
 	border: none;
+}
+
+.settingsContainer .savebtn:hover{
+	background-color: rgba(247, 140, 37, 0.8);
 }
 
 .settingsContainer .visitbtn{
@@ -91,6 +99,10 @@
 	font-size: 20pt;
 	color: var(--primary-color);
 	border: none;
+}
+
+.settingsContainer .visitbtn:hover{
+	background-color: rgba(0, 0, 0, 0.03);
 }
 
 .settingsContainer .visitbtn img{
