@@ -25,6 +25,7 @@ export class AppComponent {
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
 	ngOnInit() {
+		this.getSettings();
 		this.loading(true);
 		this.getLocalQueue();
 		this.authenticate();
@@ -51,7 +52,6 @@ export class AppComponent {
 
 	authenticate(){
 		var ang = this;
-		this.getSettings();
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
 				ang.ngZone.run(() => {
