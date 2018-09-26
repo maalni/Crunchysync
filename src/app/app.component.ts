@@ -139,6 +139,7 @@ export class AppComponent {
 				}
 			}
 			this.loading(false);
+			(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}
 

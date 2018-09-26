@@ -1,6 +1,6 @@
 {
   "name":"Crunchysync",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "manifest_version": 2,
   "description":"Sync the Crunchyroll queue properly",
   "browser_action":{
@@ -20,8 +20,8 @@
     "tabs",
     "activeTab",
     "storage",
-    "http://*/",
-    "https://*/",
+    "http://*.Crunchyroll.com/home/queue*",
+    "https://*.Crunchyroll.com/home/queue*",
 		"cookies"
   ]
 }

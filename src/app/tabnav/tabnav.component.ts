@@ -15,12 +15,25 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 			})),
 			transition('close => open', animate('100ms ease-in')),
 			transition('open => close', animate('100ms ease-in')),
+		]),
+		trigger('showTotal', [
+			state('false', style({
+				display: "none"
+			})),
+			state('true', style({
+				display: "inline"
+			})),
+			transition('close => open', animate('100ms ease-in')),
+			transition('open => close', animate('100ms ease-in')),
 		])
 	]
 })
 
 export class TabnavComponent implements OnInit {
 
+	@Input() totalWatching;
+	@Input() totalUnseen;
+	@Input() totalDone;
 	@Input() totalAnimes;
 	currentlyShown: number = 0;
 	selected: Array<string> = new Array();
@@ -31,11 +44,6 @@ export class TabnavComponent implements OnInit {
 	settingsSelected: string = "false";
 
   ngOnInit() {
-		(<HTMLElement>document.getElementById("content").children[0]).hidden = true;
-		(<HTMLElement>document.getElementById("content").children[1]).hidden = true;
-		(<HTMLElement>document.getElementById("content").children[2]).hidden = true;
-		(<HTMLElement>document.getElementById("content").children[3]).hidden = true;
-		(<HTMLElement>document.getElementById("content").children[4]).hidden = true;
 		this.showSelected(0);
   }
 

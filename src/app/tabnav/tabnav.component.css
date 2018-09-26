@@ -12,12 +12,12 @@ nav button{
 	position: absolute;
 	height: 50px;
 	color: var(--primary-color);
-	background-color: var(--secondary-color);
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
 }
 
 nav button:hover{
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.02);
 }
 
 nav button:focus{
@@ -54,10 +54,12 @@ nav button:focus{
 	width: 50px;
 }
 
-.totalAnimeCount{
+.animeCount{
 	padding-left: 5px;
 	padding-right: 5px;
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
 	border-radius: 25px;
+	margin-left: 2px;
+	display: none;
 }
