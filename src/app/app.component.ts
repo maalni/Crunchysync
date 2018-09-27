@@ -34,7 +34,7 @@ export class AppComponent {
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
 				ang.ngZone.run(() => {
-					sessionid = cookie.value;
+					ang.settings['sessionid'] = cookie.value;
 					document.dispatchEvent(ang.onAuthenticatedEvent);
 				});
 			}else{
@@ -104,9 +104,13 @@ export class AppComponent {
 	refreshQueue(){
 		this.loading(true);
 		this.dataService.getQueue(this.settings['sessionid']).subscribe(res => {
-			chrome.storage.local.set({"animes": this.animes}, function() {});
-			this.addToQueue(res);
-			(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
+			if(!res.error){
+				chrome.storage.local.set({"animes": res.data}, function() {});
+				this.addToQueue(res.data);
+				(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
+			}else{
+				this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
+			}
 			this.loading(false);
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}

@@ -1,6 +1,6 @@
 {
   "name":"Crunchysync",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "manifest_version": 2,
   "description":"Sync the Crunchyroll queue properly",
   "browser_action":{
