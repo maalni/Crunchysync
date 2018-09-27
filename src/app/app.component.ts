@@ -34,7 +34,7 @@ export class AppComponent {
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
 				ang.ngZone.run(() => {
-					ang.settings['sessionid'] = cookie.value;
+					sessionid = cookie.value;
 					document.dispatchEvent(ang.onAuthenticatedEvent);
 				});
 			}else{
@@ -44,12 +44,14 @@ export class AppComponent {
 							ang.dataService.getSessionID(deviceid).subscribe(res => {
 								if(!res.error){
 									chrome.storage.local.set({"sessionid": res.data.session_id, "deviceid": res.data.device_id}, function() {});
-									ang.settings['sessionid'] = res.data.session_id;
-									ang.settings['deviceid'] = res.data.device_id;
+									sessionid = res.data.session_id;
+									deviceid = res.data.device_id;
 									ang.dataService.login(res.data.session_id, username, password).subscribe(res => {
 										if(!res.error){
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": ang.settings['sessionid']}, function(){});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": ang.settings['sessionid']}, function(){});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": deviceid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
+											ang.settings['sessionid'] = sessionid;
+											ang.settings['deviceid'] = deviceid;
 											document.dispatchEvent(ang.onAuthenticatedEvent);
 										}
 									}, err => this.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
@@ -68,19 +70,21 @@ export class AppComponent {
 	}
 
 	addToQueue(animes: Array<any>){
-		this.animes = animes;
-		this.done = [];
-		this.watching = [];
-		this.unseen = [];
-		for(var i in this.animes){
-			var anime = this.animes[i];
-			if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-				this.done.push(anime);
-			}else{
-				if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-					this.watching.push(anime);
+		if(animes !== undefined){
+			this.animes = animes;
+			this.done = [];
+			this.watching = [];
+			this.unseen = [];
+			for(var i in this.animes){
+				var anime = this.animes[i];
+				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+					this.done.push(anime);
 				}else{
-					this.unseen.push(anime);
+					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+						this.watching.push(anime);
+					}else{
+						this.unseen.push(anime);
+					}
 				}
 			}
 		}

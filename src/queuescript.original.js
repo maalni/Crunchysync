@@ -1,8 +1,6 @@
 var manifestData = chrome.runtime.getManifest();
 var currentlySelected = 0;
 
-console.log("----------Crunchysync Contentscript v" + manifestData.version + "----------");
-console.log("Adding custom styling...");
 document.getElementById("sidebar_elements").innerHTML = "";
 document.getElementById("sortable").innerHTML =
 	"<style>"+
@@ -159,7 +157,6 @@ document.getElementById("sortable").innerHTML =
 		"}"+
 	"</style><div id='cachedwarning'>Cached</div><div id='watching'></div><div id='unseen' hidden></div><div id='done' hidden></div><div id='all' hidden></div><button id='refreshbtn' hidden><img src="+chrome.runtime.getURL("assets/icons/refresh.svg")+"><span>Refresh</span></button>";
 document.getElementsByClassName("main-tabs")[0].innerHTML = "<a id='watchingbtn' class='left selected'>Watching</a><a id='unseenbtn' class='left'>Unseen</a><a id='donebtn' class='left'>Done</a><a id='allbtn' class='left'>All</a>";
-console.log("Adding Eventlisteners...");
 document.getElementById("refreshbtn").addEventListener("click", function(){refreshQueue();});
 document.getElementById("watchingbtn").addEventListener("click", function(){changeTab(0);});
 document.getElementById("unseenbtn").addEventListener("click", function(){changeTab(1);});
@@ -168,51 +165,48 @@ document.getElementById("allbtn").addEventListener("click", function(){changeTab
 chrome.storage.local.get(["animes"], function(result) {
 	addAnimesToDom(result.animes);
 	refreshQueue();
-	console.log("----------Crunchysync Contentscript v" + manifestData.version + "----------");
 });
 
 function addAnimesToDom(animes){
-	console.log("Loading Queue...");
-	var t0 = performance.now();
-	var premiumiconsrc = chrome.runtime.getURL("assets/icons/premium.png");
-	var playiconsrc = chrome.runtime.getURL("assets/icons/openSelectedEpisode.svg");
-	var all = [];
-	var done = [];
-	var watching = [];
-	var unseen = [];
-	for(var i in animes){
-		var anime = animes[i];
-		var date = new Date(anime.most_likely_media.free_available_time);
-		var options = { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-		var formattedDate = date.toLocaleDateString(undefined, options);
-		if(anime.most_likely_media.playhead === undefined){
-			anime.most_likely_media.playhead = 0;
-		}
-		if(anime.most_likely_media.episode_number === "" || anime.most_likely_media.episode_number === undefined){
-			anime.most_likely_media.episode_number = "N/A";
-		}
-		var element = "<li name="+anime.most_likely_media.name+"><a href="+anime.most_likely_media.url+"><img src="+anime.most_likely_media.screenshot_image.fwide_url+">";
-		if(anime.most_likely_media.premium_only){
-			element += "<span class='premiumDate'>"+formattedDate.replace(new RegExp(",", 'g'), "")+"</span><img class='premiumIcon' src="+premiumiconsrc+">";
-		}
-		element += "<img class='playbutton' src="+playiconsrc+"><progress value="+anime.most_likely_media.playhead+" max="+anime.most_likely_media.duration+"></progress><div><span class='animeTitle'>"+anime.series.name+"</span><span class='episodeName'>"+anime.most_likely_media.name + "</span><span class='episodeNumber'> Episode Nr."+anime.most_likely_media.episode_number+"</span><span class='description'>"+anime.most_likely_media.description+"</span></div></a></li>";
-		all.push(element);
-		if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-			done.push(element);
-		}else{
-			if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-				watching.push(element);
+	if(animes !== undefined){
+		var premiumiconsrc = chrome.runtime.getURL("assets/icons/premium.png");
+		var playiconsrc = chrome.runtime.getURL("assets/icons/openSelectedEpisode.svg");
+		var all = [];
+		var done = [];
+		var watching = [];
+		var unseen = [];
+		for(var i in animes){
+			var anime = animes[i];
+			var date = new Date(anime.most_likely_media.free_available_time);
+			var options = { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+			var formattedDate = date.toLocaleDateString(undefined, options);
+			if(anime.most_likely_media.playhead === undefined){
+				anime.most_likely_media.playhead = 0;
+			}
+			if(anime.most_likely_media.episode_number === "" || anime.most_likely_media.episode_number === undefined){
+				anime.most_likely_media.episode_number = "N/A";
+			}
+			var element = "<li name="+anime.most_likely_media.name+"><a href="+anime.most_likely_media.url+"><img src="+anime.most_likely_media.screenshot_image.fwide_url+">";
+			if(anime.most_likely_media.premium_only){
+				element += "<span class='premiumDate'>"+formattedDate.replace(new RegExp(",", 'g'), "")+"</span><img class='premiumIcon' src="+premiumiconsrc+">";
+			}
+			element += "<img class='playbutton' src="+playiconsrc+"><progress value="+anime.most_likely_media.playhead+" max="+anime.most_likely_media.duration+"></progress><div><span class='animeTitle'>"+anime.series.name+"</span><span class='episodeName'>"+anime.most_likely_media.name + "</span><span class='episodeNumber'> Episode Nr."+anime.most_likely_media.episode_number+"</span><span class='description'>"+anime.most_likely_media.description+"</span></div></a></li>";
+			all.push(element);
+			if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+				done.push(element);
 			}else{
-				unseen.push(element);
+				if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+					watching.push(element);
+				}else{
+					unseen.push(element);
+				}
 			}
 		}
+		document.getElementById("all").innerHTML = all.join("");
+		document.getElementById("done").innerHTML = done.join("");
+		document.getElementById("watching").innerHTML = watching.join("");
+		document.getElementById("unseen").innerHTML = unseen.join("");
 	}
-	document.getElementById("all").innerHTML = all.join("");
-	document.getElementById("done").innerHTML = done.join("");
-	document.getElementById("watching").innerHTML = watching.join("");
-	document.getElementById("unseen").innerHTML = unseen.join("");
-	var t1 = performance.now();
-	console.log("Queue loaded! ("+animes.length+" items, "+(t1-t0)+"ms)");
 }
 
 function changeTab(selected){
@@ -224,7 +218,6 @@ function changeTab(selected){
 }
 
 function refreshQueue(){
-	console.log("Refreshing queue...");
 	document.getElementById("refreshbtn").hidden = true;
 	chrome.runtime.sendMessage({data: "getCrunchyrollSessionCookie"}, function(response){
 		if(response.sessionid != null){
@@ -239,7 +232,6 @@ function refreshQueue(){
         	addAnimesToDom(JSON.parse(xmlHttp.responseText).data);
 					document.getElementById("cachedwarning").hidden = true;
 					document.getElementById("refreshbtn").hidden = false;
-					console.log("Queue refreshed!");
 				}
 	    }
 	    xmlHttp.open("GET", apiurl, true);
