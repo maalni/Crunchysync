@@ -71,6 +71,7 @@ export class AppComponent {
 
 	addToQueue(animes: Array<any>){
 		if(animes !== undefined){
+			animes.sort((a,b) => a.series.name.localeCompare(b.series.name));
 			this.animes = animes;
 			this.done = [];
 			this.watching = [];

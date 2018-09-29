@@ -171,6 +171,7 @@ function addAnimesToDom(animes){
 	if(animes !== undefined){
 		var premiumiconsrc = chrome.runtime.getURL("assets/icons/premium.png");
 		var playiconsrc = chrome.runtime.getURL("assets/icons/openSelectedEpisode.svg");
+		animes.sort((comp1, comp2) => comp1['series']['name'].localeCompare(comp2['series']['name']));
 		var all = [];
 		var done = [];
 		var watching = [];

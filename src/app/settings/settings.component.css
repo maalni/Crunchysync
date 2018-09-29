@@ -94,15 +94,13 @@
 	right: 5px;
 	width: 32px;
 	height: 32px;
-	border-radius: 5px;
-	background-color: rgba(0, 0, 0, 0);
-	font-size: 20pt;
-	color: var(--primary-color);
+	border-radius: 16px;
+	background-color: var(--primary-color);
 	border: none;
 }
 
 .settingsContainer .visitbtn:hover{
-	background-color: rgba(0, 0, 0, 0.03);
+	background-color: rgba(247, 140, 37, 0.8);
 }
 
 .settingsContainer .visitbtn img{
