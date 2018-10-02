@@ -3,7 +3,7 @@
 The credentials are stored locally, AES encrypted and are shared only with the official Crunchyroll API!
 
 ### What is Crunchysync?
-Crunchysync is an Extension for Chrome, which uses nodejs, angular, crypto-ts to access the official Crunchyroll API with your credentials or cookies.
+Crunchysync is an Extension for Chrome, which uses NodeJS and Angular to access the official Crunchyroll API with your credentials or cookies.
 It will sync your queue and will provide an easy way to navigate through or manage it.
 
 ### How do i add Crunchysync to chrome?
