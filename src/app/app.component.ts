@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { DataService } from './data.service';
+import { AES } from 'crypto-ts';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent {
 	watching: Array<any> = new Array();
 	selectedAnime: Array<any> = new Array();
 	errorMessage: string = "";
+	retry: boolean = false;
 
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
@@ -26,24 +28,25 @@ export class AppComponent {
 
 	onSettingsLoadedEventHandler(settings: Array<any>){
 		this.settings = settings;
-		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid']);
+		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], true);
 	}
 
-	authenticate(username: string, password: string, sessionid: string, deviceid: string){
+	authenticate(username: string, password: string, sessionid: string, deviceid: string, useCachedSessionID: boolean){
 		var ang = this;
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
 				ang.ngZone.run(() => {
+					chrome.storage.local.set({"sessionid": AES.encrypt(cookie.value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 					ang.settings['sessionid'] = cookie.value;
 					document.dispatchEvent(ang.onAuthenticatedEvent);
 				});
 			}else{
 				ang.ngZone.run(() => {
-					if(sessionid === "" || sessionid === undefined){
+					if((sessionid === "" || sessionid === undefined) && !useCachedSessionID){
 						if(username != "" && password != ""){
 							ang.dataService.getSessionID(deviceid).subscribe(res => {
 								if(!res.error){
-									chrome.storage.local.set({"sessionid": res.data.session_id, "deviceid": res.data.device_id}, function() {});
+									chrome.storage.local.set({"sessionid": AES.encrypt(res.data.session_id, "5HR*98g5a699^9P#f7cz").toString(), "deviceid": AES.encrypt(res.data.device_id, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 									sessionid = res.data.session_id;
 									deviceid = res.data.device_id;
 									ang.dataService.login(res.data.session_id, username, password).subscribe(res => {
@@ -88,6 +91,10 @@ export class AppComponent {
 					}
 				}
 			}
+			if(this.watching.length > 0){
+				chrome.browserAction.setBadgeBackgroundColor({ color: [247, 140, 37, 1] });
+				chrome.browserAction.setBadgeText({text: this.watching.length+""});
+			}
 		}
 	}
 
@@ -110,7 +117,12 @@ export class AppComponent {
 				this.addToQueue(res.data);
 				(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
 			}else{
-				this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
+				if(res.code.equals('bad_session') && !this.retry){
+					this.retry = true;
+					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], false);
+				}else{
+					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
+				}
 			}
 			this.loading(false);
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));

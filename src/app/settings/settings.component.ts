@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AES, enc } from 'crypto-ts';
 
 @Component({
   selector: 'app-settings',
@@ -24,19 +25,28 @@ export class SettingsComponent implements OnInit {
 	getSettings(){
 		var ang = this;
 		chrome.storage.local.get(["username", "password", "deviceid", "sessionid"], function(result) {
-			ang.username = result.username;
-			ang.password = result.password;
-			ang.deviceid = result.deviceid;
-			ang.sessionid = result.sessionid;
-			ang.onSettingsLoaded.emit({"username": result.username, "password": result.password, "deviceid": result.deviceid, "sessionid": result.sessionid});
+			ang.username = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+			ang.password = AES.decrypt(result.password, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+			ang.deviceid = AES.decrypt(result.deviceid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+			ang.sessionid = AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid});
 		});
 	}
 
 	saveSettings(){
-		chrome.storage.local.set({"username": (<HTMLInputElement>document.getElementById("username")).value}, function() {});
-		chrome.storage.local.set({"password": (<HTMLInputElement>document.getElementById("password")).value}, function() {});
-		chrome.storage.local.set({"sessionid": this.sessionid}, function() {});
-		chrome.storage.local.set({"deviceid": this.deviceid}, function() {});
+		document.getElementById("confirmSettingsDialog").hidden = true;
+		chrome.storage.local.set({"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+		chrome.storage.local.set({"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+		chrome.storage.local.set({"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+		chrome.storage.local.set({"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+	}
+
+	confirmSettings(){
+		if((<HTMLInputElement>document.getElementById("username")).value != "" || (<HTMLInputElement>document.getElementById("password")).value != ""){
+			document.getElementById("confirmSettingsDialog").hidden = false;
+		}else{
+			this.saveSettings();
+		}
 	}
 
 	reloadExtension(){
@@ -45,5 +55,9 @@ export class SettingsComponent implements OnInit {
 
 	visitCrunchyroll(){
 		window.open("http://www.crunchyroll.com/");
+	}
+
+	closeConfirmDialog(){
+		document.getElementById("confirmSettingsDialog").hidden = true;
 	}
 }

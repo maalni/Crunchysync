@@ -9,6 +9,7 @@
 	 --secondary-color: white;
 	 --tertiary-color: #333;
 	 --error-color: #F44336;
+	 --success-color: #4caf50;
  }
 
 *::-webkit-scrollbar {

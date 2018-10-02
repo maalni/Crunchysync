@@ -1,4 +1,11 @@
 <div class="settingsContainer">
+	<div id="confirmSettingsDialog" (click)="closeConfirmDialog()" hidden>
+		<span>Saving your password could inherit to some security risks!<br>
+			Do you want to proceed?
+		</span>
+		<button class="closeDialog" (click)="closeConfirmDialog()">No</button>
+		<button class="confirmDialog" (click)="saveSettings()">Yes</button>
+	</div>
 	<span class="settingstitle">Settings</span>
 	<span class="version">v.{{version}}</span>
 	<input id="username" class="username" placeholder="Username" value="{{username}}">
@@ -6,6 +13,6 @@
 	<input id="sessionid" class="sessionid" placeholder="Session ID" value="SessionID: {{sessionid}}" disabled>
 	<input id="deviceid" class="deviceid" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
 	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
-	<button class="savebtn" (click)="saveSettings()">Save</button>
+	<button class="savebtn" (click)="confirmSettings()">Save</button>
 	<button class="visitbtn" (click)="visitCrunchyroll()"><img src="../assets/icons/refresh.svg"></button>
 </div>
