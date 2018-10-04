@@ -18,7 +18,8 @@ build:
   script:
   - ng build --prod --build-optimizer
   only:
-  - master
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /(release v\S+\.\S+\.\S+)/
   artifacts:
     paths:
     - dist/
