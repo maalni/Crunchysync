@@ -1,2 +1,2 @@
 ## Feature Changes:
-- {+ Fixed edgecase, where the extension tried to decrypt 'undefined' +}
+- Fixed edgecase, where the extension tried to decrypt 'undefined'
