@@ -22,10 +22,6 @@ export class DataService {
 	}
 
 	getSessionID(deviceid: string): Observable<any> {
-		if(deviceid === "" || deviceid === undefined){
-			console.log(deviceid);
-			deviceid = this.generateDeviceId();
-		}
 		return this._http.post(
 			this.sessionApiUrl + "cr_start_session?"+
 			"&api_ver=1.0"+
@@ -49,16 +45,5 @@ export class DataService {
 			"&cbcallcount= 1" +
 			"&cbelapsed= 30" +
 			"&playhead=" + playhead, {}).pipe(map(result => this.result = result));
-	}
-
-	generateDeviceId() {
-    var char_set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		var device_id = "";
-		for(var i = 0; i < 32; i++){
-			device_id += char_set.charAt(Math.floor(Math.random() * char_set.length));
-		}
-		console.log(device_id);
-		console.log(device_id.length);
-    return device_id;
 	}
 }

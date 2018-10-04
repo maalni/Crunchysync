@@ -46,13 +46,12 @@ export class AppComponent {
 						if(username != "" && password != ""){
 							ang.dataService.getSessionID(deviceid).subscribe(res => {
 								if(!res.error){
-									chrome.storage.local.set({"sessionid": AES.encrypt(res.data.session_id, "5HR*98g5a699^9P#f7cz").toString(), "deviceid": AES.encrypt(res.data.device_id, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 									sessionid = res.data.session_id;
-									deviceid = res.data.device_id;
-									ang.dataService.login(res.data.session_id, username, password).subscribe(res => {
+									ang.dataService.login(sessionid, username, password).subscribe(res => {
 										if(!res.error){
+                      chrome.storage.local.set({"sessionid": AES.encrypt(sessionid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": deviceid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
 											ang.settings['sessionid'] = sessionid;
 											ang.settings['deviceid'] = deviceid;
 											document.dispatchEvent(ang.onAuthenticatedEvent);
@@ -116,15 +115,16 @@ export class AppComponent {
 				chrome.storage.local.set({"animes": res.data}, function() {});
 				this.addToQueue(res.data);
 				(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
+        this.loading(false);
 			}else{
-				if(res.code.equals('bad_session') && !this.retry){
+				if(res.code === 'bad_session' && !this.retry){
 					this.retry = true;
 					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], false);
 				}else{
 					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
+          this.loading(false);
 				}
 			}
-			this.loading(false);
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}
 

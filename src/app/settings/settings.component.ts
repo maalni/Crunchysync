@@ -25,10 +25,23 @@ export class SettingsComponent implements OnInit {
 	getSettings(){
 		var ang = this;
 		chrome.storage.local.get(["username", "password", "deviceid", "sessionid"], function(result) {
-			ang.username = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
-			ang.password = AES.decrypt(result.password, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
-			ang.deviceid = AES.decrypt(result.deviceid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
-			ang.sessionid = AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+			if(result.username !== undefined){
+        ang.username = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+      }
+			if(result.password !== undefined){
+        ang.password = AES.decrypt(result.password, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+      }
+			if(result.deviceid !== undefined){
+        ang.deviceid = AES.decrypt(result.deviceid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+        if(ang.deviceid === ""){
+          ang.deviceid = ang.generateDeviceId();
+        }
+      }else{
+        ang.deviceid = ang.generateDeviceId();
+      }
+			if(result.sessionid !== undefined){
+        ang.sessionid = AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
+      }
 			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid});
 		});
 	}
@@ -60,4 +73,14 @@ export class SettingsComponent implements OnInit {
 	closeConfirmDialog(){
 		document.getElementById("confirmSettingsDialog").hidden = true;
 	}
+
+  generateDeviceId() {
+    var char_set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var id = "";
+    for(var i = 0; i < 32; i++){
+      id += char_set.charAt(Math.floor(Math.random() * char_set.length));
+    }
+    chrome.storage.local.set({"deviceid": AES.encrypt(id, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+    return id;
+  }
 }
