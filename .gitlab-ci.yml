@@ -26,6 +26,6 @@ build:
 tag:
   stage: tag
   script:
-    - curl --request POST --header "PRIVATE-TOKEN:$apikey" --data "tag_name=v$(cat src/manifest.json | jq -r '.version')&ref=master&release_description=[crunchysync_latest.zip](https://gitlab.com/maalni/crunchysync/-/jobs/artifacts/master/download?job=build)"$'\r\n\r\n'$(cat releasenotes.txt) "https://gitlab.com/api/v4/projects/maalni%2Fcrunchysync/repository/tags"
+    - curl --request POST --header "PRIVATE-TOKEN:$apikey" --data "tag_name=v$(cat src/manifest.json | jq -r '.version')&ref=master&release_description=[crunchysync_latest.zip](https://gitlab.com/maalni/crunchysync/-/jobs/artifacts/master/download?job=build) $(cat releasenotes.txt)" "https://gitlab.com/api/v4/projects/maalni%2Fcrunchysync/repository/tags"
   only:
     - master
