@@ -1,4 +1,4 @@
 
 
-## Feature Changes:
-- Fixed edgecase, where the extension tried to decrypt 'undefined'
+## Code Changes:
+- Fixed Bug, which wouldnt log users in, if they had an cached (invalid) sessionid

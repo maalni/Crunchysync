@@ -42,7 +42,7 @@ export class AppComponent {
 				});
 			}else{
 				ang.ngZone.run(() => {
-					if((sessionid === "" || sessionid === undefined) && !useCachedSessionID){
+					if((sessionid === "" || sessionid === undefined) || !useCachedSessionID){
 						if(username != "" && password != ""){
 							ang.dataService.getSessionID(deviceid).subscribe(res => {
 								if(!res.error){
