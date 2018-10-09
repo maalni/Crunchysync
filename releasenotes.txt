@@ -1,4 +1,4 @@
 
 
 ## Code Changes:
-- Fixed Bug, which wouldnt log users in, if they had an cached (invalid) sessionid
+- Inject contentscript also to queue while using https
