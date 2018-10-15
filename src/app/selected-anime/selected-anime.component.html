@@ -14,7 +14,7 @@
 		<ul class="animePropertys">
 			<li><span class="animeName">{{selectedAnime?.series?.name}}</span></li>
 			<li><span class="episodeName">{{selectedAnime?.most_likely_media?.name}}</span></li>
-			<li><span class="episodeNumber">Episode Nr. {{selectedAnime?.most_likely_media?.episode_number}}</span><br><br></li>
+			<li><span class="episodeNumber"  *ngIf="selectedAnime?.most_likely_media?.episode_number !== ''">Episode Nr. {{selectedAnime?.most_likely_media?.episode_number}}</span><br><br></li>
 			<li><span>{{selectedAnime?.most_likely_media?.description}}</span></li>
 		</ul>
 	</div>

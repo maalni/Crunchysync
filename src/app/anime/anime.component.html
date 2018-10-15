@@ -1,11 +1,11 @@
 <div class="animeContainer" (click)="animeSelect()">
-	<img class="preview" [src]="anime?.most_likely_media?.screenshot_image?.wide_url">
+	<img class="preview" [src]="anime?.most_likely_media?.screenshot_image?.fwide_url">
 	<img class="premium" src="../../assets/icons/premium.png" *ngIf="this.anime.most_likely_media.premium_only">
 	<button class="openEpisodebtn" (click)="openEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
 	<ul class="animePropertys">
 		<li><span class="animeName">{{anime?.series?.name}}</span></li>
 		<li><span class="episodeName">{{anime?.most_likely_media?.name}}</span></li>
-		<li><span class="episodeNumber">Episode: {{anime?.most_likely_media?.episode_number}}</span></li>
+		<li><span *ngIf="anime?.most_likely_media?.episode_number !== ''" class="episodeNumber">Episode: {{anime?.most_likely_media?.episode_number}}</span></li>
 	</ul>
 	<progress class="playtime" [value]="anime?.most_likely_media?.playhead" [max]="anime?.most_likely_media?.duration"></progress>
 </div>

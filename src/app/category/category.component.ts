@@ -12,10 +12,16 @@ export class CategoryComponent  {
 	@Output() onSelect = new EventEmitter<Array<any>>();
 	searchTerm: string = "";
 
+  /*Syncs the searchterm between the <app-search> and <app-anime> component
+    Variables:
+    String searchTerm = searchterm from <app-search>*/
 	onSearchChangeEvent(searchTerm: string){
 		this.searchTerm = searchTerm;
 	}
 
+  /*Syncs the selected anime between <app-app> and <app-category> component
+    Variables:
+    Array<any> anime = selected anime from <app-anime>*/
 	onSelectEventHandler(anime: Array<any>){
 		this.onSelect.emit(anime);
 	}

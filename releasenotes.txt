@@ -1,4 +1,6 @@
 
 
 ## Code Changes:
-- Inject contentscript also to queue while using https
+- Finally add comments to the code ;)
+- Halfed the used bandwidth per queue request
+- Faster load times

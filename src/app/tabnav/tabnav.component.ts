@@ -38,6 +38,9 @@ export class TabnavComponent {
 	currentlyShown: number = 0;
 	selected: Array<string> = new Array("true", "false", "false", "false", "false");
 
+  /*Changes the visibility of the tabs
+    Variables:
+    Number selected = Number of the selected tab*/
 	showSelected(selected: number){
 		if(selected >=0 && selected <= 4){
 			if((<HTMLElement>document.getElementById("spinner")).hidden && !(<HTMLElement>document.getElementById("refreshbtn")).hidden && selected == 4){

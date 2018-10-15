@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
 		this.getSettings();
 	}
 
+  //Returns the saved encrypted settings and decrypts them. Also calls this.generateDeviceId(), if deviceid is empty
 	getSettings(){
 		var ang = this;
 		chrome.storage.local.get(["username", "password", "deviceid", "sessionid"], function(result) {
@@ -46,6 +47,7 @@ export class SettingsComponent implements OnInit {
 		});
 	}
 
+  //Saves the encrypted settings to chromes local storage (not synced!)
 	saveSettings(){
 		document.getElementById("confirmSettingsDialog").hidden = true;
 		chrome.storage.local.set({"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
@@ -54,6 +56,7 @@ export class SettingsComponent implements OnInit {
 		chrome.storage.local.set({"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 	}
 
+  //Opens confirmation dialog if user tries to save username or password
 	confirmSettings(){
 		if((<HTMLInputElement>document.getElementById("username")).value != "" || (<HTMLInputElement>document.getElementById("password")).value != ""){
 			document.getElementById("confirmSettingsDialog").hidden = false;
@@ -62,18 +65,22 @@ export class SettingsComponent implements OnInit {
 		}
 	}
 
+  //Reloads the extension, content- and backgroundscript
 	reloadExtension(){
 		chrome.runtime.reload();
 	}
 
+  //Opens the crunchyroll homepage in a new tab
 	visitCrunchyroll(){
 		window.open("http://www.crunchyroll.com/");
 	}
 
+  //Closes the confirmation dialog
 	closeConfirmDialog(){
 		document.getElementById("confirmSettingsDialog").hidden = true;
 	}
 
+  //Generates a random deviceid and saves it to chromes local storage
   generateDeviceId() {
     var char_set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var id = "";

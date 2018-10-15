@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
 @Component({
@@ -7,25 +7,17 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
   styleUrls: ['./anime.component.css'],
 })
 
-export class AnimeComponent implements OnInit {
+export class AnimeComponent {
 
 	@Input() anime;
 	@Output() onSelect = new EventEmitter<Array<any>>();
 
-  ngOnInit() {
-		if(this.anime.most_likely_media.playhead === undefined){
-			this.anime.most_likely_media.playhead = 0;
-		}
-
-		if(this.anime.most_likely_media.episode_number === ""){
-			this.anime.most_likely_media.episode_number = "N/A";
-		}
-  }
-
+  //Emit an Event once an anime got selected
 	animeSelect(){
 		this.onSelect.emit(this.anime);
 	}
 
+  //Open the Episode in a new tab
 	openEpisode(){
 		window.open(this.anime.most_likely_media.url);
 	}

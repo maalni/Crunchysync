@@ -9,6 +9,7 @@ import { AES } from 'crypto-ts';
 })
 
 export class AppComponent {
+
 	onAuthenticatedEvent: any = new Event('onAuthenticatedEvent');
 	settings: Array<any> = new Array();
 	animes: Array<any> = new Array();
@@ -26,12 +27,25 @@ export class AppComponent {
 		this.getLocalQueue();
 	}
 
+  /*Authenticates the user, once the settings are loaded
+    Variables:
+    Array<any> settings = loaded settings from chrome local storage*/
 	onSettingsLoadedEventHandler(settings: Array<any>){
 		this.settings = settings;
-		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], true);
+		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], false);
 	}
 
-	authenticate(username: string, password: string, sessionid: string, deviceid: string, useCachedSessionID: boolean){
+  /*Authenticates the user through several methods:
+     1. Cookies
+     2. Cached sessionid
+     3. Username and password
+    Variables:
+    String username = Users provided username
+    String password = Users provided password
+    String sessionid = Cached sessionid
+    String deviceid = Extensions deviceid
+    Boolean ignoreCache = Force cache to be ignored*/
+	authenticate(username, password, sessionid, deviceid: string, ignoreCache: boolean){
 		var ang = this;
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
@@ -42,7 +56,7 @@ export class AppComponent {
 				});
 			}else{
 				ang.ngZone.run(() => {
-					if((sessionid === "" || sessionid === undefined) || !useCachedSessionID){
+					if((sessionid === "" || sessionid === undefined) || ignoreCache){
 						if(username != "" && password != ""){
 							ang.dataService.getSessionID(deviceid).subscribe(res => {
 								if(!res.error){
@@ -71,7 +85,10 @@ export class AppComponent {
 		});
 	}
 
-	addToQueue(animes: Array<any>){
+  /*Sorts animes to arrays
+    Variables:
+    Array<any> animes = List of animes, which should get sorted*/
+	sortAnimes(animes: Array<any>){
 		if(animes !== undefined){
 			animes.sort((a,b) => a.series.name.localeCompare(b.series.name));
 			this.animes = animes;
@@ -80,6 +97,9 @@ export class AppComponent {
 			this.unseen = [];
 			for(var i in this.animes){
 				var anime = this.animes[i];
+        if(anime.most_likely_media.playhead === undefined){
+    			anime.most_likely_media.playhead = 0;
+    		}
 				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
 					this.done.push(anime);
 				}else{
@@ -97,29 +117,31 @@ export class AppComponent {
 		}
 	}
 
+  //Loads cached queue from chromes local storage
 	getLocalQueue(){
 		var ang = this;
 		this.loading(true);
 		chrome.storage.local.get(["animes"], function(result) {
 			ang.ngZone.run(() => {
-				ang.addToQueue(result.animes);
+				ang.sortAnimes(result.animes);
 				ang.loading(false);
 			});
 		});
 	}
 
+  //Refreshes the cached animes
 	refreshQueue(){
 		this.loading(true);
 		this.dataService.getQueue(this.settings['sessionid']).subscribe(res => {
 			if(!res.error){
 				chrome.storage.local.set({"animes": res.data}, function() {});
-				this.addToQueue(res.data);
+				this.sortAnimes(res.data);
 				(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
         this.loading(false);
 			}else{
 				if(res.code === 'bad_session' && !this.retry){
 					this.retry = true;
-					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], false);
+					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], true);
 				}else{
 					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
           this.loading(false);
@@ -128,11 +150,17 @@ export class AppComponent {
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}
 
+  /*Syncs the selected anime between <app-category> and <app-selected-anime>
+    Variables:
+    Array<any> anime = selected anime from <app-category>*/
 	onSelectEventHandler(anime: Array<any>){
 		this.selectedAnime = anime;
 		(<HTMLElement>document.getElementById("selectedAnime")).hidden = false;
 	}
 
+  /*Shows or hides the loading animation
+    Variables:
+    Boolean state = */
 	loading(state: boolean){
 		(<HTMLElement>document.getElementById("spinner")).hidden = !state;
 		if((<HTMLElement>document.getElementById("content").children[4]).hidden){
@@ -140,6 +168,9 @@ export class AppComponent {
 		}
 	}
 
+  /*Shows an error with the given message
+    Variables:
+    String message = Errormessage*/
 	error(message: string){
 		this.errorMessage = message;
 		(<HTMLElement>document.getElementById("error")).hidden = false;

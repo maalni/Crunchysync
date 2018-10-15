@@ -10,6 +10,7 @@ export class ErrorComponent {
 
 	@Input() errorMessage;
 
+  //Closes the error
 	closeError(){
 		(<HTMLElement>document.getElementById("error")).hidden = true;
 	}
