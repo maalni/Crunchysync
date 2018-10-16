@@ -11,10 +11,10 @@ import { AnimeComponent } from './anime/anime.component';
 import { SelectedAnimeComponent } from './selected-anime/selected-anime.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TabnavComponent } from './tabnav/tabnav.component';
-import { ErrorComponent } from './error/error.component';
 import { SettingsComponent } from './settings/settings.component';
 import { CategoryComponent } from './category/category.component';
 import { SearchComponent } from './search/search.component';
+import { WarningComponent } from './warning/warning.component';
 
 
 @NgModule({
@@ -25,10 +25,10 @@ import { SearchComponent } from './search/search.component';
 		SelectedAnimeComponent,
 		SpinnerComponent,
 		TabnavComponent,
-		ErrorComponent,
 		SettingsComponent,
 		CategoryComponent,
-		SearchComponent
+		SearchComponent,
+		WarningComponent
   ],
   imports: [
     BrowserModule,

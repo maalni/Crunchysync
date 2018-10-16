@@ -9,7 +9,12 @@ export class DataService {
 	result: any;
 
 	constructor(private _http: Http) { }
-	
+
+	//Sends GET request to gitlabs servers and returns the newest release number
+	getGitlabVersion(): Observable<any> {
+		return this._http.get("https://gitlab.com/api/v4/projects/maalni%2Fcrunchysync/repository/tags").pipe(map(result => this.result = result.json()[0]['name']), catchError((err: any) => { return throwError(err.statusText) }));
+	}
+
 	/*Sends GET request to crunchyroll servers and returns the users queued animes
 		Variables:
 		String sessionid = Users session id*/

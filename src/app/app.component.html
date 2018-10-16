@@ -1,6 +1,9 @@
 <app-tabnav [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length"></app-tabnav>
-<app-error id="error" [errorMessage]="errorMessage" hidden></app-error>
-<div id="cachedwarning">Cached</div>
+<div id="warnings">
+	<app-warning *ngIf="updateVersion !== 0" (click)="openUpdate()" [message]="'New version available: '+updateVersion" [type]="'update'"></app-warning>
+	<app-warning *ngIf="errorMessage !== ''" [message]="errorMessage" [type]="'error'"></app-warning>
+	<app-warning *ngIf="cachedQueue" [message]="'Cached'" [type]="''"></app-warning>
+</div>
 <div id="content">
 	<app-category [animes]="watching" (onSelect)="onSelectEventHandler($event)"></app-category>
 	<app-category [animes]="unseen" (onSelect)="onSelectEventHandler($event)" hidden></app-category>

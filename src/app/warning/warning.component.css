@@ -1,0 +1,17 @@
+.warning{
+	width: 100%;
+	color: var(--secondary-color);
+	min-height: 17px;
+	text-align: center;
+	font-size: 10pt;
+	background-color: var(--primary-color);
+	cursor: pointer;
+}
+
+.error{
+	background-color: var(--error-color) !important;
+}
+
+.update{
+	background-color: var(--success-color) !important;
+}

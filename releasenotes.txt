@@ -1,6 +1,7 @@
 
 
-## Code Changes:
-- Finally add comments to the code ;)
-- Halfed the used bandwidth per queue request
-- Faster load times
+## Feature Changes:
+- Added update checker
+
+##UI Changes:
+- Reordered some elements in the settings ui

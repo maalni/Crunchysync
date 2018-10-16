@@ -43,7 +43,7 @@ export class SettingsComponent implements OnInit {
 			if(result.sessionid !== undefined){
         ang.sessionid = AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
       }
-			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid});
+			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "version": ang.version});
 		});
 	}
 

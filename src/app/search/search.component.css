@@ -19,7 +19,7 @@
 
 .clearsearchbtn{
 	position: absolute;
-	right: 5px;
+	right: 10px;
 	width: 37px;
 	height: 37px;
 	color: var(--primary-color);

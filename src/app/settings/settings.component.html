@@ -2,17 +2,17 @@
 	<div id="confirmSettingsDialog" (click)="closeConfirmDialog()" hidden>
 		<span>Saving your password could inherit to some security risks!<br>
 			Do you want to proceed?
+			<button class="confirmDialog" (click)="saveSettings()">Yes</button>
+			<button class="closeDialog" (click)="closeConfirmDialog()">No</button>
 		</span>
-		<button class="closeDialog" (click)="closeConfirmDialog()">No</button>
-		<button class="confirmDialog" (click)="saveSettings()">Yes</button>
 	</div>
 	<span class="settingstitle">Settings</span>
 	<span class="version">v.{{version}}</span>
 	<input id="username" class="username" placeholder="Username" value="{{username}}">
 	<input id="password" class="password" placeholder="Password" value="{{password}}" type="password">
 	<input id="sessionid" class="sessionid" placeholder="Session ID" value="SessionID: {{sessionid}}" disabled>
+	<button class="sessionbtn" (click)="visitCrunchyroll()">Refresh SessionID</button>
 	<input id="deviceid" class="deviceid" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
+	<button class="savebtn" (click)="confirmSettings()"><img src="../assets/icons/save.svg"><div>Save</div></button>
 	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
-	<button class="savebtn" (click)="confirmSettings()">Save</button>
-	<button class="visitbtn" (click)="visitCrunchyroll()"><img src="../assets/icons/refresh.svg"></button>
 </div>

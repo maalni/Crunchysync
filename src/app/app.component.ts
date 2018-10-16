@@ -18,13 +18,16 @@ export class AppComponent {
 	watching: Array<any> = new Array();
 	selectedAnime: Array<any> = new Array();
 	errorMessage: string = "";
+	updateVersion: number = 0;
 	retry: boolean = false;
+	cachedQueue: boolean = true;
 
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
 	ngOnInit() {
 		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
 		this.getLocalQueue();
+		this.checkExtensionUpdate();
 	}
 
   /*Authenticates the user, once the settings are loaded
@@ -33,6 +36,17 @@ export class AppComponent {
 	onSettingsLoadedEventHandler(settings: Array<any>){
 		this.settings = settings;
 		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], false);
+	}
+
+	//Checks, if an update is available and notifys the user
+	checkExtensionUpdate(){
+		this.dataService.getGitlabVersion().subscribe(res => {
+			var onlineVersion = parseInt(res.replace(/[v\.]/g, ""), 10);
+			var extensionVersion = parseInt(this.settings['version'].replace(/[v\.]/g, ""), 10);
+			if(onlineVersion > extensionVersion){
+				this.updateVersion = res;
+			}
+		});
 	}
 
   /*Authenticates the user through several methods:
@@ -136,7 +150,7 @@ export class AppComponent {
 			if(!res.error){
 				chrome.storage.local.set({"animes": res.data}, function() {});
 				this.sortAnimes(res.data);
-				(<HTMLElement>document.getElementById("cachedwarning")).hidden = true;
+				this.cachedQueue = false;
         this.loading(false);
 			}else{
 				if(res.code === 'bad_session' && !this.retry){
@@ -173,6 +187,9 @@ export class AppComponent {
     String message = Errormessage*/
 	error(message: string){
 		this.errorMessage = message;
-		(<HTMLElement>document.getElementById("error")).hidden = false;
+	}
+
+	openUpdate(){
+		window.open("https://gitlab.com/maalni/crunchysync/tags/"+this.updateVersion);
 	}
 }
