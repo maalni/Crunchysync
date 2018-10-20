@@ -13,6 +13,7 @@
 	<input id="sessionid" class="sessionid" placeholder="Session ID" value="SessionID: {{sessionid}}" disabled>
 	<button class="sessionbtn" (click)="visitCrunchyroll()">Refresh SessionID</button>
 	<input id="deviceid" class="deviceid" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
+	<input id="forceUsRegion" type="checkbox" [checked]="forceUsRegion"><span class="checkboxlabel">Force session with US region (Not working)</span>
 	<button class="savebtn" (click)="confirmSettings()"><img src="../assets/icons/save.svg"><div>Save</div></button>
 	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
 </div>

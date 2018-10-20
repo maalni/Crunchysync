@@ -33,11 +33,43 @@
 	height: 32px;
 	border-radius: 5px;
 	border: none;
+	padding: none;
 	margin-left: calc(100% - 135px);
 }
 
 .settingsContainer .reloadbtn:hover{
 	background-color: rgba(0, 0, 0, 0.13);
+}
+
+.settingsContainer #forceUsRegion{
+	width: 20px;
+	height: 20px;
+	appearance: none;
+	padding: 0;
+	line-height: 20px;
+	vertical-align: middle;
+	background-color: rgba(0, 0, 0, 0.1);
+	margin-top: 0;
+}
+
+.settingsContainer #forceUsRegion:checked{
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
+
+.settingsContainer #forceUsRegion:checked:after {
+	content: "✔";
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.settingsContainer .checkboxlabel{
+	position: absolute;
+	line-height: 20px;
+	height: 20px;
 }
 
 .settingsContainer .savebtn{
@@ -132,23 +164,25 @@
 .settingsContainer #confirmSettingsDialog .closeDialog{
 	position: absolute;
 	top: 50%;
-	width: 150px;
-	height: 30px;
-	border-radius: 5px;
-	border: none;
-	left: 10px;
-	color: white;
-	background-color: var(--error-color);
-}
-
-.settingsContainer #confirmSettingsDialog .confirmDialog{
-	position: absolute;
-	top: 50%;
-	width: 150px;
+	width: 155px;
 	height: 30px;
 	border-radius: 5px;
 	border: none;
 	right: 10px;
 	color: white;
+	background-color: var(--error-color);
+	margin-top: 5px;
+}
+
+.settingsContainer #confirmSettingsDialog .confirmDialog{
+	position: absolute;
+	top: 50%;
+	width: 155px;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+	left: 10px;
+	color: white;
 	background-color: var(--success-color);
+	margin-top: 5px;
 }

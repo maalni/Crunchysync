@@ -1,4 +1,4 @@
-# Crunchysync
+# Crunchysync (Loginfeature currently not working)
 
 The credentials are stored locally, AES encrypted and are shared only with the official Crunchyroll API!
 

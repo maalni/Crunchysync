@@ -10,10 +10,12 @@ import { AES, enc } from 'crypto-ts';
 export class SettingsComponent implements OnInit {
 
 	@Input() sessionid: string = "";
-	@Input() deviceid: string = "";
-	@Input() username: string = "";
-	@Input() password: string = "";
 	@Output() onSettingsLoaded = new EventEmitter<any>();
+	@Output() onSettingsChanged = new EventEmitter<any>();
+	username: string = "";
+	password: string = "";
+	deviceid: string = "";
+	forceUsRegion: boolean = false;
 	version: string = chrome.runtime.getManifest().version;
 
   constructor() { }
@@ -25,7 +27,7 @@ export class SettingsComponent implements OnInit {
   //Returns the saved encrypted settings and decrypts them. Also calls this.generateDeviceId(), if deviceid is empty
 	getSettings(){
 		var ang = this;
-		chrome.storage.local.get(["username", "password", "deviceid", "sessionid"], function(result) {
+		chrome.storage.local.get(["username", "password", "deviceid", "sessionid", "forceUsRegion"], function(result) {
 			if(result.username !== undefined){
         ang.username = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
       }
@@ -43,7 +45,10 @@ export class SettingsComponent implements OnInit {
 			if(result.sessionid !== undefined){
         ang.sessionid = AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
       }
-			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "version": ang.version});
+			if(result.forceUsRegion !== undefined){
+				ang.forceUsRegion = (AES.decrypt(result.forceUsRegion, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
+			}
+			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version});
 		});
 	}
 
@@ -52,8 +57,10 @@ export class SettingsComponent implements OnInit {
 		document.getElementById("confirmSettingsDialog").hidden = true;
 		chrome.storage.local.set({"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 		chrome.storage.local.set({"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+		chrome.storage.local.set({"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 		chrome.storage.local.set({"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 		chrome.storage.local.set({"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+		this.onSettingsChanged.emit({"username": this.username, "password": this.password, "deviceid": this.deviceid, "sessionid": this.sessionid, "forceUsRegion": this.forceUsRegion, "version": this.version});
 	}
 
   //Opens confirmation dialog if user tries to save username or password

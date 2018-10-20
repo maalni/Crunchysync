@@ -9,7 +9,7 @@
 	<app-category [animes]="unseen" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
 	<app-category [animes]="done" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
 	<app-category [animes]="animes" (onSelect)="onSelectEventHandler($event)" search="true" hidden></app-category>
-	<app-settings id="settings" [sessionid]="settings['sessionid']" [deviceid]="settings['deviceid']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" hidden></app-settings>
+	<app-settings id="settings" [sessionid]="settings['sessionid']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" (onSettingsChanged)="onSettingsChangedEventHandler($event)" hidden></app-settings>
 	<app-spinner id="spinner"></app-spinner>
 </div>
 <button id="refreshbtn" (click)="refreshQueue()" hidden><img src="../assets/icons/refresh.svg"><span>Refresh</span></button>

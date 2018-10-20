@@ -27,15 +27,8 @@ export class AppComponent {
 	ngOnInit() {
 		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
 		this.getLocalQueue();
-		this.checkExtensionUpdate();
-	}
 
-  /*Authenticates the user, once the settings are loaded
-    Variables:
-    Array<any> settings = loaded settings from chrome local storage*/
-	onSettingsLoadedEventHandler(settings: Array<any>){
-		this.settings = settings;
-		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], false);
+		this.checkExtensionUpdate();
 	}
 
 	//Checks, if an update is available and notifys the user
@@ -58,11 +51,12 @@ export class AppComponent {
     String password = Users provided password
     String sessionid = Cached sessionid
     String deviceid = Extensions deviceid
+		Boolean forceUsRegion = Use OneStay's servers to force a US session
     Boolean ignoreCache = Force cache to be ignored*/
-	authenticate(username, password, sessionid, deviceid: string, ignoreCache: boolean){
+	authenticate(username, password, sessionid, deviceid: string, forceUsRegion, ignoreCache: boolean){
 		var ang = this;
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
-			if(cookie != null){
+			if(cookie != null && !ignoreCache){
 				ang.ngZone.run(() => {
 					chrome.storage.local.set({"sessionid": AES.encrypt(cookie.value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
 					ang.settings['sessionid'] = cookie.value;
@@ -72,7 +66,7 @@ export class AppComponent {
 				ang.ngZone.run(() => {
 					if((sessionid === "" || sessionid === undefined) || ignoreCache){
 						if(username != "" && password != ""){
-							ang.dataService.getSessionID(deviceid).subscribe(res => {
+							ang.dataService.getSessionID(deviceid, forceUsRegion).subscribe(res => {
 								if(!res.error){
 									sessionid = res.data.session_id;
 									ang.dataService.login(sessionid, username, password).subscribe(res => {
@@ -81,12 +75,15 @@ export class AppComponent {
 											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
 											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
 											ang.settings['sessionid'] = sessionid;
-											ang.settings['deviceid'] = deviceid;
 											document.dispatchEvent(ang.onAuthenticatedEvent);
+										}else{
+											ang.error("Login failed! Please make sure your username and password is valid. Discription: " + res.code);
 										}
-									}, err => this.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
+									}, err => ang.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
+								}else{
+									ang.error("Connection failed! Please try again later. Discription: " + res.code)
 								}
-							}, err => this.error("Connection failed! Please try again later. Discription: " + err));
+							}, err => ang.error("Connection failed! Please try again later. Discription: " + err));
 						}else{
 							ang.error("No Cookie set! Please visit http://www.crunchyroll.com or save your credentials in the settingstab.");
 						}
@@ -153,9 +150,9 @@ export class AppComponent {
 				this.cachedQueue = false;
         this.loading(false);
 			}else{
-				if(res.code === 'bad_session' && !this.retry){
+				if((res.code === 'bad_session' || res.code === 'bad_request')&& !this.retry){
 					this.retry = true;
-					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], true);
+					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], this.settings['forceUsRegion'], true);
 				}else{
 					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
           this.loading(false);
@@ -170,6 +167,21 @@ export class AppComponent {
 	onSelectEventHandler(anime: Array<any>){
 		this.selectedAnime = anime;
 		(<HTMLElement>document.getElementById("selectedAnime")).hidden = false;
+	}
+
+	/*Authenticates the user, once the settings are loaded
+    Variables:
+    Array<any> settings = loaded settings from chrome local storage*/
+	onSettingsLoadedEventHandler(settings: Array<any>){
+		this.settings = settings;
+		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+	}
+
+	/*Triggered when settings are changed
+    Variables:
+    Array<any> settings = loaded settings from chrome local storage*/
+	onSettingsChangedEventHandler(settings: Array<any>){
+		this.settings = settings;
 	}
 
   /*Shows or hides the loading animation

@@ -26,15 +26,28 @@ export class DataService {
 			"&session_id=" + sessionid).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
 	}
 
-	/*Sends POST request to crunchyroll servers and returns a valid session id
+	/*Sends POST request to crunchyroll or OneStay's servers and returns a valid session id
 		Variables:
-		String deviceid = Extensions device id*/
-	getSessionID(deviceid: string): Observable<any> {
-		return this._http.post("https://api-manga.crunchyroll.com/cr_start_session?"+
-			"&api_ver=1.0"+
-			"&device_type=com.crunchyroll.manga.android"+
-			"&access_token=FLpcfZH4CbW4muO"+
-			"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
+		String deviceid = Extensions device id
+		Boolean forceUsRegion = Use OneStay's servers to force a US session*/
+	getSessionID(deviceid: string, forceUsRegion: boolean): Observable<any> {
+		if(!forceUsRegion){
+			return this._http.post("https://api.crunchyroll.com/start_session.0.json?"+
+				"&device_type=com.crunchyroll.crunchyroid"+
+				"&access_token=Scwg9PRRZ19iVwD"+
+				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
+		}else{
+			//Currently does nothing different
+			/*
+			return this._http.post("https://api2.cr-unblocker.com/start_session?"+
+				"&version=1.1"
+				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
+			*/
+			return this._http.post("https://api.crunchyroll.com/start_session.0.json?"+
+				"&device_type=com.crunchyroll.crunchyroid"+
+				"&access_token=Scwg9PRRZ19iVwD"+
+				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
+		}
 	}
 
 	/*Sends a POST request to crunchyroll servers and connects a session id with an account
