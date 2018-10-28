@@ -22,8 +22,9 @@
               "src/favicon.ico",
               "src/assets",
 							"src/manifest.json",
-							"src/queuescript.js",
-							"src/backgroundscript.js"
+							"src/queuescript.min.js",
+							"src/queuescript.min.css",
+							"src/backgroundscript.min.js",
             ],
             "styles": [
               "src/styles.css"

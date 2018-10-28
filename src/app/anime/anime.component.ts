@@ -10,6 +10,7 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 export class AnimeComponent {
 
 	@Input() anime;
+	@Input() userIsPremium;
 	@Output() onSelect = new EventEmitter<Array<any>>();
 
   //Emit an Event once an anime got selected

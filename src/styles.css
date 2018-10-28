@@ -6,10 +6,21 @@
 *{
    font-family: 'Roboto', sans-serif;
 	 --primary-color: #f78c25;
+	 --darken-primary-color: rgba(247, 140, 37, 0.9);
 	 --secondary-color: white;
-	 --tertiary-color: #333;
+	 --tertiary-color: #333333;
 	 --error-color: #F44336;
 	 --success-color: #4caf50;
+ }
+
+ html, body{
+ 	width: 450px;
+ 	height: 600px;
+ 	margin: 0px;
+ 	padding: 0px;
+ 	border: none;
+ 	background-color: #f3f3f3;
+ 	overflow: hidden;
  }
 
 *::-webkit-scrollbar {
@@ -34,12 +45,46 @@ progress::-webkit-progress-value {
   background-color: var(--primary-color);
 }
 
-html, body{
-	width: 450px;
-	height: 600px;
-	margin: 0px;
-	padding: 0px;
+input{
+	padding-left: 10px;
+	border-radius: 5px;
 	border: none;
-	background-color: #f3f3f3;
-	overflow: hidden;
+}
+
+input[type=checkbox]{
+	width: 20px !important;
+	height: 20px !important;
+	appearance: none;
+	padding: 0;
+	line-height: 20px;
+	vertical-align: middle;
+	background-color: rgba(0, 0, 0, 0.1);
+	margin-top: 0;
+	color: var(--secondary-color);
+}
+
+input[type=checkbox]:checked{
+	background-color: var(--primary-color);
+}
+
+input[type=checkbox]:checked:after {
+	content: "✔";
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	font-size: 12pt;
+}
+
+button{
+	border-radius: 5px;
+	border: none;
+}
+
+button:hover{
+	background-color: rgba(0,0,0,0.1);
+}
+
+app-splashscreen{
+	display: none;
 }

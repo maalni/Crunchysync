@@ -1,0 +1,3 @@
+name: "Angular build"
+sh: true,
+cmd: "ng build"

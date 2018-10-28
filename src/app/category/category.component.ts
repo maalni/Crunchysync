@@ -9,6 +9,7 @@ export class CategoryComponent  {
 
 	@Input() animes;
 	@Input() search;
+	@Input() userIsPremium;
 	@Output() onSelect = new EventEmitter<Array<any>>();
 	searchTerm: string = "";
 

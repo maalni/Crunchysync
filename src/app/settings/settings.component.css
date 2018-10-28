@@ -12,15 +12,12 @@
 .settingsContainer input{
 	width: 420px;
 	height: 30px;
-	padding-left: 10px;
-	border-radius: 5px;
-	border: none;
 	margin-left: 10px;
 	margin-bottom: 10px;
 }
 
 .settingsContainer #sessionid{
-	width: 295px;
+	width: 299px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
@@ -41,35 +38,9 @@
 	background-color: rgba(0, 0, 0, 0.13);
 }
 
-.settingsContainer #forceUsRegion{
-	width: 20px;
-	height: 20px;
-	appearance: none;
-	padding: 0;
-	line-height: 20px;
-	vertical-align: middle;
-	background-color: rgba(0, 0, 0, 0.1);
-	margin-top: 0;
-}
-
-.settingsContainer #forceUsRegion:checked{
-	background-color: var(--primary-color);
-	color: var(--secondary-color);
-}
-
-.settingsContainer #forceUsRegion:checked:after {
-	content: "✔";
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	text-align: center;
-	font-size: 12pt;
-}
-
-.settingsContainer .checkboxlabel{
-	position: absolute;
-	line-height: 20px;
-	height: 20px;
+.settingsContainer .checkbox{
+	margin-left: 10px;
+	width: calc(100% - 20px);
 }
 
 .settingsContainer .savebtn{
@@ -81,6 +52,10 @@
 	background-color: var(--primary-color);
 	border: none;
 	margin-left: calc(100% - 85px);
+}
+
+.settingsContainer .savebtn:disabled{
+	background-color: rgba(0,0,0,0.2);
 }
 
 .settingsContainer .savebtn img{
@@ -107,10 +82,10 @@
 
 .settingsContainer .sessionbtn{
 	position: relative;
-	width: 125px;
+	width: 121px;
 	height: 32px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
 	border: none;
 }
 

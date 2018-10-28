@@ -27,7 +27,6 @@ export class AppComponent {
 	ngOnInit() {
 		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
 		this.getLocalQueue();
-
 		this.checkExtensionUpdate();
 	}
 
@@ -58,7 +57,7 @@ export class AppComponent {
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null && !ignoreCache){
 				ang.ngZone.run(() => {
-					chrome.storage.local.set({"sessionid": AES.encrypt(cookie.value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
+					chrome.storage.local.set({"sessionid": AES.encrypt(cookie.value, "5HR*98g5a699^9P#f7cz").toString()});
 					ang.settings['sessionid'] = cookie.value;
 					document.dispatchEvent(ang.onAuthenticatedEvent);
 				});
@@ -71,9 +70,9 @@ export class AppComponent {
 									sessionid = res.data.session_id;
 									ang.dataService.login(sessionid, username, password).subscribe(res => {
 										if(!res.error){
-                      chrome.storage.local.set({"sessionid": AES.encrypt(sessionid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true}, function(){});
+                      chrome.storage.local.set({"sessionid": AES.encrypt(sessionid, "5HR*98g5a699^9P#f7cz").toString()});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
+											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
 											ang.settings['sessionid'] = sessionid;
 											document.dispatchEvent(ang.onAuthenticatedEvent);
 										}else{
@@ -88,6 +87,8 @@ export class AppComponent {
 							ang.error("No Cookie set! Please visit http://www.crunchyroll.com or save your credentials in the settingstab.");
 						}
 					}else{
+						chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
+						chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
 						document.dispatchEvent(ang.onAuthenticatedEvent);
 					}
 					ang.loading(false);
@@ -145,12 +146,13 @@ export class AppComponent {
 		this.loading(true);
 		this.dataService.getQueue(this.settings['sessionid']).subscribe(res => {
 			if(!res.error){
+				chrome.runtime.sendMessage({data: "onAuthenticatedEvent"});
 				chrome.storage.local.set({"animes": res.data}, function() {});
 				this.sortAnimes(res.data);
 				this.cachedQueue = false;
         this.loading(false);
 			}else{
-				if((res.code === 'bad_session' || res.code === 'bad_request')&& !this.retry){
+				if((res.code === 'bad_session' || res.code === 'bad_request') && !this.retry){
 					this.retry = true;
 					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], this.settings['forceUsRegion'], true);
 				}else{
@@ -173,16 +175,16 @@ export class AppComponent {
     Variables:
     Array<any> settings = loaded settings from chrome local storage*/
 	onSettingsLoadedEventHandler(settings: Array<any>){
-		this.settings = settings;
-		this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+    this.settings = settings;
+    if(!settings['firstuse']){
+			this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+		}
 	}
 
-	/*Triggered when settings are changed
-    Variables:
-    Array<any> settings = loaded settings from chrome local storage*/
-	onSettingsChangedEventHandler(settings: Array<any>){
-		this.settings = settings;
-	}
+  onSetupCompleteEventHandler(settings: Array<any>){
+    this.settings = settings;
+    this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+  }
 
   /*Shows or hides the loading animation
     Variables:

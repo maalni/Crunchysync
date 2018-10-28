@@ -10,6 +10,7 @@ import { DataService } from '../data.service';
 export class SelectedAnimeComponent {
 
 	@Input() selectedAnime: any;
+	@Input() userIsPremium;
 	@Output() onComplete = new EventEmitter<any>();
 
 	constructor(private dataService: DataService) {}

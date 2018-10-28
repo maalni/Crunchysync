@@ -1,6 +1,6 @@
 <div class="animeContainer" (click)="animeSelect()">
 	<img class="preview" [src]="anime?.most_likely_media?.screenshot_image?.fwide_url">
-	<img class="premium" src="../../assets/icons/premium.png" *ngIf="this.anime.most_likely_media.premium_only">
+	<img class="premium" src="../../assets/icons/premium.png" *ngIf="this.anime.most_likely_media.premium_only && !this.userIsPremium">
 	<button class="openEpisodebtn" (click)="openEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
 	<ul class="animePropertys">
 		<li><span class="animeName">{{anime?.series?.name}}</span></li>

@@ -9,13 +9,17 @@ import { AES, enc } from 'crypto-ts';
 
 export class SettingsComponent implements OnInit {
 
-	@Input() sessionid: string = "";
 	@Output() onSettingsLoaded = new EventEmitter<any>();
 	@Output() onSettingsChanged = new EventEmitter<any>();
+	@Input() sessionid: string = "";
 	username: string = "";
 	password: string = "";
 	deviceid: string = "";
 	forceUsRegion: boolean = false;
+	userIsPremium: boolean = false;
+	firstuse: boolean = false;
+	disableBackgroundChecks: boolean = false;
+	saving: boolean = false;
 	version: string = chrome.runtime.getManifest().version;
 
   constructor() { }
@@ -27,7 +31,7 @@ export class SettingsComponent implements OnInit {
   //Returns the saved encrypted settings and decrypts them. Also calls this.generateDeviceId(), if deviceid is empty
 	getSettings(){
 		var ang = this;
-		chrome.storage.local.get(["username", "password", "deviceid", "sessionid", "forceUsRegion"], function(result) {
+		chrome.storage.local.get(["username", "password", "deviceid", "sessionid", "forceUsRegion", "userIsPremium", "disableBackgroundChecks", "firstuse"], function(result) {
 			if(result.username !== undefined){
         ang.username = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
       }
@@ -48,19 +52,38 @@ export class SettingsComponent implements OnInit {
 			if(result.forceUsRegion !== undefined){
 				ang.forceUsRegion = (AES.decrypt(result.forceUsRegion, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
 			}
-			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version});
+			if(result.userIsPremium !== undefined){
+				ang.userIsPremium = (result.userIsPremium === 'true');
+			}
+			if(result.disableBackgroundChecks !== undefined){
+				ang.disableBackgroundChecks = (result.disableBackgroundChecks === 'true');
+			}
+			if(result.firstuse !== undefined){
+				ang.firstuse = (result.firstuse === 'true');
+			}else{
+				ang.firstuse = true;
+			}
+			ang.onSettingsLoaded.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
 		});
 	}
 
   //Saves the encrypted settings to chromes local storage (not synced!)
 	saveSettings(){
+		var ang = this;
 		document.getElementById("confirmSettingsDialog").hidden = true;
-		chrome.storage.local.set({"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-		chrome.storage.local.set({"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-		chrome.storage.local.set({"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-		chrome.storage.local.set({"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-		chrome.storage.local.set({"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString()}, function() {});
-		this.onSettingsChanged.emit({"username": this.username, "password": this.password, "deviceid": this.deviceid, "sessionid": this.sessionid, "forceUsRegion": this.forceUsRegion, "version": this.version});
+		this.saving = true;
+		chrome.storage.local.set({
+			"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString(),
+			"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString(),
+			"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
+			"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString(),
+			"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString(),
+			"userIsPremium": (<HTMLInputElement>document.getElementById("userIsPremium")).checked.toString(),
+			"disableBackgroundChecks": (<HTMLInputElement>document.getElementById("disableBackgroundChecks")).checked.toString()},
+			function(){
+				ang.saving = false;
+				ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
+			});
 	}
 
   //Opens confirmation dialog if user tries to save username or password

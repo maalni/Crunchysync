@@ -5,7 +5,7 @@
 		<button class="openEpisodebtn" (click)="openEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
 		<button class="openAnimebtn" (click)="openAnime()"><img src="../assets/icons/openSelectedAnime.svg"></button>
 		<button class="completeEpisodebtn" (click)="completeEpisode()"><img src="../assets/icons/completeSelectedEpisode.svg"></button>
-		<div class="premium" *ngIf="selectedAnime?.most_likely_media?.premium_only">
+		<div class="premium" *ngIf="selectedAnime?.most_likely_media?.premium_only && !this.userIsPremium">
 			<img class="premiumIcon" src="../../assets/icons/premium.png">
 			<span class="premiumDate">{{getDate()}}</span>
 		</div>

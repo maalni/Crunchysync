@@ -5,12 +5,14 @@
 	<app-warning *ngIf="cachedQueue" [message]="'Cached'" [type]="''"></app-warning>
 </div>
 <div id="content">
-	<app-category [animes]="watching" (onSelect)="onSelectEventHandler($event)"></app-category>
-	<app-category [animes]="unseen" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
-	<app-category [animes]="done" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
-	<app-category [animes]="animes" (onSelect)="onSelectEventHandler($event)" search="true" hidden></app-category>
-	<app-settings id="settings" [sessionid]="settings['sessionid']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" (onSettingsChanged)="onSettingsChangedEventHandler($event)" hidden></app-settings>
+	<app-category [animes]="watching" [userIsPremium]="settings['userIsPremium']" (onSelect)="onSelectEventHandler($event)"></app-category>
+	<app-category [animes]="unseen" [userIsPremium]="settings['userIsPremium']" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
+	<app-category [animes]="done" [userIsPremium]="settings['userIsPremium']" (onSelect)="onSelectEventHandler($event)" hidden></app-category>
+	<app-category [animes]="animes" [userIsPremium]="settings['userIsPremium']" (onSelect)="onSelectEventHandler($event)" search="true" hidden></app-category>
+	<app-settings id="settings" [sessionid]="settings['sessionid']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" (onSettingsChanged)="settings = $event" hidden></app-settings>
 	<app-spinner id="spinner"></app-spinner>
 </div>
 <button id="refreshbtn" (click)="refreshQueue()" hidden><img src="../assets/icons/refresh.svg"><span>Refresh</span></button>
-<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime" (onComplete)="refreshQueue()" hidden></app-selected-anime>
+<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime" [userIsPremium]="settings['userIsPremium']" (onComplete)="refreshQueue()" hidden></app-selected-anime>
+<app-setup *ngIf="settings['firstuse']" (onSetupComplete)="onSetupCompleteEventHandler($event)"></app-setup>
+<app-splashscreen></app-splashscreen>

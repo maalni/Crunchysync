@@ -9,8 +9,10 @@
 	position: absolute;
 	height: 50px;
 	color: var(--primary-color);
-	background-color: rgba(0, 0, 0, 0);
-	border: none;
+	background-color: white;
+	top: 0px;
+	width: 100px;
+	border-radius: 0;
 }
 
 .navContainer button:hover{
@@ -21,37 +23,28 @@
 	outline: none;
 }
 
-.watchingbtn{
-	top: 0px;
+.navContainer .watchingbtn{
 	left: 0px;
-	width: 100px;
 }
 
-.unseenbtn{
-	top: 0px;
+.navContainer .unseenbtn{
 	left: 100px;
-	width: 100px;
 }
 
-.donebtn{
-	top: 0px;
+.navContainer .donebtn{
 	left: 200px;
-	width: 100px;
 }
 
-.allbtn{
-	top: 0px;
+.navContainer .allbtn{
 	left: 300px;
-	width: 100px;
 }
 
-.settingsbtn{
-	top: 0px;
-	left: calc(100% - 50px);
+.navContainer .settingsbtn{
 	width: 50px;
+	left: 400px;
 }
 
-.animeCount{
+.navContainer .animeCount{
 	padding-left: 5px;
 	padding-right: 5px;
 	background-color: var(--primary-color);

@@ -15,6 +15,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { CategoryComponent } from './category/category.component';
 import { SearchComponent } from './search/search.component';
 import { WarningComponent } from './warning/warning.component';
+import { SplashscreenComponent } from './splashscreen/splashscreen.component';
+import { SetupComponent } from './setup/setup.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { WarningComponent } from './warning/warning.component';
 		SettingsComponent,
 		CategoryComponent,
 		SearchComponent,
-		WarningComponent
+		WarningComponent,
+		SplashscreenComponent,
+		SetupComponent
   ],
   imports: [
     BrowserModule,
