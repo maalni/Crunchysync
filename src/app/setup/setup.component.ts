@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { AES, enc } from 'crypto-ts';
 
 @Component({
@@ -7,7 +8,7 @@ import { AES, enc } from 'crypto-ts';
   styleUrls: ['./setup.component.css']
 })
 
-export class SetupComponent{
+export class SetupComponent implements OnInit {
 
 	@Output() onSetupComplete = new EventEmitter<any>();
 	username: string = "";
@@ -16,6 +17,11 @@ export class SetupComponent{
 	userIsPremium: boolean = false;
 	disableBackgroundChecks: boolean = false;
 	page: number = 0;
+  production: boolean = false;
+
+  ngOnInit() {
+    this.production = environment.production;
+	}
 
 	nextPage(){
 		this.page += 1;
@@ -36,10 +42,14 @@ export class SetupComponent{
     this.userIsPremium = (<HTMLInputElement>document.getElementById("setupDisableBackgroundChecks")).checked;
     this.disableBackgroundChecks = (<HTMLInputElement>document.getElementById("setupUserIsPremium")).checked;
 		chrome.storage.local.set({
-			"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
 			"userIsPremium": (<HTMLInputElement>document.getElementById("setupDisableBackgroundChecks")).checked.toString(),
 			"disableBackgroundChecks": (<HTMLInputElement>document.getElementById("setupUserIsPremium")).checked.toString()
 		});
+    if(!this.production){
+      chrome.storage.local.set({
+  			"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
+  		});
+    }
 		this.nextPage();
 	}
 

@@ -50,6 +50,21 @@
 	color: var(--secondary-color);
 }
 
+.setupContainer .page0 .getStarted span{
+	margin-left: -15px;
+}
+
+.setupContainer .page0 .getStarted img{
+	position: absolute;
+	top: 0;
+	left: 110px;
+	bottom: 0;
+	right: 0;
+	height: 20px;
+	width: 20px;
+	margin: auto;
+}
+
 .setupContainer .page1 .title{
 	position: absolute;
 	top: 40%;
@@ -96,10 +111,25 @@
 	right: 0;
 	width: 100px;
 	height: 40px;
+	font-size: 15pt;
 	border-radius: 20px;
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
 	margin: auto;
+}
+
+.setupContainer .page1 .nextbtn img{
+	position: absolute;
+	top: 0;
+	left: 55px;
+	bottom: 0;
+	right: 0;
+	width: 20px;
+	height: 20px;
+}
+
+.setupContainer .page1 .nextbtn span{
+	margin-left: -15px;
 }
 
 .setupContainer .page1 .skipbtn{
@@ -145,10 +175,25 @@
 	right: 0;
 	width: 100px;
 	height: 40px;
+	font-size: 15pt;
 	border-radius: 20px;
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
 	margin: auto;
+}
+
+.setupContainer .page2 .nextbtn img{
+	position: absolute;
+	top: 0;
+	left: 55px;
+	bottom: 0;
+	right: 0;
+	width: 20px;
+	height: 20px;
+}
+
+.setupContainer .page2 .nextbtn span{
+	margin-left: -15px;
 }
 
 .setupContainer .page3 .title{

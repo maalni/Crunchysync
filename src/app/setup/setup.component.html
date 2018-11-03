@@ -3,22 +3,22 @@
 	<div class="page0" *ngIf="page === 0">
 		<span class="title">Crunchysync</span>
 		<span class="subtitle">Manage your queue with ease.</span>
-		<button class="getStarted" (click)="nextPage()">Get started -></button>
+		<button class="getStarted" (click)="nextPage()"><span>Get started</span><img src="../../assets/icons/next.svg"></button>
 	</div>
 	<div class="page1" *ngIf="page === 1">
 		<span class="title">Credentials</span>
 		<span class="subtitle">Credentials will be encrypted and saved in Chrome's local storage! Storing your password could inherit security risks!</span>
 		<input id="setupUsername" class="username" placeholder="Username">
 		<input id="setupPassword" class="password" placeholder="Password" type="password">
-		<button class="nextbtn" (click)="saveCredentials()">Next -></button>
+		<button class="nextbtn" (click)="saveCredentials()"><span>Next</span><img src="../../assets/icons/next.svg"></button>
 		<button class="skipbtn" (click)="nextPage()">Skip...</button>
 	</div>
 	<div class="page2" *ngIf="page === 2">
 		<span class="title">Options</span>
-		<div class="checkbox setupForceUsRegionContainer"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox">Force session with US region (Not working)</label></div>
+		<div class="checkbox setupForceUsRegionContainer" *ngIf="!production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox">Force session with US region (Not working)</label></div>
 		<div class="checkbox setupDisableBackgroundChecksContainer"><label for="setupDisableBackgroundChecks"><input id="setupDisableBackgroundChecks" type="checkbox">Disable background checks</label></div>
 		<div class="checkbox setupUserIsPremiumContainer"><label for="setupUserIsPremium"><input id="setupUserIsPremium" type="checkbox">Disable non-premium features?</label></div>
-		<button class="nextbtn" (click)="saveOptions()">Next -></button>
+		<button class="nextbtn" (click)="saveOptions()"><span>Next</span><img src="../../assets/icons/next.svg"></button>
 	</div>
 	<div class="page3" *ngIf="page === 3">
 		<span class="title">Setup completed</span>

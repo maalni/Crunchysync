@@ -1,3 +1,10 @@
-name: "Angular build"
+name: "Update packages"
+cmd: "yarn upgrade"
 sh: true,
-cmd: "ng build"
+targets:
+  Angular production mode build:
+    cmd: "ng build --prod --build-optimizer"
+    sh: true,
+  Angular developer mode build:
+    cmd: "ng build"
+    sh: true,

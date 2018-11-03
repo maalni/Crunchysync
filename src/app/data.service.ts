@@ -35,17 +35,10 @@ export class DataService {
 			return this._http.post("https://api.crunchyroll.com/start_session.0.json?"+
 				"&device_type=com.crunchyroll.crunchyroid"+
 				"&access_token=Scwg9PRRZ19iVwD"+
-				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
+				"&device_id=" + deviceid, {}).pipe(map(result => {this.result = result.json(); console.log(this.result);}), catchError((err: any) => { return throwError(err.statusText) }));
 		}else{
-			//Currently does nothing different
-			/*
-			return this._http.post("https://api2.cr-unblocker.com/start_session?"+
-				"&version=1.1"
-				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
-			*/
-			return this._http.post("https://api.crunchyroll.com/start_session.0.json?"+
-				"&device_type=com.crunchyroll.crunchyroid"+
-				"&access_token=Scwg9PRRZ19iVwD"+
+			return this._http.post("https://api1.cr-unblocker.com/getsession.php?"+
+				"&version=1.1" +
 				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
 		}
 	}
