@@ -2,7 +2,5 @@
 This extension is now also released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
-## Feature Changes:
-- Added setup when opening the extension for the first time
-- Added background syncing (once every 30min, can be disabled)
-- Added availability notifications (require background sync)
+## UI Changes:
+- Replaced the premium icon as extension icon with my own icon

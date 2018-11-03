@@ -105,7 +105,7 @@ function checkUnavailableAnimes(){
 								}
 								for(i in available){
 									var anime = available[i];
-									chrome.notifications.create({type: "image", iconUrl: "assets/icons/premium.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
+									chrome.notifications.create({type: "image", iconUrl: "assets/icons/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
 								}
 							}
 							chrome.storage.local.get(["userIsPremium"], function(result) {
@@ -116,7 +116,7 @@ function checkUnavailableAnimes(){
 								chrome.storage.local.set({"unavailable": unavailable});
 							});
 						}else{
-							chrome.notifications.create({type: "basic", iconUrl: "assets/icons/premium.png", title: "Crunchysync's backgroundsync encountered an error", message: JSON.parse(xmlHttp.responseText).code});
+							chrome.notifications.create({type: "basic", iconUrl: "assets/icons/crunchysync.png", title: "Crunchysync's backgroundsync encountered an error", message: JSON.parse(xmlHttp.responseText).code});
 						}
 					}
 				}
