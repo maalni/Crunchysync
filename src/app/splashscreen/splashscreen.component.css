@@ -4,6 +4,13 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	width: 10%;
+	margin: auto;
+}
+
+.splashscreenContainer app-spinner{
+	position: absolute;
+	top: calc(50% + 80px);
+	left: 0;
+	right: 0;
 	margin: auto;
 }

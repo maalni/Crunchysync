@@ -15,3 +15,12 @@
 .warningContainer .update{
 	background-color: var(--success-color) !important;
 }
+
+@media only screen and (min-width: 451px), only screen and (min-height: 601px){
+	.warningContainer .error{
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 9999;
+	}
+}

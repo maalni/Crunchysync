@@ -84,8 +84,8 @@
 	background-color: rgba(0, 0, 0, 0.3);
 	color: var(--secondary-color);
 	border: none;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
 	font-size: 15pt;
 	line-height: 26px;
 	text-align: center;
@@ -127,6 +127,7 @@
 	color: var(--secondary-color);
 	border: none;
 	padding: 4px;
+	border-radius: 0px;
 }
 
 .selectedAnimeContainer .selectedAnime .openAnimebtn:hover{
@@ -146,8 +147,8 @@
 	background-color: rgba(0, 0, 0, 0.3);
 	color: var(--secondary-color);
 	border: none;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 	padding: 4px;
 }
 

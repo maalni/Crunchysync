@@ -3,4 +3,4 @@ This extension is now also released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## UI Changes:
-- Replaced the premium icon as extension icon with my own icon
+- Minor changes in the ui
