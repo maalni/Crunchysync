@@ -15,7 +15,7 @@
 	</div>
 	<div class="page2" *ngIf="page === 2">
 		<span class="title">Options</span>
-		<div class="checkbox setupForceUsRegionContainer" *ngIf="!production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox">Force session with US region (Not working)</label></div>
+		<div class="checkbox setupForceUsRegionContainer" *ngIf="!production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox">Force session with US region</label></div>
 		<div class="checkbox setupDisableBackgroundChecksContainer"><label for="setupDisableBackgroundChecks"><input id="setupDisableBackgroundChecks" type="checkbox">Disable background checks</label></div>
 		<div class="checkbox setupUserIsPremiumContainer"><label for="setupUserIsPremium"><input id="setupUserIsPremium" type="checkbox">Disable non-premium features?</label></div>
 		<button class="nextbtn" (click)="saveOptions()"><span>Next</span><img src="../../assets/icons/next.svg"></button>

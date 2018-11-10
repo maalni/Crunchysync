@@ -18,11 +18,15 @@ export class DataService {
 	/*Sends GET request to crunchyroll servers and returns the users queued animes
 		Variables:
 		String sessionid = Users session id*/
-	getQueue(sessionid: string): Observable<any> {
+	getQueue(sessionid: string, forceUsRegion: boolean): Observable<any> {
+		var locale = "en";
+		if(!forceUsRegion){
+			locale = chrome.i18n.getUILanguage();
+		}
 		return this._http.get("https://api.crunchyroll.com/queue.0.json?"+
 			"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
 			"&media_types=anime|drama"+
-			"&locale=enUS"+
+			"&locale=enUS" +
 			"&session_id=" + sessionid).pipe(map(result => this.result = result.json()), catchError((err: any) => { return throwError(err.statusText) }));
 	}
 

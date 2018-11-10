@@ -2,5 +2,6 @@
 This extension is now also released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
-## UI Changes:
-- Minor changes in the ui
+## Code Changes:
+- Minor changes to the queue algorithms to reflect crunchyrolls backend change
+- Add minor i18n support, the queue is now translated in your systemlanguage (i18n support will be completely implemented in the next release)

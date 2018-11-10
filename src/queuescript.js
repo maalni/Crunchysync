@@ -33,26 +33,28 @@ function addAnimesToDom(animes){
 		var all = [], done = [], watching = [], unseen = [];
 		for(var i in animes){
 			var anime = animes[i];
-			var element = "<li name="+anime.most_likely_media.name+"><a href="+anime.most_likely_media.url+"><img src="+anime.most_likely_media.screenshot_image.fwide_url+">";
-			if(anime.most_likely_media.playhead === undefined){
-				anime.most_likely_media.playhead = 0;
-			}
-			if(anime.most_likely_media.premium_only){
-				element += "<span class='premiumDate'>"+new Date(anime.most_likely_media.free_available_time).toLocaleDateString(undefined, { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(new RegExp(",", 'g'), "")+"</span><img class='premiumIcon' src="+premiumiconsrc+">";
-			}
-			element += "<img class='playbutton' src="+playiconsrc+"><progress value="+anime.most_likely_media.playhead+" max="+anime.most_likely_media.duration+"></progress><div><span class='animeTitle'>"+anime.series.name+"</span><span class='episodeName'>"+anime.most_likely_media.name + "</span>"
-			if(anime.most_likely_media.episode_number !== "" || anime.most_likely_media.episode_number !== undefined){
-					element += "<span class='episodeNumber'> Episode Nr."+anime.most_likely_media.episode_number+"</span>";
-			}
-			element += "<span class='description'>"+anime.most_likely_media.description+"</span></div></a></li>";
-			all.push(element);
-			if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-				done.push(element);
-			}else{
-				if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-					watching.push(element);
+			if(anime.most_likely_media !== undefined){
+				var element = "<li name="+anime.most_likely_media.name+"><a href="+anime.most_likely_media.url+"><img src="+anime.most_likely_media.screenshot_image.fwide_url+">";
+				if(anime.most_likely_media.playhead === undefined){
+					anime.most_likely_media.playhead = 0;
+				}
+				if(anime.most_likely_media.premium_only){
+					element += "<span class='premiumDate'>"+new Date(anime.most_likely_media.free_available_time).toLocaleDateString(undefined, { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(new RegExp(",", 'g'), "")+"</span><img class='premiumIcon' src="+premiumiconsrc+">";
+				}
+				element += "<img class='playbutton' src="+playiconsrc+"><progress value="+anime.most_likely_media.playhead+" max="+anime.most_likely_media.duration+"></progress><div><span class='animeTitle'>"+anime.series.name+"</span><span class='episodeName'>"+anime.most_likely_media.name + "</span>"
+				if(anime.most_likely_media.episode_number !== "" || anime.most_likely_media.episode_number !== undefined){
+						element += "<span class='episodeNumber'> Episode Nr."+anime.most_likely_media.episode_number+"</span>";
+				}
+				element += "<span class='description'>"+anime.most_likely_media.description+"</span></div></a></li>";
+				all.push(element);
+				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+					done.push(element);
 				}else{
-					unseen.push(element);
+					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+						watching.push(element);
+					}else{
+						unseen.push(element);
+					}
 				}
 			}
 		}
@@ -89,10 +91,11 @@ function refreshQueue(){
 	document.getElementById("refreshbtn").hidden = true;
 	chrome.runtime.sendMessage({data: "getSessionId"}, function(response){
 		if(response.sessionid !== undefined){
+			var locale = "en";
 			var apiurl = "https://api.crunchyroll.com/queue.0.json?"+
 				"&fields=most_likely_media,series,series.name,series.media_count,media.description,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
 				"&media_types=anime|drama"+
-				"&locale=enUS"+
+				"&locale=" + locale +
 				"&session_id=" + response.sessionid.value;
 			var xmlHttp = new XMLHttpRequest();
     	xmlHttp.onreadystatechange = function() {

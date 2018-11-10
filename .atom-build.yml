@@ -3,8 +3,8 @@ cmd: "yarn upgrade"
 sh: true,
 targets:
   Angular production mode build:
-    cmd: "ng build --prod --build-optimizer"
+    cmd: "node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && node-minify --compressor uglify-es --input src/backgroundscript.js --output src/backgroundscript.min.js && ng build --prod --build-optimizer"
     sh: true,
   Angular developer mode build:
-    cmd: "ng build"
+    cmd: "node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && node-minify --compressor uglify-es --input src/backgroundscript.js --output src/backgroundscript.min.js && ng build"
     sh: true,

@@ -109,18 +109,20 @@ export class AppComponent {
 			this.unseen = [];
 			for(var i in this.animes){
 				var anime = this.animes[i];
-        if(anime.most_likely_media.playhead === undefined){
-    			anime.most_likely_media.playhead = 0;
-    		}
-				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-					this.done.push(anime);
-				}else{
-					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-						this.watching.push(anime);
-					}else{
-						this.unseen.push(anime);
-					}
-				}
+        if(anime.most_likely_media !== undefined){
+          if(anime.most_likely_media.playhead === undefined){
+      			anime.most_likely_media.playhead = 0;
+      		}
+  				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+  					this.done.push(anime);
+  				}else{
+  					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+  						this.watching.push(anime);
+  					}else{
+  						this.unseen.push(anime);
+  					}
+  				}
+        }
 			}
 			if(this.watching.length > 0){
 				chrome.browserAction.setBadgeBackgroundColor({ color: [247, 140, 37, 1] });
@@ -144,7 +146,8 @@ export class AppComponent {
   //Refreshes the cached animes
 	refreshQueue(){
 		this.loading(true);
-		this.dataService.getQueue(this.settings['sessionid']).subscribe(res => {
+		this.dataService.getQueue(this.settings['sessionid'], this.settings['forceUsRegion']).subscribe(res => {
+      console.log(res);
 			if(!res.error){
 				chrome.runtime.sendMessage({data: "onAuthenticatedEvent"});
 				chrome.storage.local.set({"animes": res.data}, function() {});

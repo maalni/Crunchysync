@@ -85,7 +85,7 @@ export class SettingsComponent implements OnInit {
 			function(){
         if(!this.production){
           chrome.storage.local.set({
-        		"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
+        		"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
         	}, function(){
             ang.saving = false;
     				ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
