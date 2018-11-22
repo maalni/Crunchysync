@@ -13,6 +13,6 @@
 	<button *ngIf="!production" class="sessionbtn" (click)="visitCrunchyroll()">Refresh SessionID</button>
 	<input *ngIf="!production" id="deviceid" class="deviceid" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
 	<div *ngIf="!production" class="checkbox"><label for="forceUsRegion"><input id="forceUsRegion" type="checkbox" [checked]="forceUsRegion"> Force session with US region</label></div>
-	<button class="savebtn" (click)="confirmSettings()"><img src="../assets/icons/save.svg"><div>Save</div></button>
+	<button class="savebtn" (click)="saveSettings()"><img src="../assets/icons/save.svg"><div>Save</div></button>
 	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
 </div>
