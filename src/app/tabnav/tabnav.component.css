@@ -3,6 +3,7 @@
 	height: 50px;
 	background-color: var(--secondary-color);
 	z-index: 900;
+	box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
 }
 
 .navContainer button{
@@ -16,11 +17,7 @@
 }
 
 .navContainer button:hover{
-	background-color: rgba(0, 0, 0, 0.02);
-}
-
-.navContainer button:focus{
-	outline: none;
+	background-color: var(--darkened-secondary-color)
 }
 
 .navContainer .watchingbtn{

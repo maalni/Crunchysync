@@ -20,7 +20,6 @@ export class SettingsComponent implements OnInit {
 	userIsPremium: boolean = false;
 	firstuse: boolean = false;
 	disableBackgroundChecks: boolean = false;
-	saving: boolean = false;
 	version: string = chrome.runtime.getManifest().version;
   production: boolean = false;
 
@@ -73,8 +72,6 @@ export class SettingsComponent implements OnInit {
   //Saves the encrypted settings to chromes local storage (not synced!)
 	saveSettings(){
 		var ang = this;
-		document.getElementById("confirmSettingsDialog").hidden = true;
-		this.saving = true;
 		chrome.storage.local.set({
 			"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString(),
 			"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString(),
@@ -86,24 +83,11 @@ export class SettingsComponent implements OnInit {
         if(!this.production){
           chrome.storage.local.set({
         		"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
-        	}, function(){
-            ang.saving = false;
-    				ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
-          });
+        	});
         }else{
-          ang.saving = false;
   				ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
         }
 			});
-	}
-
-  //Opens confirmation dialog if user tries to save username or password
-	confirmSettings(){
-		if((<HTMLInputElement>document.getElementById("username")).value != "" || (<HTMLInputElement>document.getElementById("password")).value != ""){
-			document.getElementById("confirmSettingsDialog").hidden = false;
-		}else{
-			this.saveSettings();
-		}
 	}
 
   //Reloads the extension, content- and backgroundscript
@@ -114,11 +98,6 @@ export class SettingsComponent implements OnInit {
   //Opens the crunchyroll homepage in a new tab
 	visitCrunchyroll(){
 		window.open("http://www.crunchyroll.com/");
-	}
-
-  //Closes the confirmation dialog
-	closeConfirmDialog(){
-		document.getElementById("confirmSettingsDialog").hidden = true;
 	}
 
   //Generates a random deviceid and saves it to chromes local storage

@@ -1,19 +1,40 @@
-.settingsContainer .settingstitle{
+.settingsContainer{
+	margin-bottom: 10px;
+}
+
+.settingsContainer .title{
 	color: var(--primary-color);
 	font-size: 20pt;
 	font-weight: bold;
-	margin-left: 10px;
+	margin-left: 20px;
+}
+
+.settingsContainer .subtitle{
+	font-size: 12pt;
+	margin-left: 20px;
+	margin-bottom: 15px;
+	color: var(--tertiary-color);
+}
+
+.settingsContainer .logo{
+	width: 128px;
+	margin-left: calc(50% - 64px);
+	margin-right: calc(50% - 64px);
 }
 
 .settingsContainer .version{
 	font-size: 11pt;
+	width: 100%;
+	text-align: center;
+	color: var(--tertiary-color);
 }
 
 .settingsContainer input{
-	width: 420px;
+	width: 400px;
 	height: 30px;
-	margin-left: 10px;
+	margin-left: 20px;
 	margin-bottom: 10px;
+	border: gray 1px solid;
 }
 
 .settingsContainer #sessionid{
@@ -23,23 +44,22 @@
 }
 
 .settingsContainer .reloadbtn{
-	position: absolute;
-	bottom: 10px;
-	right: 5px;
 	width: 130px;
 	height: 32px;
 	border-radius: 5px;
-	border: none;
-	padding: none;
-	margin-left: calc(100% - 135px);
+	border: solid 1px var(--tertiary-color);
+	margin-top: 30px;
+	margin-left: calc(100% - 142px);
+	color: var(--tertiary-color);
+	background-color: var(--secondary-color);
 }
 
 .settingsContainer .reloadbtn:hover{
-	background-color: rgba(0, 0, 0, 0.13);
+	background-color: var(--darkened-secondary-color);
 }
 
 .settingsContainer .checkbox{
-	margin-left: 10px;
+	margin-top: -6px;
 	width: calc(100% - 20px);
 }
 
@@ -51,11 +71,7 @@
 	color: var(--secondary-color);
 	background-color: var(--primary-color);
 	border: none;
-	margin-left: calc(100% - 85px);
-}
-
-.settingsContainer .savebtn:disabled{
-	background-color: rgba(0,0,0,0.2);
+	margin-left: calc(100% - 93px);
 }
 
 .settingsContainer .savebtn img{
@@ -76,21 +92,13 @@
 	width: calc(100% - 32px);
 }
 
-.settingsContainer .savebtn:hover{
-	background-color: rgba(247, 140, 37, 0.8);
-}
-
 .settingsContainer .sessionbtn{
 	position: relative;
-	width: 121px;
-	height: 32px;
+	top: -8px;
+	width: 100px;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
 	border: none;
-}
-
-.settingsContainer .sessionbtn:hover{
-	background-color: rgba(0, 0, 0, 0.13);
 }
 
 .settingsContainer .sessionbtn img{
@@ -109,55 +117,4 @@
 	top: 0;
 	width: calc(100% - 32px);
 	line-height: 32px;
-}
-
-.settingsContainer #confirmSettingsDialog{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0,0.75);
-	z-index: 999;
-}
-
-.settingsContainer #confirmSettingsDialog span{
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	margin: auto;
-	width: 325px;
-	height: 65px;
-	padding: 10px;
-	border-radius: 5px;
-	line-height: 15px;
-	background-color: var(--secondary-color);
-}
-
-.settingsContainer #confirmSettingsDialog .closeDialog{
-	position: absolute;
-	top: 50%;
-	width: 155px;
-	height: 30px;
-	border-radius: 5px;
-	border: none;
-	right: 10px;
-	color: white;
-	background-color: var(--error-color);
-	margin-top: 5px;
-}
-
-.settingsContainer #confirmSettingsDialog .confirmDialog{
-	position: absolute;
-	top: 50%;
-	width: 155px;
-	height: 30px;
-	border-radius: 5px;
-	border: none;
-	left: 10px;
-	color: white;
-	background-color: var(--success-color);
-	margin-top: 5px;
 }

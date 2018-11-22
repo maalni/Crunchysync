@@ -6,14 +6,27 @@
 	font-size: 10pt;
 	background-color: var(--primary-color);
 	cursor: pointer;
+	box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+}
+
+.warningContainer .warning:hover{
+	background-color: var(--darkened-primary-color);
 }
 
 .warningContainer .error{
 	background-color: var(--error-color) !important;
 }
 
+.warningContainer .error:hover{
+	background-color: var(--darkened-error-color) !important;
+}
+
 .warningContainer .update{
 	background-color: var(--success-color) !important;
+}
+
+.warningContainer .update:hover{
+	background-color: var(--darkened-success-color) !important;
 }
 
 @media only screen and (min-width: 451px), only screen and (min-height: 601px){

@@ -7,10 +7,11 @@
 	border-radius: 5px 5px 5px 5px;
 	margin-bottom: 10px;
 	overflow: hidden;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .animeContainer:hover{
-	filter: brightness(90%);
+	background-color: var(--darkened-secondary-color);
 }
 
 .animeContainer:hover .openEpisodebtn{
@@ -23,15 +24,10 @@
 	left: 55px;
 	width: 50px;
 	height: 50px;
-	background-color: rgba(0, 0, 0, 0.7);
 	z-index: 100;
 	border-radius: 25px;
 	border: none;
 	visibility: hidden;
-}
-
-.animeContainer .openEpisodebtn:hover{
-	background-color: rgba(0, 0, 0, 0.8);
 }
 
 .animeContainer .preview{
@@ -59,7 +55,7 @@
 	width: 100%;
 	height: 5px;
 	border: none;
-	background-color: rgba(0, 0, 0, 0);
+	background-color: var(--transparent-color);
 	border-bottom-left-radius: 5px;
 }
 
@@ -102,11 +98,9 @@
 }
 
 .animeContainer progress::-webkit-progress-bar {
-	background-color: rgba(0, 0, 0, 0);
 	border-bottom-left-radius: 5px;
 }
 
 .animeContainer progress::-webkit-progress-value {
-  background-color: var(--primary-color);
 	border-bottom-left-radius: 5px;
 }

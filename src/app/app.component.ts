@@ -114,6 +114,7 @@ export class AppComponent {
       			anime.most_likely_media.playhead = 0;
       		}
   				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
+            console.log(anime)
   					this.done.push(anime);
   				}else{
   					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){

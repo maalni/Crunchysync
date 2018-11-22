@@ -6,22 +6,31 @@
 *{
    font-family: 'Roboto', sans-serif;
 	 --primary-color: #f78c25;
-	 --darken-primary-color: rgba(247, 140, 37, 0.9);
+	 --darkened-primary-color: #EA7F18;
 	 --secondary-color: white;
+	 --darkened-secondary-color: #F2F2F2;
 	 --tertiary-color: #333333;
+	 --transparent-color: rgba(0,0,0,0);
+	 --darkened-transparent-color: rgba(0,0,0,0.75);
 	 --error-color: #F44336;
+	 --darkened-error-color: #E73629;
 	 --success-color: #4caf50;
- }
+	 --darkened-success-color: #3FA243;
+}
 
- html, body{
- 	width: 450px;
+*:focus {
+	outline: none;
+}
+
+html, body{
+	width: 450px;
  	height: 600px;
  	margin: 0px;
  	padding: 0px;
  	border: none;
- 	background-color: #f3f3f3;
+ 	background-color: var(--secondary-color);
  	overflow: hidden;
- }
+}
 
 *::-webkit-scrollbar {
 	top: 50px;
@@ -49,6 +58,11 @@ input{
 	padding-left: 10px;
 	border-radius: 5px;
 	border: none;
+	background-color: var(--secondary-color);
+}
+
+input:disabled{
+	background-color: var(--darkened-secondary-color);
 }
 
 input[type=checkbox]{
@@ -58,31 +72,44 @@ input[type=checkbox]{
 	padding: 0;
 	line-height: 20px;
 	vertical-align: middle;
-	background-color: rgba(0, 0, 0, 0.1);
-	margin-top: 0;
+	background-color: var(--secondary-color);
+	margin-top: 7px;
+	margin-bottom: 10px;
 	color: var(--secondary-color);
+	border: solid 1px var(--primary-color)
+}
+
+input[type=checkbox]:hover{
+	background-color: var(--darkened-secondary-color);
 }
 
 input[type=checkbox]:checked{
 	background-color: var(--primary-color);
+	border: none;
 }
 
 input[type=checkbox]:checked:after {
 	content: "✔";
-	position: absolute;
+	margin-left: 3px;
 	width: 20px;
 	height: 20px;
 	text-align: center;
 	font-size: 12pt;
 }
 
+input[type=checkbox]:checked:hover {
+	background-color: var(--darkened-primary-color);
+}
+
 button{
 	border-radius: 5px;
 	border: none;
+	color: var(--secondary-color);
+	background-color: var(--primary-color);
 }
 
 button:hover{
-	background-color: rgba(0,0,0,0.1);
+	background-color: var(--darkened-primary-color);
 }
 
 app-splashscreen{

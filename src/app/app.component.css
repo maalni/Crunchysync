@@ -18,7 +18,7 @@
 }
 
 #refreshbtn:hover{
-	background-color: rgba(247, 140, 37, 0.8);
+	background-color: var(--darkened-primary-color);
 }
 
 #refreshbtn img{
@@ -48,7 +48,7 @@
 		min-width: 450px;
 		height: 100%;
 		min-height: 600px;
-		background-color: white;
+		background-color: var(--secondary-color);
 		display: inline;
 	}
 }
