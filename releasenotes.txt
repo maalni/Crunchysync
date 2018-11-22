@@ -3,4 +3,4 @@ This extension is now also released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## Design Changes:
-- Completely redesigned to match google's material refresh (hint: darkmode is coming...)
+- Fixed an typo
