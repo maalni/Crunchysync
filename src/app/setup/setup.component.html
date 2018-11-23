@@ -8,8 +8,8 @@
 	<div class="page1" *ngIf="page === 1">
 		<span class="title">Credentials</span>
 		<span class="subtitle">Credentials will be encrypted and saved in Chrome's local storage! Storing your password could inherit security risks!</span>
-		<input id="setupUsername" class="username" placeholder="Username">
-		<input id="setupPassword" class="password" placeholder="Password" type="password">
+		<input id="setupUsername" class="username card" placeholder="Username">
+		<input id="setupPassword" class="password card" placeholder="Password" type="password">
 		<button class="nextbtn" (click)="saveCredentials()"><span>Next</span><img src="../../assets/icons/next.svg"></button>
 		<button class="skipbtn" (click)="nextPage()">Skip...</button>
 	</div>

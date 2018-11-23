@@ -12,7 +12,8 @@
 .settingsContainer .subtitle{
 	font-size: 12pt;
 	margin-left: 20px;
-	margin-bottom: 15px;
+	margin-top: 10px;
+	margin-bottom: 5px;
 	color: var(--tertiary-color);
 }
 
@@ -30,11 +31,12 @@
 }
 
 .settingsContainer input{
+	padding-top: 0;
+	padding-bottom: 0;
 	width: 400px;
-	height: 30px;
+	height: 40px;
 	margin-left: 20px;
 	margin-bottom: 10px;
-	border: gray 1px solid;
 }
 
 .settingsContainer #sessionid{
@@ -45,7 +47,6 @@
 
 .settingsContainer .reloadbtn{
 	width: 130px;
-	height: 32px;
 	border-radius: 5px;
 	border: solid 1px var(--tertiary-color);
 	margin-top: 30px;
@@ -66,10 +67,7 @@
 .settingsContainer .savebtn{
 	position: relative;
 	width: 80px;
-	height: 32px;
 	border-radius: 5px;
-	color: var(--secondary-color);
-	background-color: var(--primary-color);
 	border: none;
 	margin-left: calc(100% - 93px);
 }
@@ -88,7 +86,7 @@
 	position: absolute;
 	left: 32px;
 	top: 0;
-	line-height: 32px;
+	line-height: 40px;
 	width: calc(100% - 32px);
 }
 
@@ -101,20 +99,10 @@
 	border: none;
 }
 
-.settingsContainer .sessionbtn img{
+.settingsContainer app-spinner{
 	position: absolute;
-	width: 32px;
-	height: 32px;
-	left: 5px;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-}
-
-.settingsContainer .sessionbtn div{
-	position: absolute;
-	left: 32px;
-	top: 0;
-	width: calc(100% - 32px);
-	line-height: 32px;
+	top: -20px;
+	left: 0;
+	right: 0;
+	height: 0px;
 }

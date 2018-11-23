@@ -114,7 +114,6 @@ export class AppComponent {
       			anime.most_likely_media.playhead = 0;
       		}
   				if(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10){
-            console.log(anime)
   					this.done.push(anime);
   				}else{
   					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
@@ -148,7 +147,6 @@ export class AppComponent {
 	refreshQueue(){
 		this.loading(true);
 		this.dataService.getQueue(this.settings['sessionid'], this.settings['forceUsRegion']).subscribe(res => {
-      console.log(res);
 			if(!res.error){
 				chrome.runtime.sendMessage({data: "onAuthenticatedEvent"});
 				chrome.storage.local.set({"animes": res.data}, function() {});

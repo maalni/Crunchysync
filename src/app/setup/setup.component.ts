@@ -38,7 +38,6 @@ export class SetupComponent implements OnInit {
 	}
 
 	saveOptions(){
-    this.forceUsRegion = (<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked;
     this.userIsPremium = (<HTMLInputElement>document.getElementById("setupDisableBackgroundChecks")).checked;
     this.disableBackgroundChecks = (<HTMLInputElement>document.getElementById("setupUserIsPremium")).checked;
 		chrome.storage.local.set({
@@ -46,6 +45,7 @@ export class SetupComponent implements OnInit {
 			"disableBackgroundChecks": (<HTMLInputElement>document.getElementById("setupUserIsPremium")).checked.toString()
 		});
     if(!this.production){
+      this.forceUsRegion = (<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked;
       chrome.storage.local.set({
   			"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("setupForceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
   		});
@@ -56,7 +56,8 @@ export class SetupComponent implements OnInit {
 	finishSetup(){
 		chrome.storage.local.set({
 			"firstuse": "false"
-		});
-		this.onSetupComplete.emit({"username": this.username, "password": this.password, "forceUsRegion": this.forceUsRegion, "userIsPremium": this.userIsPremium, "firstuse": false});
+		}, function(){
+      chrome.runtime.reload();
+    });
 	}
 }

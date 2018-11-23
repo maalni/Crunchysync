@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AES, enc } from 'crypto-ts';
 
@@ -21,9 +21,10 @@ export class SettingsComponent implements OnInit {
 	firstuse: boolean = false;
 	disableBackgroundChecks: boolean = false;
 	version: string = chrome.runtime.getManifest().version;
-  production: boolean = false;
+  production: boolean = true;
+  saving: boolean = false;
 
-  constructor() { }
+  constructor(private ngZone: NgZone) { }
 
   ngOnInit() {
     this.production = environment.production;
@@ -71,23 +72,30 @@ export class SettingsComponent implements OnInit {
 
   //Saves the encrypted settings to chromes local storage (not synced!)
 	saveSettings(){
-		var ang = this;
-		chrome.storage.local.set({
-			"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString(),
-			"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString(),
-			"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString(),
-			"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString(),
-			"userIsPremium": (<HTMLInputElement>document.getElementById("userIsPremium")).checked.toString(),
-			"disableBackgroundChecks": (<HTMLInputElement>document.getElementById("disableBackgroundChecks")).checked.toString()},
-			function(){
-        if(!this.production){
-          chrome.storage.local.set({
-        		"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
-        	});
-        }else{
-  				ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
-        }
-			});
+    if(!this.saving){
+  		var ang = this;
+      this.saving = true;
+  		chrome.storage.local.set({
+  			"username": AES.encrypt((<HTMLInputElement>document.getElementById("username")).value, "5HR*98g5a699^9P#f7cz").toString(),
+  			"password": AES.encrypt((<HTMLInputElement>document.getElementById("password")).value, "5HR*98g5a699^9P#f7cz").toString(),
+  			"sessionid": AES.encrypt(this.sessionid, "5HR*98g5a699^9P#f7cz").toString(),
+  			"deviceid": AES.encrypt(this.deviceid, "5HR*98g5a699^9P#f7cz").toString(),
+  			"userIsPremium": (<HTMLInputElement>document.getElementById("userIsPremium")).checked.toString(),
+  			"disableBackgroundChecks": (<HTMLInputElement>document.getElementById("disableBackgroundChecks")).checked.toString()},
+  			function(){
+          if(!ang.production){
+            chrome.storage.local.set({
+          		"forceUsRegion": AES.encrypt((<HTMLInputElement>document.getElementById("forceUsRegion")).checked.toString(), "5HR*98g5a699^9P#f7cz").toString(),
+          	});
+          }
+          ang.ngZone.run(() => {
+            setTimeout(function(){
+              ang.saving = false;
+            }, 2000);
+      			ang.onSettingsChanged.emit({"username": ang.username, "password": ang.password, "deviceid": ang.deviceid, "sessionid": ang.sessionid, "forceUsRegion": ang.forceUsRegion, "version": ang.version, "userIsPremium": ang.userIsPremium, "firstuse": ang.firstuse});
+          });
+        });
+    }
 	}
 
   //Reloads the extension, content- and backgroundscript

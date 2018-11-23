@@ -2,5 +2,8 @@
 This extension is now also released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
+## Code Changes:
+- Fixed an major fuckup in setup
+
 ## Design Changes:
-- Fixed an typo
+- Changed some minor details in setup, settings and search

@@ -3,16 +3,16 @@
 	<div class="version">Version {{version}}</div>
 	<div class="title">Settings</div>
 	<div class="subtitle">Credentials</div>
-	<input id="username" class="username" placeholder="Username" value="{{username}}">
-	<input id="password" class="password" placeholder="Password" value="{{password}}" type="password">
+	<input id="username" class="username card" placeholder="Username" value="{{username}}">
+	<input id="password" class="password card" placeholder="Password" value="{{password}}" type="password">
 	<div class="subtitle">Options</div>
 	<div class="checkbox"><label for="disableBackgroundChecks"><input id="disableBackgroundChecks" type="checkbox" [checked]="disableBackgroundChecks">Disable background checks</label></div>
 	<div class="checkbox"><label for="userIsPremium"><input id="userIsPremium" type="checkbox" [checked]="userIsPremium">Disable non-premium features?</label></div>
 	<div *ngIf="!production" class="subtitle">Debug</div>
-	<input *ngIf="!production" id="sessionid" class="sessionid" placeholder="Session ID" value="SessionID: {{sessionid}}" disabled>
-	<button *ngIf="!production" class="sessionbtn" (click)="visitCrunchyroll()">Refresh SessionID</button>
-	<input *ngIf="!production" id="deviceid" class="deviceid" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
+	<input *ngIf="!production" id="sessionid" class="sessionid card" placeholder="Session ID" value="SessionID: {{sessionid}}" disabled>
+	<button *ngIf="!production" class="sessionbtn card" (click)="visitCrunchyroll()">Refresh SessionID</button>
+	<input *ngIf="!production" id="deviceid" class="deviceid card" placeholder="Device ID" value="DeviceID: {{deviceid}}" disabled>
 	<div *ngIf="!production" class="checkbox"><label for="forceUsRegion"><input id="forceUsRegion" type="checkbox" [checked]="forceUsRegion"> Force session with US region</label></div>
-	<button class="savebtn" (click)="saveSettings()"><img src="../assets/icons/save.svg"><div>Save</div></button>
+	<button class="savebtn {{saving}}" (click)="saveSettings()"><img src="../assets/icons/save.svg"><div *ngIf="!saving;">Save</div><div *ngIf="saving">Saving</div><app-spinner *ngIf="saving"></app-spinner></button>
 	<button class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
 </div>
