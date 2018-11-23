@@ -1,5 +1,4 @@
-
-This extension is now also released in chrome's webstore!
+This extension is now also released in chrome's webstore!  
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## Code Changes:
