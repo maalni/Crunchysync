@@ -64,6 +64,10 @@
 	width: calc(100% - 20px);
 }
 
+.settingsContainer .checkbox label{
+	color: var(--tertiary-color);
+}
+
 .settingsContainer .savebtn{
 	position: relative;
 	width: 80px;
@@ -72,7 +76,7 @@
 	margin-left: calc(100% - 93px);
 }
 
-.settingsContainer .savebtn img{
+.settingsContainer .savebtn svg{
 	position: absolute;
 	width: 32px;
 	height: 32px;
@@ -88,6 +92,7 @@
 	top: 0;
 	line-height: 40px;
 	width: calc(100% - 32px);
+	color: var(--secondary-color);
 }
 
 .settingsContainer .sessionbtn{
@@ -101,8 +106,101 @@
 
 .settingsContainer app-spinner{
 	position: absolute;
-	top: -20px;
+	top: 0px;
 	left: 0;
 	right: 0;
 	height: 0px;
+}
+
+.settingsContainer .themeLight{
+	position: relative;
+	margin-left: 20px;
+	width: 200px;
+	height: 100px;
+	border-radius: 5px;
+	background-color: white;
+	color: #333333;
+}
+
+.settingsContainer .themeLight:hover{
+	background-color: #F2F2F2;
+}
+
+.settingsContainer .themeLight label{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 100px;
+}
+
+.settingsContainer .themeLight span{
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	color: #333333;
+}
+
+.settingsContainer .themeLight input{
+	background-color: white;
+	margin-left: 5px;
+}
+
+.settingsContainer .themeLight input:hover{
+	background-color: #F2F2F2;
+}
+
+.settingsContainer .themeLight input:checked{
+	background-color: var(--primary-color);
+}
+
+.settingsContainer .themeLight input:checked:hover{
+	background-color: var(--darkened-primary-color);
+}
+
+.settingsContainer .themeDark{
+	position: relative;
+	width: 200px;
+	height: 100px;
+	border-radius: 5px;
+	background-color: #333333;
+	color: white;
+	margin-top: -100px;
+	margin-left: 230px;
+}
+
+.settingsContainer .themeDark:hover{
+	background-color: #262626;
+}
+
+.settingsContainer .themeDark label{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 100px;
+}
+
+.settingsContainer .themeDark span{
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	color: white;
+}
+
+.settingsContainer .themeDark input{
+	background-color: #333333;
+	margin-left: 5px;
+}
+
+.settingsContainer .themeDark input:hover{
+	background-color: #262626;
+}
+
+.settingsContainer .themeDark input:checked{
+	background-color: var(--primary-color);
+}
+
+.settingsContainer .themeDark input:checked:hover{
+	background-color: var(--darkened-primary-color);
 }

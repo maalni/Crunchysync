@@ -7,18 +7,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 
 export class SearchComponent {
-
   @Output() onChange = new EventEmitter<string>();
 	searchTerm: string = "";
-
-  //Emit an event when the searchterm changes
-	onSearchChangeEvent(){
-		this.onChange.emit(this.searchTerm);
-	}
-
-  //Clears the searchterm
-	clearSearch(){
-		this.searchTerm = "";
-		this.onSearchChangeEvent();
-	}
 }

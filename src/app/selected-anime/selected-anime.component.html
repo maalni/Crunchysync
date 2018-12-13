@@ -1,10 +1,10 @@
 <div class="selectedAnimeContainer">
-	<div class="close" (click)="closeAnime()"></div>
+	<div class="close" (click)="onClose.emit()"></div>
 	<div class="selectedAnime">
-		<button class="closebtn" (click)="closeAnime()">🞩</button>
-		<button class="openEpisodebtn" (click)="openEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
-		<button class="openAnimebtn" (click)="openAnime()"><img src="../assets/icons/openSelectedAnime.svg"></button>
-		<button class="completeEpisodebtn" (click)="completeEpisode()"><img src="../assets/icons/completeSelectedEpisode.svg"></button>
+		<button class="closebtn" (click)="onClose.emit()">🞩</button>
+		<button class="openEpisodebtn" (click)="openEpisode()"><svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg></button>
+		<button class="openAnimebtn" (click)="openAnime()"><svg><use xlink:href="../assets/icons/openSelectedAnime.svg#openSelectedAnime"></use></svg></button>
+		<button class="completeEpisodebtn" (click)="completeEpisode()"><svg><use xlink:href="../assets/icons/completeSelectedEpisode.svg#completeSelectedEpisode"></use></svg></button>
 		<div class="premium" *ngIf="selectedAnime?.most_likely_media?.premium_only && !this.userIsPremium">
 			<img class="premiumIcon" src="../../assets/icons/premium.png">
 			<span class="premiumDate">{{getDate()}}</span>

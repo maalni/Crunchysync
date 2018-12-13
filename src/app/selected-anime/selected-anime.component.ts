@@ -7,11 +7,13 @@ import { DataService } from '../data.service';
   styleUrls: ['./selected-anime.component.css']
 })
 
-export class SelectedAnimeComponent {
+export class SelectedAnimeComponent{
 
-	@Input() selectedAnime: any;
+	@Input() selectedAnime;
 	@Input() userIsPremium;
 	@Output() onComplete = new EventEmitter<any>();
+  @Output() onClose = new EventEmitter<any>();
+  animeSelected:boolean = false;
 
 	constructor(private dataService: DataService) {}
 
@@ -33,14 +35,9 @@ export class SelectedAnimeComponent {
 		window.open(this.selectedAnime.series.url);
 	}
 
-  //Closes the selected anime
-	closeAnime(){
-		(<HTMLElement>document.getElementById("selectedAnime")).hidden = true;
-	}
-
   //Completes the selected episode and refreshes the queue
 	completeEpisode(){
-		this.closeAnime();
+		this.onClose.emit();
 		this.dataService.completeEpisode(this.selectedAnime['most_likely_media']['media_id'], this.selectedAnime['most_likely_media']['duration']).subscribe(res => {
 			this.onComplete.emit();
 		});

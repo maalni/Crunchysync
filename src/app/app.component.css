@@ -21,7 +21,7 @@
 	background-color: var(--darkened-primary-color);
 }
 
-#refreshbtn img{
+#refreshbtn svg{
 	position: absolute;
 	left: 10px;
 	top: 0px;
@@ -37,6 +37,7 @@
 	top: 0px;
 	line-height: 40px;
 	font-size: 13pt;
+	color: var(--secondary-color);
 }
 
 @media only screen and (min-width: 451px), only screen and (min-height: 601px){

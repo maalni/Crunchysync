@@ -21,6 +21,9 @@ export class AppComponent {
 	updateVersion: number = 0;
 	retry: boolean = false;
 	cachedQueue: boolean = true;
+  selectedPage: number = 0;
+  loading: boolean = false;
+  animeSelected: boolean = false;
 
 	constructor(private dataService: DataService, private ngZone: NgZone) {}
 
@@ -54,6 +57,7 @@ export class AppComponent {
     Boolean ignoreCache = Force cache to be ignored*/
 	authenticate(username, password, sessionid, deviceid: string, forceUsRegion, ignoreCache: boolean){
 		var ang = this;
+    this.loading = true;
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null && !ignoreCache){
 				ang.ngZone.run(() => {
@@ -91,7 +95,7 @@ export class AppComponent {
 						chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
 						document.dispatchEvent(ang.onAuthenticatedEvent);
 					}
-					ang.loading(false);
+					ang.loading = false;
 				});
 			}
 		});
@@ -134,43 +138,35 @@ export class AppComponent {
   //Loads cached queue from chromes local storage
 	getLocalQueue(){
 		var ang = this;
-		this.loading(true);
+		this.loading = true;
 		chrome.storage.local.get(["animes"], function(result) {
 			ang.ngZone.run(() => {
 				ang.sortAnimes(result.animes);
-				ang.loading(false);
+				ang.loading = false;
 			});
 		});
 	}
 
   //Refreshes the cached animes
 	refreshQueue(){
-		this.loading(true);
+		this.loading = true;
 		this.dataService.getQueue(this.settings['sessionid'], this.settings['forceUsRegion']).subscribe(res => {
 			if(!res.error){
 				chrome.runtime.sendMessage({data: "onAuthenticatedEvent"});
 				chrome.storage.local.set({"animes": res.data}, function() {});
 				this.sortAnimes(res.data);
 				this.cachedQueue = false;
-        this.loading(false);
+        this.loading = false;
 			}else{
 				if((res.code === 'bad_session' || res.code === 'bad_request') && !this.retry){
 					this.retry = true;
 					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], this.settings['forceUsRegion'], true);
 				}else{
 					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
-          this.loading(false);
+          this.loading = false;
 				}
 			}
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
-	}
-
-  /*Syncs the selected anime between <app-category> and <app-selected-anime>
-    Variables:
-    Array<any> anime = selected anime from <app-category>*/
-	onSelectEventHandler(anime: Array<any>){
-		this.selectedAnime = anime;
-		(<HTMLElement>document.getElementById("selectedAnime")).hidden = false;
 	}
 
 	/*Authenticates the user, once the settings are loaded
@@ -187,16 +183,6 @@ export class AppComponent {
     this.settings = settings;
     this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
   }
-
-  /*Shows or hides the loading animation
-    Variables:
-    Boolean state = */
-	loading(state: boolean){
-		(<HTMLElement>document.getElementById("spinner")).hidden = !state;
-		if((<HTMLElement>document.getElementById("content").children[4]).hidden){
-			(<HTMLElement>document.getElementById("refreshbtn")).hidden = state;
-		}
-	}
 
   /*Shows an error with the given message
     Variables:

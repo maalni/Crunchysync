@@ -3,24 +3,30 @@
 	<div class="page0" *ngIf="page === 0">
 		<span class="title">Crunchysync</span>
 		<span class="subtitle">Manage your queue with ease.</span>
-		<button class="getStarted" (click)="nextPage()"><span>Get started</span><img src="../../assets/icons/next.svg"></button>
+		<button class="getStarted" (click)="nextPage()"><span>Get started</span><svg><use xlink:href="../assets/icons/next.svg#next"></use></svg></button>
 	</div>
 	<div class="page1" *ngIf="page === 1">
 		<span class="title">Credentials</span>
 		<span class="subtitle">Credentials will be encrypted and saved in Chrome's local storage! Storing your password could inherit security risks!</span>
-		<input id="setupUsername" class="username card" placeholder="Username">
-		<input id="setupPassword" class="password card" placeholder="Password" type="password">
-		<button class="nextbtn" (click)="saveCredentials()"><span>Next</span><img src="../../assets/icons/next.svg"></button>
+		<input id="setupUsername" class="username card" placeholder="Username" value="{{username}}">
+		<input id="setupPassword" class="password card" placeholder="Password" type="password" value="{{password}}">
+		<button class="nextbtn" (click)="saveCredentials()"><span>Next</span><svg><use xlink:href="../assets/icons/next.svg#next"></use></svg></button>
 		<button class="skipbtn" (click)="nextPage()">Skip...</button>
 	</div>
 	<div class="page2" *ngIf="page === 2">
 		<span class="title">Options</span>
-		<div class="checkbox setupForceUsRegionContainer" *ngIf="!production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox">Force session with US region</label></div>
-		<div class="checkbox setupDisableBackgroundChecksContainer"><label for="setupDisableBackgroundChecks"><input id="setupDisableBackgroundChecks" type="checkbox">Disable background checks</label></div>
-		<div class="checkbox setupUserIsPremiumContainer"><label for="setupUserIsPremium"><input id="setupUserIsPremium" type="checkbox">Disable non-premium features?</label></div>
-		<button class="nextbtn" (click)="saveOptions()"><span>Next</span><img src="../../assets/icons/next.svg"></button>
+		<div class="checkbox setupForceUsRegionContainer" *ngIf="!production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox" [checked]="forceUsRegion">Force session with US region</label></div>
+		<div class="checkbox setupDisableBackgroundChecksContainer"><label for="setupDisableBackgroundChecks"><input id="setupDisableBackgroundChecks" type="checkbox" [checked]="disableBackgroundChecks">Disable background checks</label></div>
+		<div class="checkbox setupUserIsPremiumContainer"><label for="setupUserIsPremium"><input id="setupUserIsPremium" type="checkbox" [checked]="userIsPremium">Disable non-premium features?</label></div>
+		<button class="nextbtn" (click)="saveOptions()"><span>Next</span><svg><use xlink:href="../assets/icons/next.svg#next"></use></svg></button>
 	</div>
 	<div class="page3" *ngIf="page === 3">
+		<span class="title">Theme</span>
+		<div class="radio card setupThemeLight"><input id="setupThemeLight" type="radio" name="theme" [checked]="theme == 'light'"><label for="setupThemeLight"></label><span>Light</span></div>
+		<div class="radio card setupThemeDark"><input id="setupThemeDark" type="radio" name="theme" [checked]="theme == 'dark'"><label for="setupThemeDark"></label><span>Dark</span></div>
+		<button class="nextbtn" (click)="saveTheme()"><span>Next</span><svg><use xlink:href="../assets/icons/next.svg#next"></use></svg></button>
+	</div>
+	<div class="page4" *ngIf="page === 4">
 		<span class="title">Setup completed</span>
 		<span class="subtitle">You successfully set up Crunchysync!</span>
 		<button class="finishbtn" (click)="finishSetup()">Finish</button>

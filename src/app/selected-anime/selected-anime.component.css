@@ -34,6 +34,7 @@
 	font-size: 10pt;
 	line-height: 25px;
 	text-align: center;
+	color: var(--secondary-color);
 }
 
 .selectedAnimeContainer .selectedAnime .premiumIcon{
@@ -105,8 +106,9 @@
 	padding: 4px;
 }
 
-.selectedAnimeContainer .selectedAnime .openEpisodebtn img{
+.selectedAnimeContainer .selectedAnime .openEpisodebtn svg{
 	width: 100%;
+	height: 100%;
 }
 
 .selectedAnimeContainer .selectedAnime .openAnimebtn{
@@ -121,8 +123,9 @@
 	min-height: 25px;
 }
 
-.selectedAnimeContainer .selectedAnime .openAnimebtn img{
+.selectedAnimeContainer .selectedAnime .openAnimebtn svg{
 	width: 100%;
+	height: 100%;
 }
 
 .selectedAnimeContainer .selectedAnime .completeEpisodebtn{
@@ -138,8 +141,9 @@
 	min-height: 25px;
 }
 
-.selectedAnimeContainer .selectedAnime .completeEpisodebtn img{
+.selectedAnimeContainer .selectedAnime .completeEpisodebtn svg{
 	width: 100%;
+	height: 100%;
 }
 
 .selectedAnimeContainer .close{

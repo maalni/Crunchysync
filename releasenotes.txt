@@ -1,8 +1,11 @@
-This extension is now also released in chrome's webstore!  
+This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## Code Changes:
-- Fixed an major fuckup in setup
+- Rewrote some components
+- Modular theming
+- Implemented crunchysync into crunchyroll´s website and completely replaced their queuesite (Click the queue icon)
 
 ## Design Changes:
-- Changed some minor details in setup, settings and search
+- BLACKMODE!!!!!11!!!11!!11!!!!!!1!11!1
+- (And also theming, more themes to come...)

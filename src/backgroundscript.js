@@ -62,17 +62,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			}
 		});
 	}
-	if(request.data == "getSessionId"){
-		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
-			sendResponse({sessionid: cookie});
-		});
-		return true;
-	}
-	if(request.data == "injectContentScriptCss"){
-		chrome.tabs.query({url: "*://*.crunchyroll.com/home/queue*"}, function(result){
-			chrome.tabs.insertCSS(result[0].id, {file: "queuescript.min.css"});
-		});
-	}
 });
 
 //Checks if there are changes between current queue and previous queue and notifys the user
@@ -124,8 +113,11 @@ function checkUnavailableAnimes(){
 								}
 								for(i in available){
 									var anime = available[i];
-									chrome.notifications.create({type: "image", iconUrl: "assets/icons/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
+									chrome.notifications.create(anime.most_likely_media.url, {type: "image", iconUrl: "assets/icons/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
 								}
+								chrome.notifications.onClicked.addListener(function(notificationId) {
+								  chrome.tabs.create({url: notificationId});
+								});
 							}
 							animes = animes.filter(anime => anime.most_likely_media !== undefined);
 							unavailable = animes.filter(anime =>anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10);

@@ -1,4 +1,4 @@
 <div class="categoryContainer">
-	<app-search *ngIf="search" (onChange)="onSearchChangeEvent($event)"></app-search>
-	<app-anime *ngFor="let anime of animes | filter:searchTerm" [anime]="anime" [userIsPremium]="userIsPremium" (onSelect)="onSelectEventHandler($event)"></app-anime>
+	<app-search *ngIf="search" (onChange)="searchTerm = $event"></app-search>
+	<app-anime *ngFor="let anime of animes | filter:searchTerm" [anime]="anime" [userIsPremium]="userIsPremium" (onSelect)="onSelect.emit($event)"></app-anime>
 </div>

@@ -1,7 +1,7 @@
-<div class="animeContainer card" (click)="animeSelect()">
+<div class="animeContainer card" (click)="onSelect.emit(anime)">
 	<img class="preview" [src]="anime?.most_likely_media?.screenshot_image?.fwide_url">
 	<img class="premium" src="../../assets/icons/premium.png" *ngIf="anime?.most_likely_media?.premium_only && !this.userIsPremium">
-	<button class="openEpisodebtn" (click)="openEpisode()"><img src="../assets/icons/openSelectedEpisode.svg"></button>
+	<button class="openEpisodebtn" (click)="this.openEpisode()"><svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg></button>
 	<ul class="animePropertys">
 		<li><span class="animeName">{{anime?.series?.name}}</span></li>
 		<li><span class="episodeName">{{anime?.most_likely_media?.name}}</span></li>
