@@ -1,10 +1,18 @@
 # Crunchysync
-
-The credentials are stored locally, AES encrypted and are shared only with the official Crunchyroll API!
+Sync the Crunchyroll queue properly
 
 ### What is Crunchysync?
-Crunchysync is an Extension for Chrome, which uses NodeJS and Angular to access the official Crunchyroll API with your credentials or cookies.
+Crunchysync is an Extension for Chrome, which uses NodeJS and Angular to access the official Crunchyroll API with your credentials.
 It will sync your queue and will provide an easy way to navigate through or manage it.
+
+# Current features:
+- Sort your queue in 4 categories
+- Complete a episode without watching
+- Open episode or serie on Crunchyroll
+- Ensures your queue is up-to-date even when the extension isnt open (Can be disabled)
+- Get notified when a new episode airs or gets available for free (Can be disabled)
+
+The credentials are stored locally, AES encrypted and are shared only with the official Crunchyroll API!
 
 ### How do i use Crunchysync without providing my credentials?
 You need to visit (and log in to) Crunchyroll once a day before you can use Crunchysync.
@@ -27,11 +35,4 @@ Crunchysync will remind you if your session provided by the cookie is invalid an
 6. ???
 7. Profit
 
-### How do i add my own compiled version of Crunchysync to chrome?
-1. Download or compile the newest version of the extension
-2. Extract it
-3. Open chromes extension site
-4. Enable the developer mode (top right corner)
-5. Click on "Load extracted extensions"
-6. Locate the Crunchysync folder
-7. Click on "Ok"
+Shoutout to OneStay for his great help

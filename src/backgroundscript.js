@@ -6,10 +6,11 @@ var userIsPremium = false;
 
 //Executes backgroundcheck when chrome starts and user enabled it
 chrome.runtime.onStartup.addListener(function(){
+	chrome.alarms.create("checkUnavailableAnimes", {delayInMinutes: 30});
 	chrome.storage.local.get(["disableBackgroundChecks", "firstuse"], function(result) {
 		if((result.disableBackgroundChecks !== undefined && result.disableBackgroundChecks === "false") && (result.firstuse !== undefined && result.firstuse === "false")){
 			chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
-				if(cookie == null){
+				if((cookie == null) || (cookie == undefined) || (cookie.value == "")){
 					chrome.tabs.create({url: "index.html"}, function(tab){
 						createdtab = tab;
 					});
@@ -23,10 +24,11 @@ chrome.runtime.onStartup.addListener(function(){
 
 //Executes backgroundcheck when extension is reloaded or updated
 chrome.runtime.onInstalled.addListener(function(details){
+	chrome.alarms.create("checkUnavailableAnimes", {delayInMinutes: 30});
 	chrome.storage.local.get(["disableBackgroundChecks", "firstuse"], function(result) {
 		if((result.disableBackgroundChecks !== undefined && result.disableBackgroundChecks === "false") && (result.firstuse !== undefined && result.firstuse === "false")){
 			chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
-				if(cookie == null){
+				if((cookie == null) || (cookie == undefined) || (cookie.value == "")){
 					chrome.tabs.create({url: "index.html"}, function(tab){
 						createdtab = tab;
 					});
@@ -40,9 +42,13 @@ chrome.runtime.onInstalled.addListener(function(details){
 
 //Schedules the backgroundcheck every 30min
 chrome.alarms.onAlarm.addListener(function(alarm){
-	if(alarm.name === "checkUnavailableAnimes"){
-		checkUnavailableAnimes();
-	}
+	chrome.storage.local.get(["disableBackgroundChecks", "firstuse"], function(result) {
+		if((result.disableBackgroundChecks !== undefined && result.disableBackgroundChecks === "false") && (result.firstuse !== undefined && result.firstuse === "false")){
+			if(alarm.name === "checkUnavailableAnimes"){
+				checkUnavailableAnimes();
+			}
+		}
+	});
 });
 
 //Return the requested session cookie and injects css to the contentscript
@@ -72,7 +78,8 @@ function checkUnavailableAnimes(){
 		}
 		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
 			if(cookie != null){
-				var locale = "en";
+				console.log(cookie);
+				var locale = "enUS";
 				var apiurl = "https://api.crunchyroll.com/queue.0.json?"+
 					"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
 					"&media_types=anime|drama"+
@@ -82,7 +89,6 @@ function checkUnavailableAnimes(){
 				xmlHttp.onreadystatechange = function() {
 					if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 						if(!JSON.parse(xmlHttp.responseText).error){
-							chrome.alarms.create("checkUnavailableAnimes", {delayInMinutes: 30});
 							if(result.unavailable !== undefined || result.unavailable !== {}){
 								unavailable = result.unavailable;
 								animes = JSON.parse(xmlHttp.responseText).data;
@@ -97,14 +103,22 @@ function checkUnavailableAnimes(){
 												if(anime.most_likely_media.media_id === unavailableAnime.most_likely_media.media_id){
 													if(!(anime.most_likely_media.playhead >= unavailableAnime.most_likely_media.duration - 10)){
 														if(!anime.most_likely_media.premium_only && unavailableAnime.most_likely_media.premium_only){
-															available.push(anime);
-															unavailable.splice(a, 1);
-															break;
+														 	if(!userIsPremium){
+																available.push(anime);
+															}
 														}
 													}
 												}else{
-													available.push(anime);
-													unavailable.splice(a, 1);
+													if(anime.most_likely_media.episode_number > unavailableAnime.most_likely_media.episode_number){
+														if(anime.most_likely_media.premium_only){
+															if(userIsPremium){
+																available.push(anime);
+															}
+														}else{
+															available.push(anime);
+														}
+													}
+													animes.splice(b, 1);
 													break;
 												}
 											}
@@ -120,13 +134,13 @@ function checkUnavailableAnimes(){
 								});
 							}
 							animes = animes.filter(anime => anime.most_likely_media !== undefined);
-							unavailable = animes.filter(anime =>anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10);
-							if(userIsPremium == false){
+							unavailable = animes.filter(anime =>(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10) && (anime.most_likely_media.duration != 0));
+							if(!userIsPremium){
 								unavailable = unavailable.concat(animes.filter(anime => anime.most_likely_media.premium_only));
 							}
 							chrome.storage.local.set({"unavailable": unavailable});
 						}else{
-							chrome.notifications.create({type: "basic", iconUrl: "assets/icons/crunchysync.png", title: "Crunchysync's backgroundsync encountered an error", message: JSON.parse(xmlHttp.responseText).code});
+							chrome.notifications.create({type: "basic", iconUrl: "assets/icons/crunchysync.png", title: "Crunchysync encountered an error", message: JSON.parse(xmlHttp.responseText).code});
 						}
 					}
 				}
