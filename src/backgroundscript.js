@@ -84,6 +84,7 @@ function authenticate(){
 											chrome.storage.local.set({"sessionid": AES.encrypt(sessionid, "5HR*98g5a699^9P#f7cz").toString()});
 											chrome.storage.local.set({"userIsPremium": AES.encrypt(JSON.parse(xmlHttp2.responseText).data.user.premium.toString(), "5HR*98g5a699^9P#f7cz").toString()});
 											checkUnavailableAnimes();
+											console.log("authenticated");
 										}else{
 											error("Login failed! Please make sure your username and password is valid. Discription: " + JSON.parse(xmlHttp2.responseText).message);
 										}
@@ -131,11 +132,17 @@ function checkUnavailableAnimes(){
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				if(!JSON.parse(xmlHttp.responseText).error){
 					if(result.unavailable !== undefined || result.unavailable !== {}){
-						unavailable = result.unavailable;
-						animes = JSON.parse(xmlHttp.responseText).data;
+						animes = JSON.parse(xmlHttp.responseText.replace(/(http:)/g, "https:")).data;
+						animes = animes.filter(anime => anime.most_likely_media !== undefined);
 						animes.sort((co1, co2) => co1.series.name.localeCompare(co2.series.name));
 						watching = animes.filter(anime => (anime.most_likely_media.playhead < anime.most_likely_media.duration - 10 || anime.most_likely_media.duration == 0) && (anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1));
 						chrome.storage.local.set({"animes": animes});
+						unavailable = animes.filter(anime => anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10);
+						if(!userIsPremium){
+							unavailable = unavailable.concat(animes.filter(anime => (anime.most_likely_media.playhead <= anime.most_likely_media.duration - 10) && anime.most_likely_media.premium_only));
+						}
+						chrome.storage.local.set({"unavailable": unavailable});
+						unavailable = result.unavailable;
 						for(a in unavailable){
 							var unavailableAnime = unavailable[a];
 							for(b in animes){
@@ -168,7 +175,7 @@ function checkUnavailableAnimes(){
 						}
 						for(i in available){
 							var anime = available[i];
-							chrome.notifications.create(anime.most_likely_media.url, {type: "image", iconUrl: "assets/icons/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
+							chrome.notifications.create(anime.most_likely_media.url, {type: "image", iconUrl: "assets/images/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
 						}
 						chrome.notifications.onClicked.addListener(function(notificationId) {
 							chrome.tabs.create({url: notificationId});
@@ -180,12 +187,6 @@ function checkUnavailableAnimes(){
 							chrome.browserAction.setBadgeText({text: ""});
 						}
 					}
-					animes = animes.filter(anime => anime.most_likely_media !== undefined);
-					unavailable = animes.filter(anime =>(anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10) && (anime.most_likely_media.duration != 0));
-					if(!userIsPremium){
-						unavailable = unavailable.concat(animes.filter(anime => anime.most_likely_media.premium_only));
-					}
-					chrome.storage.local.set({"unavailable": unavailable});
 				}else{
 					if(!retry){
 						retry = true;
