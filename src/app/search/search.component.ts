@@ -1,12 +1,15 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { Varstore } from '../varstore';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.less']
 })
 
 export class SearchComponent {
-  @Output() onChange = new EventEmitter<string>();
-	searchTerm: string = "";
+
+  constructor(public varstore: Varstore){}
+
+	searchString: string = "";
 }

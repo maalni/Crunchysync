@@ -1,21 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { FilterPipe }from './filter.pipe';
-import { AppComponent } from './app.component';
+import { FilterPipe } from './filter.pipe';
+import { Varstore } from './varstore';
 import { DataService } from './data.service';
+
+import { AppComponent } from './app.component';
 import { AnimeComponent } from './anime/anime.component';
 import { SelectedAnimeComponent } from './selected-anime/selected-anime.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { TabnavComponent } from './tabnav/tabnav.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { CategoryComponent } from './category/category.component';
 import { SearchComponent } from './search/search.component';
-import { WarningComponent } from './warning/warning.component';
-import { SplashscreenComponent } from './splashscreen/splashscreen.component';
+import { NotificationComponent } from './notification/notification.component';
 import { SetupComponent } from './setup/setup.component';
 
 
@@ -26,21 +27,23 @@ import { SetupComponent } from './setup/setup.component';
 		FilterPipe,
 		SelectedAnimeComponent,
 		SpinnerComponent,
-		TabnavComponent,
+		NavbarComponent,
 		SettingsComponent,
 		CategoryComponent,
 		SearchComponent,
-		WarningComponent,
-		SplashscreenComponent,
+		NotificationComponent,
 		SetupComponent
   ],
   imports: [
     BrowserModule,
 		BrowserAnimationsModule,
-		HttpModule,
+		HttpClientModule,
 		FormsModule
   ],
-  providers: [DataService],
+  providers: [
+    DataService,
+    Varstore
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

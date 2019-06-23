@@ -1,0 +1,203 @@
+@font-face {
+	font-family: Roboto;
+	src: url('assets/fonts/Roboto/Roboto-Regular.ttf');
+}
+
+*{
+	font-family: 'Roboto', sans-serif;
+	color: var(--text-color);
+	user-select: none;
+}
+
+*:focus {
+	outline: none;
+}
+
+*::-webkit-scrollbar {
+	top: 50px;
+  width: 5px;
+	height: 550px;
+}
+
+*::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0)
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color);
+	border-radius: 5px;
+}
+
+html{
+	--accent-color: rgba(0,0,0,0);
+	--darkened-accent-color: rgba(0,0,0,0);
+	--background-color: rgba(0,0,0,0);
+	--darkened-background-color: rgba(0,0,0,0);
+	--text-color: rgba(0,0,0,0);
+	--darkened-text-color: rgba(0,0,0,0);
+	--transition-duration: 0.2s;
+	--transparent-color: rgba(0,0,0,0);
+	--darkened-transparent-color: rgba(0,0,0,0.7);
+	--error-color: #F44336;
+	--darkened-error-color: #E73629;
+	--success-color: #4caf50;
+	--darkened-success-color: #3FA243;
+}
+
+html.light{
+	--accent-color: #f78c25;
+	--darkened-accent-color: #EA7F18;
+	--background-color: white;
+	--darkened-background-color: #F2F2F2;
+	--text-color: #333333;
+	--darkened-text-color: #262626;
+}
+
+html.dark{
+	--accent-color: #f78c25;
+	--darkened-accent-color: #EA7F18;
+	--background-color: #333333;
+	--darkened-background-color: #262626;
+	--text-color: white;
+	--darkened-text-color: #F2F2F2;
+}
+
+html, body{
+	min-width: 450px;
+	width: 100%;
+	min-height: 600px;
+ 	height: 100%;
+ 	margin: 0px;
+ 	padding: 0px;
+ 	border: none;
+ 	background-color: var(--background-color);
+ 	overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--accent-color);
+	transition: var(--transition-duration);
+}
+
+input{
+	padding-left: 10px;
+	border-radius: 5px;
+	border: none;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	transition: var(--transition-duration);
+}
+
+input:hover{
+	background-color: var(--darkened-background-color);
+}
+
+input:disabled{
+	background-color: var(--darkened-background-color);
+}
+
+input[type=checkbox]{
+	width: 20px !important;
+	height: 20px !important;
+	appearance: none;
+	padding: 0;
+	line-height: 20px;
+	vertical-align: middle;
+	background-color: var(--background-color);
+	margin-top: 7px;
+	margin-bottom: 10px;
+	color: var(--background-color);
+	border: solid 1px var(--text-color);
+	cursor: pointer;
+}
+
+input[type=checkbox]:hover{
+	background-color: var(--darkened-background-color);
+}
+
+input[type=checkbox]:checked{
+	background-color: var(--accent-color) !important;
+	border: none;
+}
+
+input[type=checkbox]:checked:after {
+	content: "✔";
+	margin-left: 3px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	font-size: 12pt;
+}
+
+input[type=checkbox]:checked:hover {
+	background-color: var(--darkened-accent-color) !important;
+}
+
+input[type=radio]{
+	width: 20px !important;
+	height: 20px !important;
+	appearance: none;
+	padding: 0;
+	line-height: 20px;
+	vertical-align: middle;
+	background-color: var(--background-color);
+	margin-top: 7px;
+	margin-bottom: 10px;
+	color: var(--background-color);
+	border: solid 1px var(--accent-color);
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+input[type=radio]:hover{
+	background-color: var(--darkened-background-color);
+}
+
+input[type=radio]:checked{
+	background-color: var(--accent-color) !important;
+	border: none;
+}
+
+input[type=radio]:checked:after {
+	content: "✔";
+	margin-left: 3px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	font-size: 12pt;
+}
+
+input[type=radio]:checked:hover {
+	background-color: var(--darkened-accent-color) !important;
+}
+
+label{
+	cursor: pointer;
+}
+
+button{
+	border-radius: 5px;
+	border: none;
+	color: var(--background-color);
+	background-color: var(--accent-color);
+	min-height: 40px;
+	cursor: pointer;
+	transition: var(--transition-duration);
+}
+
+button:hover{
+	background-color: var(--darkened-accent-color);
+}
+
+svg{
+	width: 100%;
+	height: 100%;
+}
+
+.card{
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}

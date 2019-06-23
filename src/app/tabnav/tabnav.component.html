@@ -1,7 +1,0 @@
-<nav class="navContainer">
-	<button class="watchingbtn" (click)="selectPage(0)" [@isSelected]="selected == 0">Watching<span class="animeCount" [hidden]="selected != 0">{{totalWatching}}</span></button>
-	<button class="unseenbtn" (click)="selectPage(1)" [@isSelected]="selected == 1">Unseen<span class="animeCount" [hidden]="selected != 1">{{totalUnseen}}</span></button>
-	<button class="donebtn" (click)="selectPage(2)" [@isSelected]="selected == 2">Done<span class="animeCount" [hidden]="selected != 2">{{totalDone}}</span></button>
-	<button class="allbtn" (click)="selectPage(3)" [@isSelected]="selected == 3">All<span class="animeCount" [hidden]="selected != 3">{{totalAnimes}}</span></button>
-	<button class="settingsbtn" (click)="selectPage(4)" [@isSelected]="selected == 4"><img src="../assets/icons/settings.svg"></button>
-</nav>

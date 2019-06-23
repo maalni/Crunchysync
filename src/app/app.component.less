@@ -1,0 +1,93 @@
+#content{
+	min-height: 490px;
+	height: calc(100% - 110px);
+	left: 0;
+	overflow-y: scroll;
+	padding-top: 60px;
+}
+
+#content .cacheNotification{
+	height: 20px;
+	width: 100px;
+	margin-bottom: 10px;
+	margin-left: calc(50% - 50px);
+	border-radius: 20px;
+	font-size: 10pt;
+	line-height: 20px;
+	text-align: center;
+	background-color: var(--accent-color);
+}
+
+#content .cacheNotification svg{
+	height: 20px;
+	width: 20px;
+	position: absolute;
+}
+
+#content .cacheNotification span{
+	margin-left: 25px;
+	color: var(--background-color);
+}
+
+#refreshbtn{
+	position: fixed;
+	top: 15px;
+	right: 51px;
+	width: 30px;
+	height: 30px;
+	min-height: 0;
+	border: none;
+	border-radius: 25px;
+	background-color: var(--background-color);
+	z-index: 997;
+	padding: 0;
+}
+
+#refreshbtn:hover{
+	background-color: var(--darkened-background-color);
+}
+
+#refreshbtn svg{
+	margin-top: 3px;
+	width: 24px;
+	height: 24px;
+}
+
+#settingsbtn{
+	position: fixed;
+	top: 15px;
+	right: 16px;
+	width: 30px;
+	height: 30px;
+	min-height: 0;
+	padding: 0;
+	border: none;
+	border-radius: 25px;
+	background-color: var(--background-color);
+	z-index: 997;
+}
+
+#settingsbtn:hover{
+	background-color: var(--darkened-background-color);
+}
+
+#settingsbtn svg{
+	margin-top: 1px;
+	width: 28px;
+	height: 28px;
+}
+
+#settingsbtn span{
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	border-radius: 10px;
+	font-size: 6pt;
+	background-color: var(--accent-color);
+	color: var(--background-color);
+}

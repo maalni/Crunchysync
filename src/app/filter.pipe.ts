@@ -10,8 +10,14 @@ export class FilterPipe implements PipeTransform {
     if(!searchText) return items;
 		searchText = searchText.toLowerCase();
 		return items.filter( it => {
-    	if(it.series.name.toLowerCase().includes(searchText))return it.series.name.toLowerCase().includes(searchText);
-			if(it.most_likely_media.name.toLowerCase().includes(searchText)) return it.most_likely_media.name.toLowerCase().includes(searchText);
+      if(it.most_likely_media != undefined && it.series != undefined){
+    	   if(it.series.name.toLowerCase().includes(searchText)){
+           return it.series.name.toLowerCase().includes(searchText);
+         }
+			   if(it['most_likely_media']['name'].toLowerCase().includes(searchText)){
+           return it['most_likely_media']['name'].toLowerCase().includes(searchText);
+         }
+      }
     });
   }
 }

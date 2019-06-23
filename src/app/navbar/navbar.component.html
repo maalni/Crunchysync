@@ -1,0 +1,18 @@
+<nav class="navContainer">
+	<button class="watchingbtn" (click)="selectPage(0)" [@isSelected]="varstore.selectedPage == 0">
+		<svg><use xlink:href="../assets/icons/categories.svg#watching"></use></svg><br>
+		Watching<span *ngIf="varstore.selectedPage == 0 && totalWatching > 0" class="animeCount">{{totalWatching}}</span>
+	</button>
+	<button class="unseenbtn" (click)="selectPage(1)" [@isSelected]="varstore.selectedPage == 1">
+		<svg><use xlink:href="../assets/icons/categories.svg#unseen"></use></svg><br>
+		Unseen<span *ngIf="varstore.selectedPage == 1 && totalUnseen > 0" class="animeCount">{{totalUnseen}}</span>
+	</button>
+	<button class="donebtn" (click)="selectPage(2)" [@isSelected]="varstore.selectedPage == 2">
+		<svg><use xlink:href="../assets/icons/categories.svg#done"></use></svg><br>
+		Done<span *ngIf="varstore.selectedPage == 2 && totalDone > 0" class="animeCount">{{totalDone}}</span>
+	</button>
+	<button class="allbtn" (click)="selectPage(3)" [@isSelected]="varstore.selectedPage == 3">
+		<svg><use xlink:href="../assets/icons/categories.svg#all"></use></svg><br>
+		All<span *ngIf="varstore.selectedPage == 3 && totalAnimes > 0" class="animeCount">{{totalAnimes}}</span>
+	</button>
+</nav>

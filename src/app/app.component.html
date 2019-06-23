@@ -1,18 +1,23 @@
-<app-tabnav [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length" (onSelectedEvent)="selectedPage = $event"></app-tabnav>
-<div id="warnings" [hidden]="selectedPage == 4">
-	<app-warning *ngIf="updateVersion !== 0" (click)="openUpdate()" [message]="'New version available: '+updateVersion" [type]="'update'"></app-warning>
-	<app-warning *ngIf="errorMessage !== ''" [message]="errorMessage" [type]="'error'"></app-warning>
-	<app-warning *ngIf="cachedQueue" [message]="'Cached'" [type]="''"></app-warning>
-</div>
+<app-search [hidden]="varstore.selectedPage == 4"></app-search>
+<button id="refreshbtn" (click)="refreshQueue()" title="Refresh" [hidden]="(varstore.selectedPage == 4)||(varstore.loading)">
+	<svg><use xlink:href="../assets/icons/refresh.svg#refresh"></use></svg>
+</button>
+<button id="settingsbtn" (click)="varstore.selectedPage = 4" title="Settings" [hidden]="varstore.selectedPage == 4">
+	<svg><use xlink:href="../assets/icons/settings.svg#settings"></use></svg>
+	<span [hidden]="varstore.notifications.length == 0" class="notificationCount">{{varstore.notifications.length}}</span>
+</button>
 <div id="content">
-	<app-category [animes]="watching" [userIsPremium]="settings['userIsPremium']" (onSelect)="selectedAnime = $event; animeSelected = true" [hidden]="selectedPage != 0"></app-category>
-	<app-category [animes]="unseen" [userIsPremium]="settings['userIsPremium']" (onSelect)="selectedAnime = $event; animeSelected = true" [hidden]="selectedPage != 1"></app-category>
-	<app-category [animes]="done" [userIsPremium]="settings['userIsPremium']" (onSelect)="selectedAnime = $event; animeSelected = true" [hidden]="selectedPage != 2"></app-category>
-	<app-category [animes]="animes" [userIsPremium]="settings['userIsPremium']" (onSelect)="selectedAnime = $event; animeSelected = true" search="true" [hidden]="selectedPage != 3"></app-category>
-	<app-settings id="settings" [sessionid]="settings['sessionid']" [firstuse]="settings['firstuse']" (onSettingsLoaded)="onSettingsLoadedEventHandler($event)" (onSettingsChanged)="settings = $event" [hidden]="selectedPage != 4"></app-settings>
-	<app-spinner id="spinner" [hidden]="(selectedPage == 4)||(!loading)"></app-spinner>
+	<div *ngIf="varstore.cachedQueue && varstore.selectedPage != 4" class="cacheNotification">
+		<svg><use xlink:href="../assets/icons/offline.svg#offline"></use></svg>
+		<span>Cached</span>
+	</div>
+	<app-category [animes]="watching" [hidden]="varstore.selectedPage != 0"></app-category>
+	<app-category [animes]="unseen" [hidden]="varstore.selectedPage != 1"></app-category>
+	<app-category [animes]="done" [hidden]="varstore.selectedPage != 2"></app-category>
+	<app-category [animes]="animes" [hidden]="varstore.selectedPage != 3"></app-category>
+	<app-spinner id="spinner" [hidden]="(varstore.selectedPage == 4)||(!varstore.loading)"></app-spinner>
 </div>
-<button id="refreshbtn" (click)="refreshQueue()" [hidden]="(selectedPage == 4)||(loading)"><svg><use xlink:href="../assets/icons/refresh.svg#refresh"></use></svg><span>Refresh</span></button>
-<app-selected-anime id="selectedAnime" [selectedAnime]="selectedAnime" [userIsPremium]="settings['userIsPremium']" (onComplete)="refreshQueue()" (onClose)="animeSelected = false" [hidden]="!animeSelected"></app-selected-anime>
-<app-setup *ngIf="settings['firstuse']" [username]="settings['username']" [password]="settings['password']" [forceUsRegion]="settings['forceUsRegion']" [userIsPremium]="settings['userIsPremium']" [disableBackgroundChecks]="settings['disableBackgroundChecks']" [theme]="settings['theme']" (onSetupComplete)="onSetupCompleteEventHandler($event)"></app-setup>
-<app-splashscreen></app-splashscreen>
+<app-navbar [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length"></app-navbar>
+<app-selected-anime *ngIf="!IsObjectEmpty(varstore.selectedAnime)" id="selectedAnime" (onComplete)="refreshQueue()"></app-selected-anime>
+<app-settings id="settings" (onSettingsChanged)="onSettingsChangedEventHandler()" [hidden]="varstore.selectedPage != 4"></app-settings>
+<app-setup *ngIf="varstore.settings['firstuse']" (onSetupComplete)="onSetupCompleteEventHandler($event)"></app-setup>

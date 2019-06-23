@@ -1,6 +1,32 @@
 var crunchysyncHidden = true;
-document.getElementById('header_userpanel_beta').getElementsByTagName("ul")[0].children[0].innerHTML = "<a id='crqueuenavbaricon' class='header-icon' token='topbar'><iframe id='crunchysync' src='" + chrome.runtime.getURL("index.html") + "' hidden></iframe><div class='icon-container'><svg viewBox='0 0 48 48'><use xlink:href='/i/svg/header.svg#cr_bookmark_header'></use></svg></div><div class='caption'>Queue</div></a>";
+var crunchysync = document.createElement('div');
+crunchysync.setAttribute("id", "crunchysync");
+crunchysync.hidden = crunchysyncHidden;
+var iframe = document.createElement('iframe');
+iframe.setAttribute("src", chrome.runtime.getURL("index.html"));
+iframe.setAttribute("class", "card");
+var closeCrunchysync = document.createElement('div');
+closeCrunchysync.setAttribute("id", "closecrunchysync");
+closeCrunchysync.setAttribute("title", "Close Crunchysync");
+closeCrunchysync.hidden = crunchysyncHidden;
+document.getElementById('header_userpanel_beta').getElementsByTagName("ul")[0].children[0].children[0].removeAttribute("href");
+document.getElementById("template_scroller").appendChild(closeCrunchysync);
+document.getElementById('closecrunchysync').addEventListener("click", function(){toggleCrunchysync();});
+document.getElementsByTagName("body")[0].appendChild(crunchysync);
+document.getElementById('crunchysync').appendChild(iframe);
 document.getElementById('header_userpanel_beta').getElementsByTagName("ul")[0].children[0].addEventListener("click", function(){toggleCrunchysync();});
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if(request.theme !== undefined){
+  		setTheme(request.theme);
+  	}else{
+  		setTheme("light");
+  	}
+    sendResponse();
+  }
+);
+
 chrome.storage.local.get(["theme"], function(result) {
 	if(result.theme !== undefined){
 		setTheme(result.theme);
@@ -12,25 +38,13 @@ chrome.storage.local.get(["theme"], function(result) {
 //Changes the css color values according to the provided theme
 function setTheme(theme){
 	var html = document.getElementsByTagName('html')[0];
-	if(theme == "dark"){
-		html.style.setProperty("--secondary-color", "#333333");
-		html.style.setProperty("--darkened-secondary-color", "#262626");
-		html.style.setProperty("--tertiary-color", "white");
-		html.style.setProperty("--darkened-tertiary-color", "#F2F2F2");
-	}else if(theme == "light"){
-		html.style.setProperty("--secondary-color", "white");
-		html.style.setProperty("--darkened-secondary-color", "#F2F2F2");
-		html.style.setProperty("--tertiary-color", "#333333");
-		html.style.setProperty("--darkened-tertiary-color", "#262626");
-	}
+  html.classList.remove("light");
+  html.classList.remove("dark");
+  html.classList.add(theme);
 }
 
 function toggleCrunchysync(){
   crunchysyncHidden = !crunchysyncHidden;
   document.getElementById('crunchysync').hidden = crunchysyncHidden;
-}
-
-function closeCrunchysync(){
-  crunchysyncHidden = true;
-  document.getElementById('crunchysync').hidden = crunchysyncHidden;
+	document.getElementById('closecrunchysync').hidden = crunchysyncHidden;
 }

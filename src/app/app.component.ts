@@ -1,31 +1,24 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
+import { Varstore } from './varstore';
 import { AES } from 'crypto-ts';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.less'],
 })
 
 export class AppComponent {
 
 	onAuthenticatedEvent: any = new Event('onAuthenticatedEvent');
-	settings: Array<any> = new Array();
 	animes: Array<any> = new Array();
 	unseen: Array<any> = new Array();
 	done: Array<any> = new Array();
 	watching: Array<any> = new Array();
-	selectedAnime: Array<any> = new Array();
-	errorMessage: string = "";
-	updateVersion: number = 0;
 	retry: boolean = false;
-	cachedQueue: boolean = true;
-  selectedPage: number = 0;
-  loading: boolean = false;
-  animeSelected: boolean = false;
 
-	constructor(private dataService: DataService, private ngZone: NgZone) {}
+	constructor(public varstore: Varstore, private dataService: DataService) {}
 
 	ngOnInit() {
 		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
@@ -33,72 +26,51 @@ export class AppComponent {
 		this.checkExtensionUpdate();
 	}
 
-	//Checks, if an update is available and notifys the user
+	//Checks, if an update is available and notifies the user
 	checkExtensionUpdate(){
 		this.dataService.getGitlabVersion().subscribe(res => {
 			var onlineVersion = parseInt(res.replace(/[v\.]/g, ""), 10);
-			var extensionVersion = parseInt(this.settings['version'].replace(/[v\.]/g, ""), 10);
+			var extensionVersion = parseInt(this.varstore.version.replace(/[v\.]/g, ""), 10);
 			if(onlineVersion > extensionVersion){
-				this.updateVersion = res;
+				this.varstore.notifications.push({message: "Update " + onlineVersion + " available.", type: "update", url: "https://gitlab.com/maalni/crunchysync/tags/"+onlineVersion});
 			}
 		});
 	}
 
   /*Authenticates the user through several methods:
-     1. Cookies
-     2. Cached sessionid
-     3. Username and password
+     1. Cached sessionid
+     2. Username and password
     Variables:
-    String username = Users provided username
-    String password = Users provided password
-    String sessionid = Cached sessionid
-    String deviceid = Extensions deviceid
-		Boolean forceUsRegion = Use OneStay's servers to force a US session
     Boolean ignoreCache = Force cache to be ignored*/
-	authenticate(username, password, sessionid, deviceid: string, forceUsRegion, ignoreCache: boolean){
-		var ang = this;
-    this.loading = true;
-		chrome.cookies.get({"url": "http://crunchyroll.com", "name": "sess_id"}, function(cookie){
-			if(cookie != null && !ignoreCache){
-				ang.ngZone.run(() => {
-					chrome.storage.local.set({"sessionid": AES.encrypt(cookie.value, "5HR*98g5a699^9P#f7cz").toString()});
-					ang.settings['sessionid'] = cookie.value;
-					document.dispatchEvent(ang.onAuthenticatedEvent);
-				});
-			}else{
-				ang.ngZone.run(() => {
-					if((sessionid === "" || sessionid === undefined) || ignoreCache){
-						if(username != "" && password != ""){
-							ang.dataService.getSessionID(deviceid, forceUsRegion).subscribe(res => {
-								if(!res.error){
-									sessionid = res.data.session_id;
-									ang.dataService.login(sessionid, username, password).subscribe(res => {
-										if(!res.error){
-                      chrome.storage.local.set({"sessionid": AES.encrypt(sessionid, "5HR*98g5a699^9P#f7cz").toString()});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
-											chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
-											ang.settings['sessionid'] = sessionid;
-											document.dispatchEvent(ang.onAuthenticatedEvent);
-										}else{
-											ang.error("Login failed! Please make sure your username and password is valid. Discription: " + res.code);
-										}
-									}, err => ang.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
-								}else{
-									ang.error("Connection failed! Please try again later. Discription: " + res.code)
-								}
-							}, err => ang.error("Connection failed! Please try again later. Discription: " + err));
-						}else{
-							ang.error("No Cookie set! Please visit http://www.crunchyroll.com or save your credentials in the settingstab.");
-						}
-					}else{
-						chrome.cookies.set({"url": "http://crunchyroll.com", "name": "sess_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
-						chrome.cookies.set({"url": "http://crunchyroll.com", "name": "session_id", "value": sessionid, "domain": ".crunchyroll.com", "httpOnly": true});
-						document.dispatchEvent(ang.onAuthenticatedEvent);
-					}
-					ang.loading = false;
-				});
-			}
-		});
+	authenticate(ignoreCache: boolean){
+    this.varstore.loading = true;
+		if((this.varstore.settings['sessionid'] === "" || this.varstore.settings['sessionid'] === undefined) || ignoreCache){
+      if(this.varstore.settings['username'] != "" && this.varstore.settings['password'] != ""){
+        this.dataService.getSessionID(this.varstore.settings['deviceid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
+          if(!res.error){
+            this.varstore.settings['sessionid'] = res.data.session_id;
+            this.dataService.login(this.varstore.settings['sessionid'], this.varstore.settings['username'], this.varstore.settings['password']).subscribe(res => {
+              if(!res.error){
+                this.varstore.settings['userIsPremium'] = (res.data.user.premium === 'true');
+                chrome.storage.local.set({"sessionid": AES.encrypt(this.varstore.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString()});
+                chrome.storage.local.set({"userIsPremium": AES.encrypt(this.varstore.settings['userIsPremium'], "5HR*98g5a699^9P#f7cz").toString()});
+                this.varstore.loading = false;
+                document.dispatchEvent(this.onAuthenticatedEvent);
+              }else{
+                this.error("Login failed! Please make sure your username and password is valid. Discription: " + res.message);
+              }
+            }, err => this.error("Login failed! Please make sure your username and password is valid. Discription: " + err));
+          }else{
+            this.error("Connection failed! Please try again later. Discription: " + res.message);
+          }
+        }, err => this.error("Connection failed! Please try again later. Discription: " + err));
+      }else{
+        this.error("No Credentials set! Please save your credentials in the settingstab.");
+      }
+    }else{
+      this.varstore.loading = false;
+      document.dispatchEvent(this.onAuthenticatedEvent);
+    }
 	}
 
   /*Sorts animes to arrays
@@ -131,67 +103,66 @@ export class AppComponent {
 			if(this.watching.length > 0){
 				chrome.browserAction.setBadgeBackgroundColor({ color: [247, 140, 37, 1] });
 				chrome.browserAction.setBadgeText({text: this.watching.length+""});
-			}
+			}else{
+        chrome.browserAction.setBadgeText({text: ""});
+      }
 		}
 	}
 
   //Loads cached queue from chromes local storage
 	getLocalQueue(){
 		var ang = this;
-		this.loading = true;
+		this.varstore.loading = true;
 		chrome.storage.local.get(["animes"], function(result) {
-			ang.ngZone.run(() => {
-				ang.sortAnimes(result.animes);
-				ang.loading = false;
-			});
+			ang.sortAnimes(result.animes);
+			ang.varstore.loading = false;
 		});
 	}
 
   //Refreshes the cached animes
 	refreshQueue(){
-		this.loading = true;
-		this.dataService.getQueue(this.settings['sessionid'], this.settings['forceUsRegion']).subscribe(res => {
+		this.varstore.loading = true;
+		this.dataService.getQueue(this.varstore.settings['sessionid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
 			if(!res.error){
-				chrome.runtime.sendMessage({data: "onAuthenticatedEvent"});
 				chrome.storage.local.set({"animes": res.data}, function() {});
 				this.sortAnimes(res.data);
-				this.cachedQueue = false;
-        this.loading = false;
+				this.varstore.cachedQueue = false;
+        this.varstore.loading = false;
 			}else{
 				if((res.code === 'bad_session' || res.code === 'bad_request') && !this.retry){
 					this.retry = true;
-					this.authenticate(this.settings['username'], this.settings['password'], this.settings['sessionid'], this.settings['deviceid'], this.settings['forceUsRegion'], true);
+					this.authenticate(true);
 				}else{
-					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.code);
-          this.loading = false;
+					this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + res.message);
+          this.varstore.loading = false;
 				}
 			}
 		}, err => this.error("Your queue couldnt be loaded! Please make sure your session is valid and try again. Discription: " + err));
 	}
 
-	/*Authenticates the user, once the settings are loaded
-    Variables:
-    Array<any> settings = loaded settings from chrome local storage*/
-	onSettingsLoadedEventHandler(settings: Array<any>){
-    this.settings = settings;
-    if(!settings['firstuse']){
-			this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+	//Authenticates the user, when the settings are changed
+	onSettingsChangedEventHandler(){
+    if(!this.varstore.settings['firstuse']){
+			this.authenticate(false);
 		}
 	}
 
-  onSetupCompleteEventHandler(settings: Array<any>){
-    this.settings = settings;
-    this.authenticate(settings['username'], settings['password'], settings['sessionid'], settings['deviceid'], settings['forceUsRegion'], false);
+  //Authenticates the user, when the setup is completed
+  onSetupCompleteEventHandler(){
+    this.authenticate(true);
+  }
+
+  /*Checks if Object is empty
+    Variables:
+    Object obj = Object to be checked*/
+  IsObjectEmpty(obj: Object){
+    return Object.keys(obj).length == 0;
   }
 
   /*Shows an error with the given message
     Variables:
     String message = Errormessage*/
 	error(message: string){
-		this.errorMessage = message;
-	}
-
-	openUpdate(){
-		window.open("https://gitlab.com/maalni/crunchysync/tags/"+this.updateVersion);
+		this.varstore.notifications.push({message: message, type: "error", url: ""});
 	}
 }

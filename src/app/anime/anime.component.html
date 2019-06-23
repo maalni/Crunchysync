@@ -1,7 +1,9 @@
-<div class="animeContainer card" (click)="onSelect.emit(anime)">
+<div class="animeContainer card" (click)="varstore.selectedAnime = anime" [title]="'Open \'' + anime?.most_likely_media?.name + '\' in detailed view'">
 	<img class="preview" [src]="anime?.most_likely_media?.screenshot_image?.fwide_url">
-	<img class="premium" src="../../assets/icons/premium.png" *ngIf="anime?.most_likely_media?.premium_only && !this.userIsPremium">
-	<button class="openEpisodebtn" (click)="this.openEpisode()"><svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg></button>
+	<img class="premium" src="../../assets/icons/premium.png" *ngIf="anime?.most_likely_media?.premium_only && !this.varstore.settings['userIsPremium']">
+	<button class="openEpisodebtn" (click)="this.openEpisode()" [title]="'Start watching \'' + anime?.most_likely_media?.name + '\''">
+		<svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg>
+	</button>
 	<ul class="animePropertys">
 		<li><span class="animeName">{{anime?.series?.name}}</span></li>
 		<li><span class="episodeName">{{anime?.most_likely_media?.name}}</span></li>

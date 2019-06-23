@@ -1,15 +1,19 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Varstore } from '../varstore';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  styleUrls: ['./category.component.less']
 })
 
 export class CategoryComponent  {
+
+  constructor(public varstore: Varstore){}
+
 	@Input() animes;
-	@Input() search;
-	@Input() userIsPremium;
-	@Output() onSelect = new EventEmitter<Array<any>>();
-	searchTerm: string = "";
+
+  openCrunchyroll(){
+    window.open("https://www.crunchyroll.com/videos/anime");
+  }
 }

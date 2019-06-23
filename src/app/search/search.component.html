@@ -1,4 +1,5 @@
 <div class="searchContainer card">
-	<input class="search" placeholder="Search..." [(ngModel)]="searchTerm" (keydown)="onChange.emit(searchTerm)" (keyup)="onChange.emit(searchTerm)" (change)="onChange.emit(searchTerm)" (paste)="onChange.emit(searchTerm)">
-	<button *ngIf="searchTerm !== ''" class="clearsearchbtn" (click)="searchTerm = ''; onChange.emit(searchTerm)">🞩</button>
+	<svg><use xlink:href="../../assets/icons/search.svg#search"></use></svg>
+	<input class="search" placeholder="Search..." [(ngModel)]="searchString" (keydown)="varstore.searchTerm = searchString" (keyup)="varstore.searchTerm = searchString" (change)="varstore.searchTerm = searchString" (paste)="varstore.searchTerm = searchString">
+	<button *ngIf="searchString !== ''" class="clearsearchbtn" (click)="searchString = ''; varstore.searchTerm = ''">🞩</button>
 </div>

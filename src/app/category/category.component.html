@@ -1,4 +1,11 @@
 <div class="categoryContainer">
-	<app-search *ngIf="search" (onChange)="searchTerm = $event"></app-search>
-	<app-anime *ngFor="let anime of animes | filter:searchTerm" [anime]="anime" [userIsPremium]="userIsPremium" (onSelect)="onSelect.emit($event)"></app-anime>
+	<div *ngIf="animes | filter: varstore.searchTerm as result">
+		<div class="searchresult" *ngIf="result.length > 0 && varstore.searchTerm != '' && varstore.searchTerm != undefined">Search for "{{varstore.searchTerm}}" had {{result.length}} result<span *ngIf="result.length > 1">s</span>:</div>
+		<app-anime *ngFor="let anime of result" [anime]="anime" [userIsPremium]="userIsPremium"></app-anime>
+		<div class="empty" *ngIf="result.length <= 0">
+			<div class="title">A bit empty in here</div>
+			<div>Add more Animes to your queue to fill up this space.</div>
+			<button (click)="openCrunchyroll()">Browse Crunchyroll's library</button>
+		</div>
+	</div>
 </div>

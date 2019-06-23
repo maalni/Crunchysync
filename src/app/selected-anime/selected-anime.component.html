@@ -1,21 +1,29 @@
 <div class="selectedAnimeContainer">
-	<div class="close" (click)="onClose.emit()"></div>
+	<div class="close" (click)="varstore.selectedAnime = {}" title="Close detailed view"></div>
 	<div class="selectedAnime">
-		<button class="closebtn" (click)="onClose.emit()">🞩</button>
-		<button class="openEpisodebtn" (click)="openEpisode()"><svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg></button>
-		<button class="openAnimebtn" (click)="openAnime()"><svg><use xlink:href="../assets/icons/openSelectedAnime.svg#openSelectedAnime"></use></svg></button>
-		<button class="completeEpisodebtn" (click)="completeEpisode()"><svg><use xlink:href="../assets/icons/completeSelectedEpisode.svg#completeSelectedEpisode"></use></svg></button>
-		<div class="premium" *ngIf="selectedAnime?.most_likely_media?.premium_only && !this.userIsPremium">
+		<div class="buttons">
+			<button class="completeEpisodebtn" (click)="completeEpisode()" [title]="'Complete \'' + varstore.selectedAnime['most_likely_media']['name'] + '\''"><svg><use xlink:href="../assets/icons/completeEpisode.svg#completeEpisode	"></use></svg></button>
+			<button class="openAnimebtn" (click)="openAnime()" [title]="'Open \'' + varstore.selectedAnime['series']['name'] + '\' in a new tab'"><svg>
+					<use xlink:href="../assets/icons/openSelectedAnime.svg#openSelectedAnime"></use>
+				</svg></button>
+			<button class="closebtn" (click)="varstore.selectedAnime = {}" title="Close detailed view">🞩</button>
+		</div>
+		<div class="premium" *ngIf="varstore.selectedAnime['most_likely_media']['premium_only'] && !this.varstore.settings['userIsPremium']">
 			<img class="premiumIcon" src="../../assets/icons/premium.png">
 			<span class="premiumDate">{{getDate()}}</span>
 		</div>
-		<img class="preview" [src]="selectedAnime?.most_likely_media?.screenshot_image?.fwide_url">
-		<progress class="playtime" [value]="selectedAnime?.most_likely_media?.playhead" [max]="selectedAnime?.most_likely_media?.duration"></progress>
+		<button class="openEpisodebtn" (click)="openEpisode()" [title]="'Start watching \'' + varstore.selectedAnime['most_likely_media']['name'] + '\''"><svg>
+				<use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use>
+			</svg></button>
+		<img class="preview" [src]="varstore.selectedAnime['most_likely_media']['screenshot_image']['fwide_url']">
+		<progress class="playtime" [value]="varstore.selectedAnime['most_likely_media']['playhead']" [max]="varstore.selectedAnime['most_likely_media']['duration']"></progress>
 		<ul class="animePropertys">
-			<li><span class="animeName">{{selectedAnime?.series?.name}}</span></li>
-			<li><span class="episodeName">{{selectedAnime?.most_likely_media?.name}}</span></li>
-			<li><span class="episodeNumber"  *ngIf="selectedAnime?.most_likely_media?.episode_number !== ''">Episode Nr. {{selectedAnime?.most_likely_media?.episode_number}}</span><br><br></li>
-			<li><span>{{selectedAnime?.most_likely_media?.description}}</span></li>
+			<li><button class="animeName" (click)="openOverview()">{{varstore.selectedAnime['series']['name']}}</button></li>
+			<li><span class="episodeName">{{varstore.selectedAnime['most_likely_media']['name']}}</span></li>
+			<li><span class="episodeNumber" *ngIf="varstore.selectedAnime['most_likely_media']['episode_number'] !== ''">Episode Nr. {{varstore.selectedAnime['most_likely_media']['episode_number']}}</span><br><br></li>
+			<li>
+				<div class="description">{{varstore.selectedAnime['most_likely_media']['description']}}</div>
+			</li>
 		</ul>
 	</div>
 </div>

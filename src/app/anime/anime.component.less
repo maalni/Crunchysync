@@ -1,0 +1,137 @@
+.animeContainer{
+	position: relative;
+	left: 15px;
+	width: calc(100% - 25px);
+	height: 90px;
+	background-color: var(--background-color);
+	border-radius: 5px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	cursor: pointer;
+	transition: var(--transition-duration);
+}
+
+.animeContainer:hover{
+	background-color: var(--darkened-background-color);
+}
+
+.animeContainer:hover .openEpisodebtn{
+	visibility:visible;
+	opacity: 1;
+}
+
+.animeContainer .openEpisodebtn{
+	position: absolute;
+	top: 20px;
+	left: 55px;
+	width: 50px;
+	height: 50px;
+	z-index: 100;
+	border-radius: 25px;
+	border: none;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.animeContainer .preview{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 160px;
+	height: 90px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.animeContainer .premium{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 32px;
+	height: 32px;
+}
+
+.animeContainer .playtime{
+	position: absolute;
+	top: 85px;
+	left: 0px;
+	width: 100%;
+	height: 5px;
+	border: none;
+	background-color: var(--transparent-color);
+	border-bottom-left-radius: 5px;
+}
+
+.animeContainer .animePropertys{
+	position: absolute;
+	top: 10px;
+	left: 170px;
+	height: 70px;
+	width: calc(100% - 180px);
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.animeContainer .animeName{
+	top: 10px;
+	width: 100%;
+	height: 18px;
+	font-size: 11pt;
+	overflow: hidden;
+}
+
+.animeContainer .episodeName{
+	top: 30px;
+	width: 100%;
+	height: 40px;
+	font-size: 13pt;
+	overflow: hidden;
+}
+
+.animeContainer .episodeNumber{
+	width: 100%;
+	height: 16px;
+	font-size: 10pt;
+	overflow: hidden;
+}
+
+.animeContainer .animePropertys li{
+	height: 20px;
+	overflow: hidden;
+}
+
+.animeContainer progress::-webkit-progress-bar {
+	border-bottom-left-radius: 5px;
+}
+
+.animeContainer progress::-webkit-progress-value {
+	border-bottom-left-radius: 5px;
+}
+
+@media only screen and (min-width: 900px) {
+	.animeContainer{
+		width: calc(50% - 32px);
+		margin-left: 10px;
+		margin-right: 10px;
+		display: inline-block;
+	}
+}
+
+@media only screen and (min-width: 1350px) {
+	.animeContainer{
+		width: calc((100% / 3) - 28px);
+		margin-left: 10px;
+		margin-right: 10px;
+		display: inline-block;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	.animeContainer{
+		width: calc(25% - 26px);
+		margin-left: 10px;
+		margin-right: 10px;
+		display: inline-block;
+	}
+}

@@ -1,11 +1,24 @@
 This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
+##Package Changes:
+- Upgraded to Angular 8.0.1
+
 ## Code Changes:
-- Rewrote some components
-- Modular theming
-- Implemented crunchysync into crunchyroll´s website and completely replaced their queuesite (Click the queue icon)
+- Rewrote Notificationmodule
+- Deleted unused code
+- Credentials are now mandatory
+- Detect if user is premium
+- Now stores many vars globaly (Slows the Extension a bit down)
+- Sync themes between extension and tab
+- Changed background auth, removed popupscreen
+- Improved search to show the number of results
+- Added an "Empty library" screen (If you can draw anime characters very well, please contact me at 'mail@crunchysync.de'. I want to include some to make the extension prettier)
+- Improved the setup process
+- Major redesign according to Googles material design refresh
 
 ## Design Changes:
-- BLACKMODE!!!!!11!!!11!!11!!!!!!1!11!1
-- (And also theming, more themes to come...)
+- New notification design
+- New icon (Remade with vectors)
+- Made the ui responsive (therefore can now be accessed by right-clicking the extension icon)
+- Now shows the deviceid used by crunchysync to authenticate with crunchyroll's server (Can help to identify unwanted devices using https://www.crunchyroll.com/acct/?action=devices)

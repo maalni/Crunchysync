@@ -1,0 +1,4 @@
+<div *ngIf="!hidden" class="notificationContainer {{url != undefined && url != ''}}" (click)="openUrl()">
+	<div class="title {{type}}"><svg><use attr.xlink:href="../assets/icons/notifications.svg#{{type}}"></use></svg>{{type.charAt(0).toUpperCase() + type.slice(1)}}:</div>
+	<div class="message">{{message}}</div>
+</div>
