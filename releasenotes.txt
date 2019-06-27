@@ -2,4 +2,4 @@ This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## Code Changes:
-- Little Bugfix in the backgroundservice, which prevented notifications from being shown
+- Little Bugfix for an issue where crunchysync's ui would be invisible

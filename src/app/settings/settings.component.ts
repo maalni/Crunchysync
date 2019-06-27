@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit {
 			if(result.disableBackgroundChecks !== undefined){
 				ang.settings['disableBackgroundChecks'] = (AES.decrypt(result.disableBackgroundChecks, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
 			}
-      if(theme == null || theme == undefined || theme == ""){
+      if(result.theme == null || result.theme == undefined || result.theme == ""){
         result.theme = "light";
       }
 			ang.settings['theme'] = result.theme;
