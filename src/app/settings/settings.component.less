@@ -41,6 +41,26 @@
 	height: 20px;
 }
 
+.settingsContainer .reloadbtn {
+	margin-top: 10px;
+	margin-left: calc(100% - 180px);
+	width: 40px;
+	height: 40px;
+	font-size: 15pt;
+	border-radius: 20px;
+	background-color: var(--background-color);
+}
+
+.settingsContainer .reloadbtn:hover{
+	background-color: var(--darkened-background-color);
+}
+
+.settingsContainer .reloadbtn svg{
+	margin-bottom: -3px;
+	width: 20px;
+	height: 20px;
+}
+
 .settingsContainer .title {
   color: var(--accent-color);
   font-size: 20pt;
@@ -92,125 +112,12 @@
   width: calc(100% - 20px);
 }
 
-.settingsContainer .reloadbtn {
-  width: 80%;
-  border-radius: 5px;
-  margin-left: 10%;
-	margin-bottom: 10px;
-	border: solid 1px var(--text-color);
-	color: var(--text-color);
-	background-color: var(--background-color);
-}
-
-.settingsContainer .savebtn {
-	position: absolute;
-	top: 10px;
-	right: 20px;
-	width: 40px;
-	height: 40px;
-	min-height: 0;
-	padding: 0;
-	border: none;
-	border-radius: 25px;
-	background-color: var(--background-color);
-}
-
-.settingsContainer .savebtn:hover {
-	background-color: var(--darkened-background-color);
-}
-
-.settingsContainer .savebtn svg {
-	margin-top: 1px;
-  width: 28px;
-  height: 28px;
-}
-
-.settingsContainer .savebtn div {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  line-height: 40px;
-  width: 50%;
-  color: var(--background-color);
-  text-align: left;
-}
-
 .settingsContainer app-spinner {
   position: absolute;
   top: 0px;
   left: 0;
   right: 0;
   height: 0px;
-}
-
-.settingsContainer .theme {
-  position: relative;
-  margin-left: 20px;
-  width: calc(50% - 30px);
-  height: 100px;
-  border-radius: 5px;
-  display: inline-block;
-  transition: var(--transition-duration);
-}
-
-.settingsContainer .theme label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-}
-
-.settingsContainer .theme span {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-}
-
-.settingsContainer .theme input {
-  margin-left: 5px;
-}
-
-.settingsContainer .theme.light {
-  background-color: white;
-  color: #333333;
-}
-
-.settingsContainer .theme.light:hover {
-  background-color: #F2F2F2;
-}
-
-.settingsContainer .theme.light span {
-  color: #333333;
-}
-
-.settingsContainer .theme.light input {
-  background-color: white;
-}
-
-.settingsContainer .theme.light input:hover {
-  background-color: #F2F2F2;
-}
-
-.settingsContainer .theme.dark {
-  background-color: #333333;
-  color: white;
-}
-
-.settingsContainer .theme.dark:hover {
-  background-color: #262626;
-}
-
-.settingsContainer .theme.dark span {
-  color: white;
-}
-
-.settingsContainer .theme.dark input {
-  background-color: #333333;
-}
-
-.settingsContainer .theme.dark input:hover {
-  background-color: #262626;
 }
 
 @media only screen and (min-width: 900px) {

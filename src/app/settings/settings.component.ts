@@ -33,7 +33,7 @@ export class SettingsComponent implements OnInit {
   //Returns the saved encrypted settings and decrypts them. Also calls this.generateDeviceId(), if deviceid is empty
 	getSettings(){
 		var ang = this;
-		chrome.storage.local.get(["username", "password", "deviceid", "sessionid", "forceUsRegion", "userIsPremium", "disableBackgroundChecks", "firstuse", "forceSetup", "theme"], function(result) {
+		chrome.storage.local.get(["username", "password", "deviceid", "sessionid", "forceUsRegion", "userIsPremium", "autoThemeSwitcher", "disableBackgroundChecks", "firstuse", "forceSetup", "theme"], function(result) {
 			if(result.username !== undefined){
         ang.settings['username'] = AES.decrypt(result.username, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
       }
@@ -57,6 +57,9 @@ export class SettingsComponent implements OnInit {
 			if(result.userIsPremium !== undefined){
 				ang.settings['userIsPremium'] = (AES.decrypt(result.userIsPremium, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
 			}
+      if(result.autoThemeSwitcher !== undefined){
+				ang.settings['autoThemeSwitcher'] = (AES.decrypt(result.autoThemeSwitcher, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
+			}
 			if(result.disableBackgroundChecks !== undefined){
 				ang.settings['disableBackgroundChecks'] = (AES.decrypt(result.disableBackgroundChecks, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
 			}
@@ -64,6 +67,9 @@ export class SettingsComponent implements OnInit {
         result.theme = "light";
       }
 			ang.settings['theme'] = result.theme;
+      if(result.autoThemeSwitcher !== undefined){
+				ang.settings['autoThemeSwitcher'] = (AES.decrypt(result.autoThemeSwitcher, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === 'true');
+			}
       ang.setTheme(ang.settings['theme']);
       if(result.forceSetup!== undefined){
         ang.settings['forceSetup'] = (AES.decrypt(result.forceSetup, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === "true");
@@ -85,6 +91,7 @@ export class SettingsComponent implements OnInit {
       ang.varstore.saving = true;
       ang.settings['username'] = (<HTMLInputElement>document.getElementById("username")).value;
       ang.settings['password'] = (<HTMLInputElement>document.getElementById("password")).value;
+      ang.settings['autoThemeSwitcher'] = (<HTMLInputElement>document.getElementById("autoThemeSwitcher")).checked;
       ang.settings['disableBackgroundChecks'] = (<HTMLInputElement>document.getElementById("disableBackgroundChecks")).checked;
       if((<HTMLInputElement>document.getElementById("themeLight")).checked){
         ang.settings['theme'] = "light";
@@ -102,8 +109,8 @@ export class SettingsComponent implements OnInit {
   			"password": AES.encrypt(ang.settings['password'], "5HR*98g5a699^9P#f7cz").toString(),
   			"sessionid": AES.encrypt(ang.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString(),
   			"deviceid": AES.encrypt(ang.settings['deviceid'], "5HR*98g5a699^9P#f7cz").toString(),
-  			"userIsPremium": AES.encrypt(ang.settings['userIsPremium'], "5HR*98g5a699^9P#f7cz").toString(),
-  			"disableBackgroundChecks": AES.encrypt(ang.settings['disableBackgroundChecks'], "5HR*98g5a699^9P#f7cz").toString(),
+        "autoThemeSwitcher": AES.encrypt(ang.settings['autoThemeSwitcher'].toString(), "5HR*98g5a699^9P#f7cz").toString(),
+  			"disableBackgroundChecks": AES.encrypt(ang.settings['disableBackgroundChecks'].toString(), "5HR*98g5a699^9P#f7cz").toString(),
         "theme": ang.settings['theme']
       }, function(){
         if(!ang.varstore.production){
@@ -130,12 +137,21 @@ export class SettingsComponent implements OnInit {
 
   //Changes the css color values according to the provided theme
   setTheme(theme: string){
-    if(theme == null || theme == undefined || theme == ""){
-      theme = "light";
-    }
     var html = document.getElementsByTagName('html')[0];
     html.classList.remove("light");
     html.classList.remove("dark");
+    if(theme == null || theme == undefined || theme == ""){
+      theme = "light";
+    }
+    if(theme == "auto" || this.settings['autoThemeSwitcher']){
+      var currentHour = new Date().getHours();
+      if(currentHour < 6 || currentHour > 18){
+        theme = "dark";
+      }else{
+        theme = "light";
+      }
+    }
+    this.settings['theme'] = theme;
     html.classList.add(theme);
   }
 

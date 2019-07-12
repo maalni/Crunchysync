@@ -16,16 +16,16 @@
 	</div>
 	<div class="page2" *ngIf="page === 2">
 		<div class="title">Options</div>
-		<div class="checkbox setupForceUsRegionContainer" *ngIf="!varstore.production"><label for="setupForceUsRegion"><input id="setupForceUsRegion" type="checkbox" [checked]="varstore.settings['forceUsRegion']">Force session with US region</label></div>
-		<div class="checkbox setupDisableBackgroundChecksContainer"><label for="setupDisableBackgroundChecks"><input id="setupDisableBackgroundChecks" type="checkbox" [checked]="varstore.settings['disableBackgroundChecks']">Disable background checks</label></div>
+		<div class="checkbox setupForceUsRegionContainer" *ngIf="!varstore.production"><input id="setupForceUsRegion" type="checkbox" [checked]="varstore.settings['forceUsRegion']"><label for="setupForceUsRegion">Force session with US region</label></div>
+		<div class="checkbox setupDisableBackgroundChecksContainer"><input id="setupDisableBackgroundChecks" type="checkbox" [checked]="varstore.settings['disableBackgroundChecks']"><label for="setupDisableBackgroundChecks">Disable backgroundservice</label></div>
 		<button class="backbtn" (click)="previousPage()"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
 		<button class="nextbtn" (click)="saveOptions()">Next<svg><use xlink:href="../assets/icons/arrows.svg#right"></use></svg></button>
 	</div>
 	<div class="page3" *ngIf="page === 3">
 		<div class="title">Themes</div>
 		<div class="themesContainer">
-			<div class="radio card setupTheme light"><input id="setupThemeLight" type="radio" name="theme" [checked]="varstore.settings['theme'] == 'light'" (click)="this.setTheme('light')"><label for="setupThemeLight"></label><span>Light</span></div>
-			<div class="radio card setupTheme dark"><input id="setupThemeDark" type="radio" name="theme" [checked]="varstore.settings['theme'] == 'dark'" (click)="this.setTheme('dark')"><label for="setupThemeDark"></label><span>Dark</span></div>
+			<div class="card theme light"><input id="setupThemeLight" type="radio" name="theme" [checked]="varstore.settings['theme'] == 'light'" (click)="this.setTheme('light')"><label for="setupThemeLight"></label><span>Light</span></div>
+			<div class="card theme dark"><input id="setupThemeDark" type="radio" name="theme" [checked]="varstore.settings['theme'] == 'dark'" (click)="this.setTheme('dark')"><label for="setupThemeDark"></label><span>Dark</span></div>
 		</div>
 		<button class="backbtn" (click)="previousPage()"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
 		<button class="nextbtn" (click)="saveTheme()">Next<svg><use xlink:href="../assets/icons/arrows.svg#right"></use></svg></button>

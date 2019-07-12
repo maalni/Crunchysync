@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { DataService } from '../data.service';
+import { apiService } from '../api.service';
 import { Varstore } from '../varstore';
 
 @Component({
@@ -12,7 +12,7 @@ export class SelectedAnimeComponent{
 
 	@Output() onComplete = new EventEmitter<any>();
 
-	constructor(public varstore: Varstore,private dataService: DataService) {}
+	constructor(public varstore: Varstore,private apiService: apiService) {}
 
   //Parses the date string to the localy used formatting
 	getDate(){
@@ -34,7 +34,7 @@ export class SelectedAnimeComponent{
 
   //Completes the selected episode and refreshes the queue
 	completeEpisode(){
-		this.dataService.completeEpisode(this.varstore.selectedAnime['most_likely_media']['media_id'], this.varstore.selectedAnime['most_likely_media']['duration']).subscribe(res => {
+		this.apiService.completeEpisode(this.varstore.selectedAnime['most_likely_media']['media_id'], this.varstore.selectedAnime['most_likely_media']['duration']).subscribe(res => {
       this.varstore.selectedAnime = {};
 			this.onComplete.emit();
 		});
@@ -42,6 +42,12 @@ export class SelectedAnimeComponent{
 
   //Open anime overview and show all episodes
   openOverview(){
-
+    console.log(this.varstore.selectedAnime);
+    this.apiService.getCollections(this.varstore.settings['sessionid'], true, this.varstore.selectedAnime['series']['series_id']).subscribe(res => {
+      console.log(res);
+    });
+    this.apiService.getEpisodes(this.varstore.settings['sessionid'], true, "24557").subscribe(res => {
+      console.log(res);
+    });
   }
 }

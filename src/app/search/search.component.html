@@ -1,4 +1,4 @@
-<div class="searchContainer card">
+<div class="searchContainer">
 	<svg><use xlink:href="../../assets/icons/search.svg#search"></use></svg>
 	<input class="search" placeholder="Search..." [(ngModel)]="searchString" (keydown)="varstore.searchTerm = searchString" (keyup)="varstore.searchTerm = searchString" (change)="varstore.searchTerm = searchString" (paste)="varstore.searchTerm = searchString">
 	<button *ngIf="searchString !== ''" class="clearsearchbtn" (click)="searchString = ''; varstore.searchTerm = ''">🞩</button>
