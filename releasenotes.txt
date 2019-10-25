@@ -4,4 +4,4 @@ https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkeg
 ## Design Changes:
 - Changed checkbox styles
 - Added automatic theme switching by time
-- Changed the list styling to comply more with md2 guidelines
+- Changed the styling to comply more with md2 guidelines
