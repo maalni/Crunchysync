@@ -6,7 +6,6 @@
 	background-color: var(--background-color);
 	border-radius: 5px;
 	margin-bottom: 10px;
-	overflow: hidden;
 	cursor: pointer;
 	transition: var(--transition-duration);
 }
@@ -39,8 +38,12 @@
 	left: 0px;
 	width: 160px;
 	height: 90px;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.animeContainer .preview img{
+	width: 100%;
 }
 
 .animeContainer .premium{
@@ -64,9 +67,9 @@
 
 .animeContainer .animePropertys{
 	position: absolute;
-	top: 10px;
+	top: 5px;
 	left: 170px;
-	height: 70px;
+	height: 80px;
 	width: calc(100% - 180px);
 	margin: 0;
 	padding: 0;
@@ -77,7 +80,6 @@
 	top: 10px;
 	width: 100%;
 	height: 18px;
-	font-size: 11pt;
 	overflow: hidden;
 }
 
@@ -85,20 +87,24 @@
 	top: 30px;
 	width: 100%;
 	height: 40px;
-	font-size: 13pt;
+	font-size: var(--title-font-size);
+	font-weight: bold;
 	overflow: hidden;
 }
 
 .animeContainer .episodeNumber{
 	width: 100%;
 	height: 16px;
-	font-size: 10pt;
 	overflow: hidden;
 }
 
 .animeContainer .animePropertys li{
-	height: 20px;
+	max-height: 16px;
 	overflow: hidden;
+}
+
+.animeContainer .animePropertys li:nth-of-type(2){
+	max-height: 50px;
 }
 
 .animeContainer progress::-webkit-progress-bar {

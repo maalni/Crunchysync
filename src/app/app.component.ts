@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
+import { apiService } from './api.service';
 import { Varstore } from './varstore';
 import { AES } from 'crypto-ts';
 
@@ -13,12 +13,9 @@ export class AppComponent {
 
 	onAuthenticatedEvent: any = new Event('onAuthenticatedEvent');
 	animes: Array<any> = new Array();
-	unseen: Array<any> = new Array();
-	done: Array<any> = new Array();
-	watching: Array<any> = new Array();
 	retry: boolean = false;
 
-	constructor(public varstore: Varstore, private dataService: DataService) {}
+	constructor(public varstore: Varstore, private apiService: apiService) {}
 
 	ngOnInit() {
 		document.addEventListener("onAuthenticatedEvent", (e: Event) => {this.refreshQueue()}, false);
@@ -28,7 +25,7 @@ export class AppComponent {
 
 	//Checks, if an update is available and notifies the user
 	checkExtensionUpdate(){
-		this.dataService.getGitlabVersion().subscribe(res => {
+		this.apiService.getGitlabVersion().subscribe(res => {
 			var onlineVersion = parseInt(res.replace(/[v\.]/g, ""), 10);
 			var extensionVersion = parseInt(this.varstore.version.replace(/[v\.]/g, ""), 10);
 			if(onlineVersion > extensionVersion){
@@ -43,13 +40,19 @@ export class AppComponent {
     Variables:
     Boolean ignoreCache = Force cache to be ignored*/
 	authenticate(ignoreCache: boolean){
+    this.apiService.getCollections(this.varstore.settings['sessionid'], true, "254209").subscribe(res => {
+      console.log(res);
+    });
+    this.apiService.getEpisodes(this.varstore.settings['sessionid'], true, "24557").subscribe(res => {
+      console.log(res);
+    });
     this.varstore.loading = true;
 		if((this.varstore.settings['sessionid'] === "" || this.varstore.settings['sessionid'] === undefined) || ignoreCache){
       if(this.varstore.settings['username'] != "" && this.varstore.settings['password'] != ""){
-        this.dataService.getSessionID(this.varstore.settings['deviceid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
+        this.apiService.getSessionID(this.varstore.settings['deviceid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
           if(!res.error){
             this.varstore.settings['sessionid'] = res.data.session_id;
-            this.dataService.login(this.varstore.settings['sessionid'], this.varstore.settings['username'], this.varstore.settings['password']).subscribe(res => {
+            this.apiService.login(this.varstore.settings['sessionid'], this.varstore.settings['username'], this.varstore.settings['password']).subscribe(res => {
               if(!res.error){
                 this.varstore.settings['userIsPremium'] = (res.data.user.premium === 'true');
                 chrome.storage.local.set({"sessionid": AES.encrypt(this.varstore.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString()});
@@ -78,31 +81,31 @@ export class AppComponent {
     Array<any> animes = List of animes, which should get sorted*/
 	sortAnimes(animes: Array<any>){
 		if(animes !== undefined){
-			animes.sort((a,b) => a.series.name.localeCompare(b.series.name));
-			this.animes = animes;
-			this.done = [];
-			this.watching = [];
-			this.unseen = [];
-			for(var i in this.animes){
-				var anime = this.animes[i];
+			animes.sort((a,b) => a.most_likely_media.collection_name.localeCompare(b.most_likely_media.collection_name));
+      this.animes[0] = [];
+      this.animes[1] = [];
+      this.animes[2] = [];
+			this.animes[3] = animes;
+			for(var i in this.animes[3]){
+				var anime = this.animes[3][i];
         if(anime.most_likely_media !== undefined){
           if(anime.most_likely_media.playhead === undefined){
       			anime.most_likely_media.playhead = 0;
       		}
   				if((anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10) && (anime.most_likely_media.duration != 0)){
-  					this.done.push(anime);
+  					this.animes[2].push(anime);
   				}else{
   					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-  						this.watching.push(anime);
+  						this.animes[0].push(anime);
   					}else{
-  						this.unseen.push(anime);
+  						this.animes[1].push(anime);
   					}
   				}
         }
 			}
-			if(this.watching.length > 0){
+			if(this.animes[0].length > 0){
 				chrome.browserAction.setBadgeBackgroundColor({ color: [247, 140, 37, 1] });
-				chrome.browserAction.setBadgeText({text: this.watching.length+""});
+				chrome.browserAction.setBadgeText({text: this.animes[0].length+""});
 			}else{
         chrome.browserAction.setBadgeText({text: ""});
       }
@@ -114,6 +117,7 @@ export class AppComponent {
 		var ang = this;
 		this.varstore.loading = true;
 		chrome.storage.local.get(["animes"], function(result) {
+      console.log(result.animes);
 			ang.sortAnimes(result.animes);
 			ang.varstore.loading = false;
 		});
@@ -122,9 +126,12 @@ export class AppComponent {
   //Refreshes the cached animes
 	refreshQueue(){
 		this.varstore.loading = true;
-		this.dataService.getQueue(this.varstore.settings['sessionid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
+		this.apiService.getQueue(this.varstore.settings['sessionid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
 			if(!res.error){
-				chrome.storage.local.set({"animes": res.data}, function() {});
+				chrome.storage.local.set({"animes": res.data}, function() {
+          console.log(chrome.runtime.lastError);
+          console.log("saved");
+        });
 				this.sortAnimes(res.data);
 				this.varstore.cachedQueue = false;
         this.varstore.loading = false;
@@ -146,11 +153,6 @@ export class AppComponent {
 			this.authenticate(false);
 		}
 	}
-
-  //Authenticates the user, when the setup is completed
-  onSetupCompleteEventHandler(){
-    this.authenticate(true);
-  }
 
   /*Checks if Object is empty
     Variables:

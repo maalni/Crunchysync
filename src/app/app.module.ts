@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FilterPipe } from './filter.pipe';
 import { Varstore } from './varstore';
-import { DataService } from './data.service';
+import { apiService } from './api.service';
 
 import { AppComponent } from './app.component';
 import { AnimeComponent } from './anime/anime.component';
@@ -41,7 +41,7 @@ import { SetupComponent } from './setup/setup.component';
 		FormsModule
   ],
   providers: [
-    DataService,
+    apiService,
     Varstore
   ],
   bootstrap: [AppComponent]

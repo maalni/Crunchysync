@@ -5,6 +5,7 @@
 
 *{
 	font-family: 'Roboto', sans-serif;
+	font-size: var(--font-size);
 	color: var(--text-color);
 	user-select: none;
 }
@@ -29,6 +30,8 @@
 }
 
 html{
+	--title-font-size: 15pt;
+	--font-size: 10pt;
 	--accent-color: rgba(0,0,0,0);
 	--darkened-accent-color: rgba(0,0,0,0);
 	--background-color: rgba(0,0,0,0);
@@ -101,40 +104,58 @@ input:disabled{
 }
 
 input[type=checkbox]{
-	width: 20px !important;
-	height: 20px !important;
-	appearance: none;
-	padding: 0;
-	line-height: 20px;
-	vertical-align: middle;
-	background-color: var(--background-color);
-	margin-top: 7px;
-	margin-bottom: 10px;
-	color: var(--background-color);
-	border: solid 1px var(--text-color);
-	cursor: pointer;
+	display: none;
 }
 
-input[type=checkbox]:hover{
-	background-color: var(--darkened-background-color);
+input[type=checkbox] + label {
+  position: relative;
+  display: inline-block;
+  min-width: 112px;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: left;
+  margin: 10px;
+	margin-left: 20px;
+  padding: 10px 44px;
 }
 
-input[type=checkbox]:checked{
-	background-color: var(--accent-color) !important;
-	border: none;
+input[type=checkbox] + label::before, input[type=checkbox] + label::after {
+  content: "";
+  position: absolute;
+  margin: 0;
+  outline: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  transition: all 0.3s ease;
 }
 
-input[type=checkbox]:checked:after {
-	content: "✔";
-	margin-left: 3px;
-	width: 20px;
-	height: 20px;
-	text-align: center;
-	font-size: 12pt;
+input[type=checkbox] + label::before {
+  left: 1px;
+  width: 34px;
+  height: 14px;
+  background-color: var(--text-color);
+	opacity: 0.5;
+  border-radius: 8px;
 }
 
-input[type=checkbox]:checked:hover {
-	background-color: var(--darkened-accent-color) !important;
+input[type=checkbox] + label::after {
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #FAFAFA;
+  border-radius: 50%;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
+}
+
+input[type=checkbox]:checked + label::before {
+  background-color: var(--accent-color);
+}
+
+input[type=checkbox]:checked + label::after {
+  background-color: var(--accent-color);
+  -ms-transform: translate(80%, -50%);
+  -webkit-transform: translate(80%, -50%);
+  transform: translate(80%, -50%);
 }
 
 input[type=radio]{
@@ -184,7 +205,7 @@ button{
 	border: none;
 	color: var(--background-color);
 	background-color: var(--accent-color);
-	min-height: 40px;
+	min-height: 30px;
 	cursor: pointer;
 	transition: var(--transition-duration);
 }
@@ -200,4 +221,69 @@ svg{
 
 .card{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.theme {
+	position: relative;
+	margin-left: 20px;
+	width: calc(50% - 30px);
+	height: 100px;
+	display: inline-block;
+}
+
+.theme label {
+	position: relative;
+	width: 10px;
+	height: 10px;
+}
+
+.theme label::before {
+	content: "";
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	display: inline-block;
+	transition: var(--transition-duration);
+	border: solid 2px var(--transparent-color);
+}
+
+.theme input:checked + label::before {
+	border: solid 2px var(--accent-color);
+}
+
+.theme span {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.theme input {
+  display:none;
+}
+
+.theme.light label::before {
+  background-color: white;
+  color: #333333;
+}
+
+.theme.light:hover label::before {
+  background-color: #F2F2F2;
+}
+
+.theme.light span {
+  color: #333333;
+}
+
+.theme.dark label::before {
+  background-color: #333333;
+  color: white;
+}
+
+.theme.dark:hover label::before {
+  background-color: #262626;
+}
+
+.theme.dark span {
+  color: white;
 }

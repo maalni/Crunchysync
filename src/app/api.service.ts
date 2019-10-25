@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class DataService {
+export class apiService {
 
 	result: any;
 
@@ -24,7 +24,7 @@ export class DataService {
 			locale = chrome.i18n.getUILanguage();
 		}
 		return this.http.get("https://api.crunchyroll.com/queue.0.json?"+
-			"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
+			"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.collection_name,media.collection_id,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
 			"&media_types=anime|drama"+
 			"&locale=" + locale +
 			"&session_id=" + sessionid).pipe(map(result => this.result = JSON.parse(JSON.stringify(result).replace(/(http:)/g, "https:"))), catchError((err: any) => { return throwError(err.statusText) }));
@@ -58,6 +58,19 @@ export class DataService {
 			"&locale=enUS" +
 			"&account=" + encodeURIComponent(username) +
 			"&password=" + encodeURIComponent(password), {}).pipe(map(result => this.result = result), catchError((err: any) => { return throwError(err.statusText) }));
+	}
+
+	getCollections(sessionid: string, forceUsRegion: boolean, series: string): Observable<any> {
+		var locale = "enUS";
+		if(!forceUsRegion){
+			locale = chrome.i18n.getUILanguage();
+		}
+		return this.http.post("https://api.crunchyroll.com/list_collections.0.json?" +
+			"series_id=" + series +
+			"&sort=asc" +
+			"&offset=0" +
+			"&session_id=" + sessionid +
+			"&locale=" + locale, {}).pipe(map(result => this.result = result), catchError((err: any) => { return throwError(err.statusText) }));
 	}
 
 	getEpisodes(sessionid: string, forceUsRegion: boolean, collection: string): Observable<any> {

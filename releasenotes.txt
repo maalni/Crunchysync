@@ -1,5 +1,7 @@
 This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
-## Code Changes:
-- Little Bugfix for an issue where crunchysync's ui would be invisible
+## Design Changes:
+- Changed checkbox styles
+- Added automatic theme switching by time
+- Changed the list styling to comply more with md2 guidelines

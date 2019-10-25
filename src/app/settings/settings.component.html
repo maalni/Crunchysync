@@ -1,6 +1,7 @@
 <div class="settingsContainer">
-	<button class="backbtn" (click)="this.varstore.selectedPage = 0" title="Back"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
-	<button class="savebtn" (click)="saveSettings()" title="Save" [hidden]="varstore.saving"><svg><use xlink:href="../assets/icons/save.svg#save"></use></svg></button>
+	<button class="backbtn" (click)="this.varstore.selectedPage = 0" title="Go back"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
+	<button *ngIf="!varstore.production" class="reloadbtn" (click)="reloadExtension()" title="Reload extension"><svg class="logo"><use xlink:href="../assets/icons/refresh.svg#refresh"></use></svg></button>
+	<button class="savebtn" (click)="saveSettings()" title="Save"><svg><use xlink:href="../assets/icons/save.svg#save"></use></svg></button>
 	<div id="notifications" [hidden]="varstore.selectedPage != 4">
 		<app-notification *ngFor="let notification of varstore.notifications" [message]="notification['message']" [type]="notification['type']" [url]="notification['url']"></app-notification>
 	</div>
@@ -8,18 +9,18 @@
 	<div class="author">made by Alexander König</div>
 	<div class="version">Version {{varstore.version}}<span *ngIf="!varstore.production">-debug</span></div>
 	<div class="title">Settings</div>
-	<div class="subtitle">Credentials</div>
+	<div class="subtitle">Credentials:</div>
 	<input id="username" class="card" placeholder="Username" value="{{settings['username']}}">
 	<input id="password" class="card" placeholder="Password" value="{{settings['password']}}" type="password">
-	<div class="subtitle">Theme</div>
-	<div class="radio card theme light"><input id="themeLight" type="radio" name="theme" [checked]="settings['theme'] == 'light'"><label for="themeLight"></label><span>Light</span></div>
-	<div class="radio card theme dark"><input id="themeDark" type="radio" name="theme" [checked]="settings['theme'] == 'dark'"><label for="themeDark"></label><span>Dark</span></div>
-	<div class="subtitle">Options</div>
-	<div class="checkbox"><label for="disableBackgroundChecks"><input id="disableBackgroundChecks" type="checkbox" [checked]="settings['disableBackgroundChecks']">Disable background checks</label></div>
-	<div *ngIf="!varstore.production" class="subtitle">Debug</div>
-	<input *ngIf="!varstore.production" id="sessionid" class="card" placeholder="Session ID" value="SessionID: {{settings['sessionid']}}" disabled>
+	<div class="subtitle">Themes:</div>
+	<div class="checkbox"><input id="autoThemeSwitcher" type="checkbox" [checked]="settings['autoThemeSwitcher']" (click)="setTheme('auto')"><label for="autoThemeSwitcher">Switch theme based on time</label></div>
+	<div class="card theme light"><input id="themeLight" type="radio" name="theme" [checked]="settings['theme'] == 'light'" (click)="settings['autoThemeSwitcher'] = false; setTheme('light')"><label for="themeLight"></label><span>Light</span></div>
+	<div class="card theme dark"><input id="themeDark" type="radio" name="theme" [checked]="settings['theme'] == 'dark'" (click)="settings['autoThemeSwitcher'] = false; setTheme('dark')"><label for="themeDark"></label><span>Dark</span></div>
+	<div class="subtitle">Options:</div>
+	<div class="checkbox"><input id="disableBackgroundChecks" type="checkbox" [checked]="settings['disableBackgroundChecks']"><label for="disableBackgroundChecks">Disable backgroundservice</label></div>
 	<input id="deviceid" class="card" placeholder="Device ID" value="DeviceID: {{settings['deviceid']}}" disabled>
-	<div *ngIf="!varstore.production" class="checkbox"><label for="forceUsRegion"><input id="forceUsRegion" type="checkbox" [checked]="settings['forceUsRegion']"> Force session with US region</label></div>
-	<div *ngIf="!varstore.production" class="checkbox"><label for="forceSetup"><input id="forceSetup" type="checkbox" [checked]="settings['forceSetup']"> Force setup at startup</label></div>
-	<button *ngIf="!varstore.production" class="reloadbtn" (click)="reloadExtension()">Reload Extension</button>
+	<div *ngIf="!varstore.production" class="subtitle">Debug:</div>
+	<div *ngIf="!varstore.production" class="checkbox"><input id="forceUsRegion" type="checkbox" [checked]="settings['forceUsRegion']"><label for="forceUsRegion">Force session with US region</label></div>
+	<div *ngIf="!varstore.production" class="checkbox"><input id="forceSetup" type="checkbox" [checked]="settings['forceSetup']"><label for="forceSetup">Force setup at startup</label></div>
+	<input *ngIf="!varstore.production" id="sessionid" class="card" placeholder="Session ID" value="SessionID: {{settings['sessionid']}}" disabled>
 </div>

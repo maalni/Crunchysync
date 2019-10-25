@@ -1,23 +1,20 @@
-<app-search [hidden]="varstore.selectedPage == 4"></app-search>
-<button id="refreshbtn" (click)="refreshQueue()" title="Refresh" [hidden]="(varstore.selectedPage == 4)||(varstore.loading)">
+<app-search></app-search>
+<button id="refreshbtn" (click)="refreshQueue()" title="Refresh" [hidden]="varstore.loading">
 	<svg><use xlink:href="../assets/icons/refresh.svg#refresh"></use></svg>
 </button>
-<button id="settingsbtn" (click)="varstore.selectedPage = 4" title="Settings" [hidden]="varstore.selectedPage == 4">
+<button id="settingsbtn" (click)="varstore.selectedPage = 4" title="Settings">
 	<svg><use xlink:href="../assets/icons/settings.svg#settings"></use></svg>
 	<span [hidden]="varstore.notifications.length == 0" class="notificationCount">{{varstore.notifications.length}}</span>
 </button>
 <div id="content">
-	<div *ngIf="varstore.cachedQueue && varstore.selectedPage != 4" class="cacheNotification">
+	<div *ngIf="varstore.cachedQueue" class="cacheNotification">
 		<svg><use xlink:href="../assets/icons/offline.svg#offline"></use></svg>
 		<span>Cached</span>
 	</div>
-	<app-category [animes]="watching" [hidden]="varstore.selectedPage != 0"></app-category>
-	<app-category [animes]="unseen" [hidden]="varstore.selectedPage != 1"></app-category>
-	<app-category [animes]="done" [hidden]="varstore.selectedPage != 2"></app-category>
-	<app-category [animes]="animes" [hidden]="varstore.selectedPage != 3"></app-category>
-	<app-spinner id="spinner" [hidden]="(varstore.selectedPage == 4)||(!varstore.loading)"></app-spinner>
+	<app-category [animes]="animes[varstore.selectedPage]"></app-category>
+	<app-spinner id="spinner" [hidden]="!varstore.loading"></app-spinner>
 </div>
-<app-navbar [totalWatching]="watching?.length" [totalUnseen]="unseen?.length" [totalDone]="done?.length" [totalAnimes]="animes?.length"></app-navbar>
+<app-navbar [totalWatching]="animes[0]?.length" [totalUnseen]="animes[1]?.length" [totalDone]="animes[2]?.length" [totalAnimes]="animes[3]?.length"></app-navbar>
 <app-selected-anime *ngIf="!IsObjectEmpty(varstore.selectedAnime)" id="selectedAnime" (onComplete)="refreshQueue()"></app-selected-anime>
 <app-settings id="settings" (onSettingsChanged)="onSettingsChangedEventHandler()" [hidden]="varstore.selectedPage != 4"></app-settings>
-<app-setup *ngIf="varstore.settings['firstuse']" (onSetupComplete)="onSetupCompleteEventHandler($event)"></app-setup>
+<app-setup *ngIf="varstore.settings['firstuse']" (onSetupComplete)="this.authenticate(true)"></app-setup>

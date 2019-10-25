@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Varstore } from '../varstore';
-import { DataService } from '../data.service';
+import { apiService } from '../api.service';
 import { AES, enc } from 'crypto-ts';
 
 @Component({
@@ -17,7 +17,7 @@ export class SetupComponent {
   errorMessage: string = "";
   saving: boolean = false;
 
-  constructor(public varstore: Varstore, private dataService: DataService) {}
+  constructor(public varstore: Varstore, private apiService: apiService) {}
 
 	nextPage(){
 		this.page += 1;
@@ -37,10 +37,10 @@ export class SetupComponent {
   			"username": AES.encrypt(ang.settings['username'], "5HR*98g5a699^9P#f7cz").toString(),
   			"password": AES.encrypt(ang.settings['password'], "5HR*98g5a699^9P#f7cz").toString()
   	  });
-      this.dataService.getSessionID(this.varstore.settings['deviceid'], this.settings['forceUsRegion']).subscribe(res => {
+      this.apiService.getSessionID(this.varstore.settings['deviceid'], this.settings['forceUsRegion']).subscribe(res => {
         if(!res.error){
           this.settings['sessionid'] = res.data.session_id;
-          this.dataService.login(this.settings['sessionid'], this.settings['username'], this.settings['password']).subscribe(res => {
+          this.apiService.login(this.settings['sessionid'], this.settings['username'], this.settings['password']).subscribe(res => {
             if(!res.error){
               this.settings['userIsPremium'] = (res.data.user.premium === 'true');
               chrome.storage.local.set({"sessionid": AES.encrypt(this.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString()});
