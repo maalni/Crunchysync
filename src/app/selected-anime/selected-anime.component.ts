@@ -16,10 +16,14 @@ export class SelectedAnimeComponent{
 
   //Parses the date string to the localy used formatting
 	getDate(){
-		var date = new Date(this.varstore.selectedAnime['most_likely_media']['free_available_time']);
-		var options = { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-		var formattedDate = date.toLocaleDateString(undefined, options);
-		return formattedDate.replace(new RegExp(",", 'g'), "");
+    if(this.varstore.selectedAnime['most_likely_media']['free_available_time'] != "9998-11-30T00:00:00-08:00" && this.varstore.selectedAnime['most_likely_media']['premium_only'] != true){
+  		var date = new Date(this.varstore.selectedAnime['most_likely_media']['free_available_time']);
+  		var options = { weekday: 'long', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+  		var formattedDate = date.toLocaleDateString(undefined, options);
+  		return formattedDate.replace(new RegExp(",", 'g'), "");
+    }else{
+      return "Not available";
+    }
 	}
 
   //Opens the selected Episode in a new tab

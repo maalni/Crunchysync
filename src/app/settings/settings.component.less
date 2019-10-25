@@ -21,11 +21,10 @@
 
 
 .settingsContainer .backbtn{
-	margin-top: 10px;
+	margin-top: 14px;
 	margin-left: 20px;
 	width: 100px;
-	height: 40px;
-	font-size: 15pt;
+	font-size: var(--title-font-size);
 	border-radius: 20px;
 	background-color: var(--background-color);
 	color: var(--accent-color);
@@ -42,13 +41,15 @@
 }
 
 .settingsContainer .reloadbtn {
-	margin-top: 10px;
-	margin-left: calc(100% - 180px);
-	width: 40px;
-	height: 40px;
-	font-size: 15pt;
+	position: absolute;
+	top: 14px;
+	right: 51px;
+	width: 30px;
+	height: 30px;
+	font-size: var(--title-font-size);
 	border-radius: 20px;
 	background-color: var(--background-color);
+	padding: 0;
 }
 
 .settingsContainer .reloadbtn:hover{
@@ -56,20 +57,41 @@
 }
 
 .settingsContainer .reloadbtn svg{
-	margin-bottom: -3px;
-	width: 20px;
-	height: 20px;
+	margin-top: 3px;
+	width: 24px;
+	height: 24px;
+}
+
+.settingsContainer .savebtn {
+	position: absolute;
+	top: 14px;
+	right: 16px;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	font-size: var(--title-font-size);
+	border-radius: 20px;
+	background-color: var(--background-color);
+}
+
+.settingsContainer .savebtn:hover{
+	background-color: var(--darkened-background-color);
+}
+
+.settingsContainer .savebtn svg{
+	margin-top: 3px;
+	width: 24px;
+	height: 24px;
 }
 
 .settingsContainer .title {
   color: var(--accent-color);
-  font-size: 20pt;
+  font-size: var(--title-font-size);
   font-weight: bold;
   margin-left: 20px;
 }
 
 .settingsContainer .subtitle {
-  font-size: 12pt;
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 5px;
@@ -83,13 +105,11 @@
 }
 
 .settingsContainer .author {
-  font-size: 11pt;
   width: 100%;
   text-align: center;
 }
 
 .settingsContainer .version {
-  font-size: 11pt;
   width: 100%;
   text-align: center;
 }

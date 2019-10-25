@@ -1,6 +1,7 @@
 <div class="settingsContainer">
-	<button class="backbtn" (click)="saveSettings(); this.varstore.selectedPage = 0" title="Save and go back"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
+	<button class="backbtn" (click)="this.varstore.selectedPage = 0" title="Go back"><svg><use xlink:href="../assets/icons/arrows.svg#left"></use></svg>Back</button>
 	<button *ngIf="!varstore.production" class="reloadbtn" (click)="reloadExtension()" title="Reload extension"><svg class="logo"><use xlink:href="../assets/icons/refresh.svg#refresh"></use></svg></button>
+	<button class="savebtn" (click)="saveSettings()" title="Save"><svg><use xlink:href="../assets/icons/save.svg#save"></use></svg></button>
 	<div id="notifications" [hidden]="varstore.selectedPage != 4">
 		<app-notification *ngFor="let notification of varstore.notifications" [message]="notification['message']" [type]="notification['type']" [url]="notification['url']"></app-notification>
 	</div>
@@ -19,7 +20,7 @@
 	<div class="checkbox"><input id="disableBackgroundChecks" type="checkbox" [checked]="settings['disableBackgroundChecks']"><label for="disableBackgroundChecks">Disable backgroundservice</label></div>
 	<input id="deviceid" class="card" placeholder="Device ID" value="DeviceID: {{settings['deviceid']}}" disabled>
 	<div *ngIf="!varstore.production" class="subtitle">Debug:</div>
-	<input *ngIf="!varstore.production" id="sessionid" class="card" placeholder="Session ID" value="SessionID: {{settings['sessionid']}}" disabled>
 	<div *ngIf="!varstore.production" class="checkbox"><input id="forceUsRegion" type="checkbox" [checked]="settings['forceUsRegion']"><label for="forceUsRegion">Force session with US region</label></div>
 	<div *ngIf="!varstore.production" class="checkbox"><input id="forceSetup" type="checkbox" [checked]="settings['forceSetup']"><label for="forceSetup">Force setup at startup</label></div>
+	<input *ngIf="!varstore.production" id="sessionid" class="card" placeholder="Session ID" value="SessionID: {{settings['sessionid']}}" disabled>
 </div>

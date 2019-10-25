@@ -9,20 +9,25 @@
 			<button class="closebtn" (click)="varstore.selectedAnime = {}" title="Close detailed view">🞩</button>
 		</div>
 		<div class="premium" *ngIf="varstore.selectedAnime['most_likely_media']['premium_only'] && !this.varstore.settings['userIsPremium']">
-			<img class="premiumIcon" src="../../assets/icons/premium.png">
+			<svg class="premiumIcon"><use xlink:href="../assets/icons/premium.svg#premium"></use></svg>
 			<span class="premiumDate">{{getDate()}}</span>
 		</div>
-		<button class="openEpisodebtn" (click)="openEpisode()" [title]="'Start watching \'' + varstore.selectedAnime['most_likely_media']['name'] + '\''"><svg>
-				<use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use>
-			</svg></button>
+		<button class="openEpisodebtn" (click)="openEpisode()" [title]="'Start watching \'' + varstore.selectedAnime['most_likely_media']['name'] + '\''"><svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg></button>
 		<img class="preview" [src]="varstore.selectedAnime['most_likely_media']['screenshot_image']['fwide_url']">
 		<progress class="playtime" [value]="varstore.selectedAnime['most_likely_media']['playhead']" [max]="varstore.selectedAnime['most_likely_media']['duration']"></progress>
 		<ul class="animePropertys">
-			<li><button class="animeName" (click)="openOverview()">{{varstore.selectedAnime['series']['name']}}</button></li>
+			<li><button class="animeName" (click)="openOverview()">{{varstore.selectedAnime['most_likely_media']['collection_name']}}</button></li>
 			<li><span class="episodeName">{{varstore.selectedAnime['most_likely_media']['name']}}</span></li>
-			<li><span class="episodeNumber" *ngIf="varstore.selectedAnime['most_likely_media']['episode_number'] !== ''">Episode Nr. {{varstore.selectedAnime['most_likely_media']['episode_number']}}</span><br><br></li>
+			<li><span class="episodeNumber" *ngIf="varstore.selectedAnime['most_likely_media']['episode_number'] !== ''"><span *ngIf="varstore.selectedAnime['most_likely_media']['episode_number'] !== 'OVA'">Episode Nr. </span>{{varstore.selectedAnime['most_likely_media']['episode_number']}}</span><br><br></li>
 			<li>
 				<div class="description">{{varstore.selectedAnime['most_likely_media']['description']}}</div>
+			</li>
+			<li>
+				<div>
+					<span><svg><use xlink:href="../assets/icons/arrows.svg#down"></use></svg>More information...</span>
+					<div>publisher</div>
+					<div>languages</div>
+				</div>
 			</li>
 		</ul>
 	</div>

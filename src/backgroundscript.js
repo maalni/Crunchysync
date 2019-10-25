@@ -123,7 +123,7 @@ function checkUnavailableAnimes(){
 			}
 		}
 		var apiurl = "https://api.crunchyroll.com/queue.0.json?"+
-			"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.media_id,media.free_available_time,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
+			"&fields=most_likely_media,series,series.name,series.media_count,series.series_id,media.description,media.media_id,media.free_available_time,media.collection_name,media.name,media.url,media.episode_number,series.url,media.screenshot_image,media.duration,media.playhead,media.premium_only,image.fwide_url"+
 			"&media_types=anime|drama"+
 			"&locale=" + locale +
 			"&session_id=" + AES.decrypt(result.sessionid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
@@ -134,8 +134,9 @@ function checkUnavailableAnimes(){
 					if(result.unavailable !== undefined || result.unavailable !== {}){
 						animes = JSON.parse(xmlHttp.responseText.replace(/(http:)/g, "https:")).data;
 						animes = animes.filter(anime => anime.most_likely_media !== undefined);
-						animes.sort((co1, co2) => co1.series.name.localeCompare(co2.series.name));
+						animes.sort((co1, co2) => co1.most_likely_media.collection_name.localeCompare(co2.most_likely_media.collection_name));
 						watching = animes.filter(anime => (anime.most_likely_media.playhead < anime.most_likely_media.duration - 10 || anime.most_likely_media.duration == 0) && (anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1));
+						console.log(animes);
 						chrome.storage.local.set({"animes": animes});
 						unavailable = animes.filter(anime => anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10);
 						if(!userIsPremium){
@@ -175,7 +176,7 @@ function checkUnavailableAnimes(){
 						}
 						for(i in available){
 							var anime = available[i];
-							chrome.notifications.create(anime.most_likely_media.url, {type: "image", iconUrl: "assets/images/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime.series.name + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
+							chrome.notifications.create(anime.most_likely_media.url, {type: "image", iconUrl: "assets/images/crunchysync.png", imageUrl: anime.most_likely_media.screenshot_image.fwide_url, title: "A new Episode of " + anime['most_likely_media']['collection_name'] + " is available", message: anime.most_likely_media.name + "\nEpisode Nr." + anime.most_likely_media.episode_number});
 						}
 						chrome.notifications.onClicked.addListener(function(notificationId) {
 							chrome.tabs.create({url: notificationId});
