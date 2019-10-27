@@ -81,7 +81,13 @@ export class AppComponent {
     Array<any> animes = List of animes, which should get sorted*/
 	sortAnimes(animes: Array<any>){
 		if(animes !== undefined){
-			animes.sort((a,b) => a.most_likely_media.collection_name.localeCompare(b.most_likely_media.collection_name));
+      animes.sort((a,b) => {
+        if(a['most_likely_media']['collection_name'] != undefined){
+          return a['most_likely_media']['collection_name'].localeCompare(b['most_likely_media']['collection_name']);
+        }else{
+          return 0;
+        }
+      });
       this.animes[0] = [];
       this.animes[1] = [];
       this.animes[2] = [];
@@ -117,7 +123,6 @@ export class AppComponent {
 		var ang = this;
 		this.varstore.loading = true;
 		chrome.storage.local.get(["animes"], function(result) {
-      console.log(result.animes);
 			ang.sortAnimes(result.animes);
 			ang.varstore.loading = false;
 		});
@@ -128,10 +133,7 @@ export class AppComponent {
 		this.varstore.loading = true;
 		this.apiService.getQueue(this.varstore.settings['sessionid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
 			if(!res.error){
-				chrome.storage.local.set({"animes": res.data}, function() {
-          console.log(chrome.runtime.lastError);
-          console.log("saved");
-        });
+				chrome.storage.local.set({"animes": res.data});
 				this.sortAnimes(res.data);
 				this.varstore.cachedQueue = false;
         this.varstore.loading = false;
