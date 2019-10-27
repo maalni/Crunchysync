@@ -8,6 +8,7 @@
 	margin-bottom: 10px;
 	cursor: pointer;
 	transition: var(--transition-duration);
+	overflow: hidden;
 }
 
 .animeContainer:hover{
@@ -52,6 +53,16 @@
 	left: 0px;
 	width: 32px;
 	height: 32px;
+}
+
+.animeContainer .newAnime{
+	position: absolute;
+	top: 32px;
+	left: -2px;
+	padding: 0 5px;
+	background-color: var(--accent-color);
+	color: var(--background-color);
+	transform: skew(-10deg);
 }
 
 .animeContainer .playtime{
