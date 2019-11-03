@@ -82,7 +82,7 @@ export class AppComponent {
 	sortAnimes(animes: Array<any>){
 		if(animes !== undefined){
       animes.sort((a,b) => {
-        if(a['most_likely_media']['collection_name'] != undefined){
+        if(a['most_likely_media'] != undefined && b['most_likely_media'] != undefined && a['most_likely_media']['collection_name'] != undefined && b['most_likely_media']['collection_name'] != undefined){
           return a['most_likely_media']['collection_name'].localeCompare(b['most_likely_media']['collection_name']);
         }else{
           return 0;
