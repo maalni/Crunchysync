@@ -14,10 +14,14 @@ export class AnimeComponent{
   constructor(public varstore: Varstore) {}
 
   isNewEpisode(){
-    var releasedate = new Date(this.anime['most_likely_media']['available_time']).getTime();
-    var currentdate = new Date().getTime();
-    var weeks = Math.round((currentdate - releasedate) / 604800000);
-    return weeks < 2;
+    if(this.anime['most_likely_media'] != undefined && this.anime['most_likely_media']['available_time'] != undefined){
+      var releasedate = new Date(this.anime['most_likely_media']['available_time']).getTime();
+      var currentdate = new Date().getTime();
+      var weeks = Math.round((currentdate - releasedate) / 604800000);
+      return weeks < 2;
+    }else{
+      return false;
+    }
   }
 
   openEpisode(){
