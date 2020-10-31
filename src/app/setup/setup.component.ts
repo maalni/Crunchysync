@@ -40,7 +40,7 @@ export class SetupComponent {
       this.apiService.getSessionID(this.varstore.settings['deviceid'], this.settings['forceUsRegion']).subscribe(res => {
         if(!res.error){
           this.settings['sessionid'] = res.data.session_id;
-          this.apiService.login(this.settings['sessionid'], this.settings['username'], this.settings['password']).subscribe(res => {
+          this.apiService.login(this.settings['sessionid'], this.settings['username'], this.settings['password'], this.varstore.settings['forceUsRegion']).subscribe(res => {
             if(!res.error){
               this.settings['userIsPremium'] = (res.data.user.premium === 'true');
               chrome.storage.local.set({"sessionid": AES.encrypt(this.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString()});

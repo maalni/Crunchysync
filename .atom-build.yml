@@ -1,15 +1,15 @@
 name: Angular developer mode build
-cmd: "ng build"
+cmd: "yarn ng build"
 sh: true,
 targets:
   Angular developer mode build(with compression):
-    cmd: "node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && browserify src/backgroundscript.js -o src/backgroundscript.min.js && node-minify --compressor uglify-es --input src/queuescript.js --output src/queuescript.min.js && ng build"
+    cmd: "yarn node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && browserify src/backgroundscript.js -o src/backgroundscript.min.js && node-minify --compressor uglify-es --input src/queuescript.js --output src/queuescript.min.js && ng build"
     sh: true,
   Angular production mode build:
-    cmd: "ng build --prod --build-optimizer"
+    cmd: "yarn ng build --prod --build-optimizer"
     sh: true,
   Angular production mode build(with compression):
-    cmd: "node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && browserify src/backgroundscript.js -o src/backgroundscript.min.js --output src/backgroundscript.min.js && node-minify --compressor uglify-es --input src/queuescript.js --output src/queuescript.min.js && ng build --prod --build-optimizer"
+    cmd: "yarn node-minify --compressor clean-css --input src/queuescript.css --output src/queuescript.min.css && browserify src/backgroundscript.js -o src/backgroundscript.min.js --output src/backgroundscript.min.js && node-minify --compressor uglify-es --input src/queuescript.js --output src/queuescript.min.js && ng build --prod --build-optimizer"
     sh: true,
   Update packages:
     cmd: "yarn upgrade"

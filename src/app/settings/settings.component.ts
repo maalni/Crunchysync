@@ -132,6 +132,7 @@ export class SettingsComponent implements OnInit {
 
   //Reloads the extension, content- and backgroundscript
 	reloadExtension(){
+    chrome.storage.local.set({"sessionid": AES.encrypt("", "5HR*98g5a699^9P#f7cz").toString()});
 		chrome.runtime.reload();
 	}
 

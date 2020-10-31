@@ -58,10 +58,11 @@ function authenticate(){
 		deviceid = AES.decrypt(result.deviceid, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8);
 		forceUsRegion = (AES.decrypt(result.forceUsRegion, '5HR*98g5a699^9P#f7cz').toString(enc.Utf8) === "true");
 		if(username != "" && password != ""){
-			var apiurl1 = "https://api.crunchyroll.com/start_session.0.json?"+
+			var apiurl1 = "https://api.crunchyroll.com/start_session.1.json?"+
 				"&device_type=com.crunchyroll.crunchyroid"+
-				"&access_token=Scwg9PRRZ19iVwD"+
-				"&device_id=" + deviceid;
+				"&access_token=WveH9VkPLrXvuNm"+
+				"&device_id=" + deviceid +
+				"&version=457";
 			if(forceUsRegion){
 				apiurl1 = "https://api1.cr-unblocker.com/getsession.php?"+
 					"&version=1.1" +
