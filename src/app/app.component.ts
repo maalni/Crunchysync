@@ -52,7 +52,7 @@ export class AppComponent {
         this.apiService.getSessionID(this.varstore.settings['deviceid'], this.varstore.settings['forceUsRegion']).subscribe(res => {
           if(!res.error){
             this.varstore.settings['sessionid'] = res.data.session_id;
-            this.apiService.login(this.varstore.settings['sessionid'], this.varstore.settings['username'], this.varstore.settings['password']).subscribe(res => {
+            this.apiService.login(this.varstore.settings['sessionid'], this.varstore.settings['username'], this.varstore.settings['password'], this.varstore.settings['forceUsRegion']).subscribe(res => {
               if(!res.error){
                 this.varstore.settings['userIsPremium'] = (res.data.user.premium === 'true');
                 chrome.storage.local.set({"sessionid": AES.encrypt(this.varstore.settings['sessionid'], "5HR*98g5a699^9P#f7cz").toString()});
@@ -81,8 +81,9 @@ export class AppComponent {
     Array<any> animes = List of animes, which should get sorted*/
 	sortAnimes(animes: Array<any>){
 		if(animes !== undefined){
+      animes = animes.filter(anime => anime['most_likely_media'] != undefined);
       animes.sort((a,b) => {
-        if(a['most_likely_media'] != undefined && b['most_likely_media'] != undefined && a['most_likely_media']['collection_name'] != undefined && b['most_likely_media']['collection_name'] != undefined){
+        if(a['most_likely_media']['collection_name'] != undefined && b['most_likely_media']['collection_name'] != undefined){
           return a['most_likely_media']['collection_name'].localeCompare(b['most_likely_media']['collection_name']);
         }else{
           return 0;
@@ -91,23 +92,21 @@ export class AppComponent {
       this.animes[0] = [];
       this.animes[1] = [];
       this.animes[2] = [];
-			this.animes[3] = animes;
+			this.animes[3] = animes
 			for(var i in this.animes[3]){
 				var anime = this.animes[3][i];
-        if(anime.most_likely_media !== undefined){
-          if(anime.most_likely_media.playhead === undefined){
-      			anime.most_likely_media.playhead = 0;
-      		}
-  				if((anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10) && (anime.most_likely_media.duration != 0)){
-  					this.animes[2].push(anime);
+        if(anime.most_likely_media.playhead === undefined){
+      		anime.most_likely_media.playhead = 0;
+      	}
+  			if((anime.most_likely_media.playhead >= anime.most_likely_media.duration - 10) && (anime.most_likely_media.duration != 0)){
+  				this.animes[2].push(anime);
+  			}else{
+  				if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
+  					this.animes[0].push(anime);
   				}else{
-  					if(anime.most_likely_media.playhead > 0 || anime.most_likely_media.episode_number != 1){
-  						this.animes[0].push(anime);
-  					}else{
-  						this.animes[1].push(anime);
-  					}
+  					this.animes[1].push(anime);
   				}
-        }
+  			}
 			}
 			if(this.animes[0].length > 0){
 				chrome.browserAction.setBadgeBackgroundColor({ color: [247, 140, 37, 1] });
