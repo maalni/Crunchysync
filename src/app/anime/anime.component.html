@@ -4,6 +4,7 @@
 		<progress class="playtime" [value]="anime?.most_likely_media?.playhead" [max]="anime?.most_likely_media?.duration"></progress>
 	</div>
 	<svg class="premium" *ngIf="anime?.most_likely_media?.premium_only && !this.varstore.settings['userIsPremium']"><use xlink:href="../assets/icons/premium.svg#premium"></use></svg>
+	<span class="newAnime" *ngIf="isNewEpisode()">New</span>
 	<button class="openEpisodebtn" (click)="this.openEpisode()" [title]="'Start watching \'' + anime?.most_likely_media?.name + '\''">
 		<svg><use xlink:href="../assets/icons/openSelectedEpisode.svg#openSelectedEpisode"></use></svg>
 	</button>

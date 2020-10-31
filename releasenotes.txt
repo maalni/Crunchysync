@@ -2,6 +2,5 @@ This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
 ## Design Changes:
-- Changed checkbox styles
-- Added automatic theme switching by time
-- Changed the styling to comply more with md2 guidelines
+- Added marker for episodes, which are less than 2 weeks old
+- Fix bug, which rendered the extension unuseable
