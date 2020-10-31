@@ -23,7 +23,7 @@
     "browserify": "^16.5.0",
     "crypto-ts": "^1.0.2",
     "node-minify": "^3.6.0",
-    "rxjs": "~6.5.2",
+    "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
