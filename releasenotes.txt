@@ -1,5 +1,5 @@
 This extension is now released in chrome's webstore!
 https://chrome.google.com/webstore/detail/crunchysync/ajfcpdkomcbeanmgbpoiedlkegdkjgfm
 
-## Design Changes:
-- Fix bug, which rendered the extension unuseable
+## Code Changes:
+- Integrate crunchyrolls api change into the extension

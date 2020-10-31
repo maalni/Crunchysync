@@ -36,10 +36,11 @@ export class apiService {
 		Boolean forceUsRegion = Use OneStay's servers to force a US session*/
 	getSessionID(deviceid: string, forceUsRegion: boolean): Observable<any> {
 		if(!forceUsRegion){
-			return this.http.post("https://api.crunchyroll.com/start_session.0.json?"+
+			return this.http.post("https://api.crunchyroll.com/start_session.1.json?"+
 				"&device_type=com.crunchyroll.crunchyroid"+
-				"&access_token=Scwg9PRRZ19iVwD"+
-				"&device_id=" + deviceid, {}).pipe(map(result => this.result = result), catchError((err: any) => { return throwError(err.statusText) }));
+				"&access_token=WveH9VkPLrXvuNm"+
+				"&device_id=" + deviceid +
+				"&version=457", {}).pipe(map(result => this.result = result), catchError((err: any) => { return throwError(err.statusText) }));
 		}else{
 			return this.http.get("https://api1.cr-unblocker.com/getsession.php?"+
 				"&version=1.1" +
@@ -52,10 +53,14 @@ export class apiService {
 		String sessionid = Users session id
 		String username = Users username
 		String password = Users password*/
-	login(sessionid, username, password: string): Observable<any> {
+	login(sessionid, username, password: string, forceUsRegion: boolean): Observable<any> {
+		var locale = "enUS";
+		if(!forceUsRegion){
+			locale = chrome.i18n.getUILanguage();
+		}
 		return this.http.post("https://api.crunchyroll.com/login.0.json?" +
-			"&session_id=" + sessionid+
-			"&locale=enUS" +
+			"&session_id=" + sessionid +
+			"&locale=" + locale +
 			"&account=" + encodeURIComponent(username) +
 			"&password=" + encodeURIComponent(password), {}).pipe(map(result => this.result = result), catchError((err: any) => { return throwError(err.statusText) }));
 	}
